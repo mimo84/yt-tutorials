@@ -1,0 +1,127 @@
+Resources:
+  CdkYtTutorialQueue7F6CD051:
+    Type: AWS::SQS::Queue
+    Properties:
+      VisibilityTimeout: 300
+    UpdateReplacePolicy: Delete
+    DeletionPolicy: Delete
+    Metadata:
+      aws:cdk:path: CdkYtTutorialStack/CdkYtTutorialQueue/Resource
+  CdkYtTutorialQueuePolicy544C50D2:
+    Type: AWS::SQS::QueuePolicy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action: sqs:SendMessage
+            Condition:
+              ArnEquals:
+                aws:SourceArn:
+                  Ref: CdkYtTutorialTopicEF6888F1
+            Effect: Allow
+            Principal:
+              Service: sns.amazonaws.com
+            Resource:
+              Fn::GetAtt:
+                - CdkYtTutorialQueue7F6CD051
+                - Arn
+        Version: "2012-10-17"
+      Queues:
+        - Ref: CdkYtTutorialQueue7F6CD051
+    Metadata:
+      aws:cdk:path: CdkYtTutorialStack/CdkYtTutorialQueue/Policy/Resource
+  CdkYtTutorialQueueCdkYtTutorialStackCdkYtTutorialTopicD4B1C52A8C681710:
+    Type: AWS::SNS::Subscription
+    Properties:
+      Protocol: sqs
+      TopicArn:
+        Ref: CdkYtTutorialTopicEF6888F1
+      Endpoint:
+        Fn::GetAtt:
+          - CdkYtTutorialQueue7F6CD051
+          - Arn
+    Metadata:
+      aws:cdk:path: CdkYtTutorialStack/CdkYtTutorialQueue/CdkYtTutorialStackCdkYtTutorialTopicD4B1C52A/Resource
+  CdkYtTutorialTopicEF6888F1:
+    Type: AWS::SNS::Topic
+    Metadata:
+      aws:cdk:path: CdkYtTutorialStack/CdkYtTutorialTopic/Resource
+  CDKMetadata:
+    Type: AWS::CDK::Metadata
+    Properties:
+      Analytics: v2:deflate64:H4sIAAAAAAAAE1VOzQ6CMAx+Fu+jwEHj0YQXUPAFsMykoCusm8Yse3c3SEy8tN9v0xrq6gjV7tS/pcBhKgOy1RA61+OkGjbirEenmrtptbC3qDNOxkCO2ESVi0EWgXDx2q/uBtZ55gfh5yduNCoxKd/5m6ClOd/JiT9+5ZkwqyuIMSrDg4ZRyle9h0N6eRSiwnrj6Kmh3fYX/xQjN88AAAA=
+    Metadata:
+      aws:cdk:path: CdkYtTutorialStack/CDKMetadata/Default
+    Condition: CDKMetadataAvailable
+Conditions:
+  CDKMetadataAvailable:
+    Fn::Or:
+      - Fn::Or:
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - af-south-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-east-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-northeast-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-northeast-2
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-south-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-southeast-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-southeast-2
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ca-central-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - cn-north-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - cn-northwest-1
+      - Fn::Or:
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-central-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-north-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-south-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-west-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-west-2
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-west-3
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - me-south-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - sa-east-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - us-east-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - us-east-2
+      - Fn::Or:
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - us-west-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - us-west-2
+

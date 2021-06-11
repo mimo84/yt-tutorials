@@ -1,0 +1,20 @@
+{
+  "Music": [
+    {
+      "PutRequest": {
+        "Item": {
+          "Artist": { "S": "Queen" },
+          "SongTitle": { "S": "Radio Ga Ga" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "Artist": { "S": "Lady Gaga" },
+          "SongTitle": { "S": "The Queen" }
+        }
+      }
+    }
+  ]
+}
