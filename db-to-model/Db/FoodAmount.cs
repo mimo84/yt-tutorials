@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace db_to_model.Db;
+﻿namespace db_to_model.Db;
 
 public partial class FoodAmount
 {
@@ -35,9 +32,14 @@ public partial class FoodAmount
 
     public decimal? Calcium { get; set; }
 
-    public string? Source { get; set; }
+    public string Source { get; set; }
 
-    public virtual Food Food { get; set; } = null!;
+    /// <summary>
+    /// This is to help the user to know what kind of &quot;amount&quot; it is, is it a serving, is it based on weight.
+    /// </summary>
+    public string AmountName { get; set; }
+
+    public virtual Food Food { get; set; }
 
     public virtual ICollection<FoodMeal> FoodMeals { get; set; } = new List<FoodMeal>();
 }

@@ -226,3 +226,5 @@ AppPackages/
 #####
 
 appsettings.local.json
+
+*.bak

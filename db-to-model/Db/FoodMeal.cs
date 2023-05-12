@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace db_to_model.Db;
+﻿namespace db_to_model.Db;
 
 public partial class FoodMeal
 {
@@ -18,7 +15,9 @@ public partial class FoodMeal
     /// </summary>
     public int FoodMealId { get; set; }
 
-    public virtual FoodAmount FoodAmount { get; set; } = null!;
+    public virtual Food Food { get; set; }
 
-    public virtual Meal? Meal { get; set; }
+    public virtual FoodAmount FoodAmount { get; set; }
+
+    public virtual Meal Meal { get; set; }
 }
