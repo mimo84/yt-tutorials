@@ -1,7 +1,15 @@
-﻿namespace FoodDiary.Core.Entities;
+﻿using System;
+using System.Collections.Generic;
+
+namespace FoodDiary.Core.Entities;
 
 public partial class FoodMeal
 {
+    /// <summary>
+    /// There can be multiple times the same food and food amount within the same meal
+    /// </summary>
+    public int FoodMealId { get; set; }
+
     public int FoodId { get; set; }
 
     public int MealId { get; set; }
@@ -9,11 +17,6 @@ public partial class FoodMeal
     public int FoodAmountId { get; set; }
 
     public decimal Amount { get; set; }
-
-    /// <summary>
-    /// There can be multiple times the same food and food amount within the same meal
-    /// </summary>
-    public int FoodMealId { get; set; }
 
     public virtual Food Food { get; set; }
 

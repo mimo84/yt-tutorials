@@ -1,10 +1,18 @@
-﻿namespace FoodDiary.Core.Entities;
+﻿using System;
+using System.Collections.Generic;
+
+namespace FoodDiary.Core.Entities;
 
 public partial class FoodAmount
 {
     public int FoodId { get; set; }
 
     public int FoodAmountId { get; set; }
+
+    /// <summary>
+    /// This is to help the user to know what kind of &quot;amount&quot; it is, is it a serving, is it based on weight.
+    /// </summary>
+    public string AmountName { get; set; }
 
     public decimal Amount { get; set; }
 
@@ -33,11 +41,6 @@ public partial class FoodAmount
     public decimal? Calcium { get; set; }
 
     public string Source { get; set; }
-
-    /// <summary>
-    /// This is to help the user to know what kind of &quot;amount&quot; it is, is it a serving, is it based on weight.
-    /// </summary>
-    public string AmountName { get; set; }
 
     public virtual Food Food { get; set; }
 

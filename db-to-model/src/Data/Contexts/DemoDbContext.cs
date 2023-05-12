@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using FoodDiary.Core.Entities;
+﻿using FoodDiary.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace FoodDiary.Data.Contexts;
@@ -37,9 +35,7 @@ public partial class DemoDbContext : DbContext
 
             entity.ToTable("diary");
 
-            entity.Property(e => e.DiaryId)
-                .ValueGeneratedNever()
-                .HasColumnName("diary_id");
+            entity.Property(e => e.DiaryId).HasColumnName("diary_id");
             entity.Property(e => e.Date)
                 .HasDefaultValueSql("CURRENT_DATE")
                 .HasColumnName("date");
@@ -51,9 +47,7 @@ public partial class DemoDbContext : DbContext
 
             entity.ToTable("food");
 
-            entity.Property(e => e.FoodId)
-                .ValueGeneratedNever()
-                .HasColumnName("food_id");
+            entity.Property(e => e.FoodId).HasColumnName("food_id");
             entity.Property(e => e.Name)
                 .HasMaxLength(100)
                 .HasColumnName("name");
@@ -65,11 +59,7 @@ public partial class DemoDbContext : DbContext
 
             entity.ToTable("food_amount");
 
-            entity.HasIndex(e => e.FoodId, "unq_food_amount_food_id").IsUnique();
-
-            entity.Property(e => e.FoodAmountId)
-                .ValueGeneratedNever()
-                .HasColumnName("food_amount_id");
+            entity.Property(e => e.FoodAmountId).HasColumnName("food_amount_id");
             entity.Property(e => e.Alcohol)
                 .HasPrecision(10, 4)
                 .HasColumnName("alcohol");
@@ -119,8 +109,8 @@ public partial class DemoDbContext : DbContext
                 .HasPrecision(10, 4)
                 .HasColumnName("sugar");
 
-            entity.HasOne(d => d.Food).WithOne(p => p.FoodAmount)
-                .HasForeignKey<FoodAmount>(d => d.FoodId)
+            entity.HasOne(d => d.Food).WithMany(p => p.FoodAmounts)
+                .HasForeignKey(d => d.FoodId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_food_amount_food");
         });
@@ -131,12 +121,9 @@ public partial class DemoDbContext : DbContext
 
             entity.ToTable("food_meal");
 
-            entity.HasIndex(e => e.FoodId, "unq_food_meal_food_id").IsUnique();
-
             entity.HasIndex(e => e.MealId, "unq_food_meal_meal_id").IsUnique();
 
             entity.Property(e => e.FoodMealId)
-                .ValueGeneratedNever()
                 .HasComment("There can be multiple times the same food and food amount within the same meal")
                 .HasColumnName("food_meal_id");
             entity.Property(e => e.Amount)
@@ -151,8 +138,8 @@ public partial class DemoDbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_food_meal_food_amount");
 
-            entity.HasOne(d => d.Food).WithOne(p => p.FoodMeal)
-                .HasForeignKey<FoodMeal>(d => d.FoodId)
+            entity.HasOne(d => d.Food).WithMany(p => p.FoodMeals)
+                .HasForeignKey(d => d.FoodId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_food_meal_food");
         });
@@ -166,7 +153,7 @@ public partial class DemoDbContext : DbContext
             entity.HasIndex(e => e.DiaryId, "unq_meal_diary_id").IsUnique();
 
             entity.Property(e => e.MealId)
-                .ValueGeneratedNever()
+                .ValueGeneratedOnAdd()
                 .HasColumnName("meal_id");
             entity.Property(e => e.DiaryId).HasColumnName("diary_id");
             entity.Property(e => e.Name)
