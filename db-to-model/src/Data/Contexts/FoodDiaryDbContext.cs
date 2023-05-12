@@ -3,13 +3,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FoodDiary.Data.Contexts;
 
-public partial class DemoDbContext : DbContext
+public partial class FoodDiaryDbContext : DbContext
 {
-    public DemoDbContext()
+    public FoodDiaryDbContext()
     {
     }
 
-    public DemoDbContext(DbContextOptions<DemoDbContext> options)
+    public FoodDiaryDbContext(DbContextOptions<FoodDiaryDbContext> options)
         : base(options)
     {
     }

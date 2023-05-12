@@ -11,8 +11,8 @@ namespace FoodDiary.Api.Controllers;
 [Route("[controller]")]
 public class DiaryController : ControllerBase
 {
-    private readonly DemoDbContext dbContext;
-    public DiaryController(DemoDbContext _dbContext)
+    private readonly FoodDiaryDbContext dbContext;
+    public DiaryController(FoodDiaryDbContext _dbContext)
     {
         dbContext = _dbContext;
     }

@@ -10,7 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<DemoDbContext>(options =>
+builder.Services.AddDbContext<FoodDiaryDbContext>(options =>
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("Database"));
 });
