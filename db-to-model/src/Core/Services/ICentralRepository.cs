@@ -1,9 +1,8 @@
 using FoodDiary.Core.Dto;
 
-namespace FoodDiary.Core.Services
+namespace FoodDiary.Core.Services;
+
+public interface ICentralRepository
 {
-    public interface ICentralRepository
-    {
-        public Task AddFoodWithAmountsAsync(FoodWithAmountDto foodAmountDto);
-    }
+    public Task AddFoodWithAmountsAsync(FoodWithAmountDto foodAmountDto, CancellationToken cancellationToken);
 }

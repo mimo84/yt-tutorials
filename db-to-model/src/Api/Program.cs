@@ -1,4 +1,6 @@
+using FoodDiary.Core.Services;
 using FoodDiary.Data.Contexts;
+using FoodDiary.Data.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +16,8 @@ builder.Services.AddDbContext<FoodDiaryDbContext>(options =>
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("Database"));
 });
+
+builder.Services.AddScoped<ICentralRepository, CentralRepository>();
 
 var app = builder.Build();
 
