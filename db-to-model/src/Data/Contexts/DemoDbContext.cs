@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using FoodDiary.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace db_to_model.Db;
+namespace FoodDiary.Data.Contexts;
 
 public partial class DemoDbContext : DbContext
 {

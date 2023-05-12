@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="PostgreSQL" id="Project-211d" database="PostgreSQL" >
+	<schema name="public" >
+		<comment><![CDATA[standard public schema]]></comment>
+		<table name="diary" >
+			<column name="diary_id" type="integer" jt="4" mandatory="y" />
+			<column name="date" type="date" jt="91" mandatory="y" >
+				<defo><![CDATA[CURRENT_DATE]]></defo>
+			</column>
+			<index name="pk_diary" unique="PRIMARY_KEY" >
+				<column name="diary_id" />
+			</index>
+		</table>
+		<table name="food" >
+			<column name="food_id" type="integer" jt="4" mandatory="y" />
+			<column name="name" type="varchar" length="100" jt="12" />
+			<index name="pk_food" unique="PRIMARY_KEY" >
+				<column name="food_id" />
+			</index>
+		</table>
+		<table name="food_amount" >
+			<column name="food_id" type="integer" jt="4" mandatory="y" />
+			<column name="food_amount_id" prior="amount_id" type="integer" jt="4" mandatory="y" />
+			<column name="amount_name" type="varchar" length="100" jt="12" >
+				<comment><![CDATA[This is to help the user to know what kind of "amount" it is, is it a serving, is it based on weight.]]></comment>
+			</column>
+			<column name="amount" type="numeric" length="10" decimal="2" jt="2" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+			</column>
+			<column name="protein" type="numeric" length="10" decimal="4" jt="2" />
+			<column name="fat" type="numeric" length="10" decimal="4" jt="2" />
+			<column name="carbohydrates" type="numeric" length="10" decimal="4" jt="2" />
+			<column name="fiber" type="numeric" length="10" decimal="4" jt="2" />
+			<column name="alcohol" type="numeric" length="10" decimal="4" jt="2" />
+			<column name="sugar" type="numeric" length="10" decimal="4" jt="2" />
+			<column name="saturated_fats" type="numeric" length="10" decimal="4" jt="2" />
+			<column name="sodium" type="numeric" length="10" decimal="4" jt="2" />
+			<column name="cholesterol" type="numeric" length="10" decimal="4" jt="2" />
+			<column name="potassium" type="numeric" length="10" decimal="4" jt="2" />
+			<column name="iron" type="numeric" length="10" decimal="4" jt="2" />
+			<column name="calcium" type="numeric" length="10" decimal="4" jt="2" />
+			<column name="source" type="varchar" length="100" jt="12" />
+			<index name="unq_food_amount_food_id" unique="UNIQUE_KEY" >
+				<column name="food_id" />
+			</index>
+			<index name="pk_food_amount" unique="PRIMARY_KEY" >
+				<column name="food_amount_id" />
+			</index>
+			<fk name="fk_food_amount_food" to_schema="public" to_table="food" >
+				<fk_column name="food_id" pk="food_id" />
+			</fk>
+		</table>
+		<table name="food_meal" >
+			<column name="food_meal_id" type="integer" jt="4" mandatory="y" >
+				<comment><![CDATA[There can be multiple times the same food and food amount within the same meal]]></comment>
+			</column>
+			<column name="food_id" type="integer" jt="4" mandatory="y" />
+			<column name="meal_id" type="integer" jt="4" mandatory="y" />
+			<column name="food_amount_id" type="integer" jt="4" mandatory="y" />
+			<column name="amount" type="numeric" length="10" decimal="4" jt="2" mandatory="y" />
+			<index name="unq_food_meal_meal_id" unique="UNIQUE_KEY" >
+				<column name="meal_id" />
+			</index>
+			<index name="unq_food_meal_food_id" unique="UNIQUE_KEY" >
+				<column name="food_id" />
+			</index>
+			<index name="pk_food_meal" unique="PRIMARY_KEY" >
+				<column name="food_meal_id" />
+			</index>
+			<fk name="fk_food_meal_food_amount" to_schema="public" to_table="food_amount" >
+				<fk_column name="food_amount_id" pk="food_amount_id" />
+			</fk>
+			<fk name="fk_food_meal_food" to_schema="public" to_table="food" >
+				<fk_column name="food_id" pk="food_id" />
+			</fk>
+		</table>
+		<table name="meal" >
+			<column name="meal_id" type="integer" jt="4" mandatory="y" />
+			<column name="diary_id" type="integer" jt="4" mandatory="y" />
+			<column name="name" type="varchar" length="100" jt="12" />
+			<index name="pk_meal" unique="PRIMARY_KEY" >
+				<column name="meal_id" />
+			</index>
+			<index name="unq_meal_diary_id" unique="UNIQUE_KEY" >
+				<column name="diary_id" />
+			</index>
+			<fk name="fk_meal_food_meal" to_schema="public" to_table="food_meal" >
+				<fk_column name="meal_id" pk="meal_id" />
+			</fk>
+			<fk name="fk_meal_diary" to_schema="public" to_table="diary" >
+				<fk_column name="diary_id" pk="diary_id" />
+			</fk>
+		</table>
+	</schema>
+	<connector name="PostgreSQL" database="PostgreSQL" driver_class="org.postgresql.Driver" driver_jar="postgresql-42.5.3.jar" driver_desc="Standard" host="localhost" port="5432" instance="demo_db" user="user_demo" passwd="cGdfc3Ryb25nX3Bhc3N3b3Jk" useSystemProxy="false" />
+	<layout name="AlternativeLayout" id="Layout-1346" confirmed="y" show_relation="columns" >
+		<entity schema="public" name="diary" color="C1D8EE" x="800" y="448" />
+		<entity schema="public" name="food" color="C1D8EE" x="48" y="48" />
+		<entity schema="public" name="food_amount" color="C1D8EE" x="384" y="48" />
+		<entity schema="public" name="food_meal" color="C1D8EE" x="144" y="400" />
+		<entity schema="public" name="meal" color="C1D8EE" x="496" y="448" />
+	</layout>
+</project>

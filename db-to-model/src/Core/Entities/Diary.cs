@@ -1,4 +1,6 @@
-﻿namespace db_to_model.Db;
+﻿using System;
+
+namespace FoodDiary.Core.Entities;
 
 public partial class Diary
 {

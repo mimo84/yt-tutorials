@@ -1,8 +1,11 @@
-using db_to_model.Db;
+using System.Linq;
+using System.Threading.Tasks;
+using FoodDiary.Core.Entities;
+using FoodDiary.Data.Contexts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace db_to_model.Controllers;
+namespace FoodDiary.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]

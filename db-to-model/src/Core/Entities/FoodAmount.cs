@@ -1,4 +1,4 @@
-﻿namespace db_to_model.Db;
+﻿namespace FoodDiary.Core.Entities;
 
 public partial class FoodAmount
 {
