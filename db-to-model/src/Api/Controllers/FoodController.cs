@@ -1,8 +1,6 @@
 using FoodDiary.Api.Models;
 using FoodDiary.Core.Dto;
-using FoodDiary.Core.Entities;
 using FoodDiary.Core.Services;
-using FoodDiary.Data.Contexts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FoodDiary.Api.Controllers;
@@ -24,5 +22,23 @@ public class FoodController : ControllerBase
     {
         await centralRepository.AddFoodWithAmountsAsync(request.Body.Food, cancellationToken);
         return new FoodEnvelope<bool>(true);
+    }
+
+    [HttpPost("upload")]
+    public async Task<IActionResult> UploadFile([FromBody] IFormFile file)
+    {
+        var data = new byte[file.Length];
+
+        using (var bstream = file.OpenReadStream())
+        {
+            while (bstream.CanRead)
+            {
+                bstream.Read(data);
+            }
+        }
+
+        // etc
+
+        return Ok();
     }
 }

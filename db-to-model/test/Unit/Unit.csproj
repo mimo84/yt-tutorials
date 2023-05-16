@@ -3,12 +3,11 @@
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="30.0.1" />
     <PackageReference Include="FluentAssertions" Version="6.11.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.2" />
     <PackageReference Include="Moq" Version="4.18.4" />
@@ -25,6 +24,17 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Core\Core.csproj" />
+  </ItemGroup>
+
+  <!-- <ItemGroup>
+    <Folder Include="TestData" />
+  </ItemGroup> -->
+
+  <ItemGroup>
+    <None
+      Include="TestData\**"
+      CopyToOutputDirectory="PreserveNewest"
+      LinkBase="TestData\" />
   </ItemGroup>
 
 </Project>
