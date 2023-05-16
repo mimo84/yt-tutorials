@@ -24,11 +24,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Core\Core.csproj" />
+    <ProjectReference Include="..\..\src\Data\Data.csproj" />
   </ItemGroup>
-
-  <!-- <ItemGroup>
-    <Folder Include="TestData" />
-  </ItemGroup> -->
 
   <ItemGroup>
     <None
