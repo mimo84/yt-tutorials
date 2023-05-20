@@ -9,5 +9,5 @@ public partial class Diary
 
     public DateOnly Date { get; set; }
 
-    public virtual ICollection<Meal> Meal { get; set; }
+    public virtual ICollection<Meal> Meals { get; set; } = new List<Meal>();
 }

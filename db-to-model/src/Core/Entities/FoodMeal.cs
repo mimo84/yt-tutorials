@@ -16,7 +16,7 @@ public partial class FoodMeal
 
     public int FoodAmountId { get; set; }
 
-    public decimal Amount { get; set; }
+    public decimal ConsumedAmount { get; set; }
 
     public virtual Food Food { get; set; }
 

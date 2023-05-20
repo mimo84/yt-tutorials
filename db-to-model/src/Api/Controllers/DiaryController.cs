@@ -1,5 +1,3 @@
-using System.Linq;
-using System.Threading.Tasks;
 using FoodDiary.Core.Dto;
 using FoodDiary.Core.Entities;
 using FoodDiary.Data.Contexts;
@@ -33,7 +31,7 @@ public class DiaryController : ControllerBase
     }
 
     [HttpPost(Name = "add_diary")]
-    public async Task<Diary> AddDiary(DiaryIngressDto diaryEntryDto)
+    public async Task<bool> AddDiary(DiaryIngressDto diaryEntryDto)
     {
         DateOnly diaryDate = new(diaryEntryDto.Date.Year, diaryEntryDto.Date.Month, diaryEntryDto.Date.Day);
         Diary diary = await dbContext.Diaries.Where(d => d.Date == diaryDate).SingleOrDefaultAsync();
@@ -43,14 +41,14 @@ public class DiaryController : ControllerBase
             diary = new Diary()
             {
                 Date = diaryDate,
-                Meal = new List<Meal>()
+                Meals = new List<Meal>()
             };
-            dbContext.Add(diary);
+            dbContext.Diaries.Add(diary);
         }
 
         await dbContext.SaveChangesAsync();
 
 
-        return diary;
+        return true;
     }
 }

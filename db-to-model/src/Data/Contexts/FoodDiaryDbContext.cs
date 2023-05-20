@@ -49,7 +49,8 @@ public partial class FoodDiaryDbContext : DbContext
 
             entity.Property(e => e.FoodId).HasColumnName("food_id");
             entity.Property(e => e.Name)
-                .HasMaxLength(100)
+                .IsRequired()
+                .HasColumnType("character varying")
                 .HasColumnName("name");
         });
 
@@ -68,8 +69,8 @@ public partial class FoodDiaryDbContext : DbContext
                 .HasDefaultValueSql("1")
                 .HasColumnName("amount");
             entity.Property(e => e.AmountName)
-                .HasMaxLength(100)
                 .HasComment("This is to help the user to know what kind of \"amount\" it is, is it a serving, is it based on weight.")
+                .HasColumnType("character varying")
                 .HasColumnName("amount_name");
             entity.Property(e => e.Calcium)
                 .HasPrecision(10, 4)
@@ -103,7 +104,7 @@ public partial class FoodDiaryDbContext : DbContext
                 .HasPrecision(10, 4)
                 .HasColumnName("sodium");
             entity.Property(e => e.Source)
-                .HasMaxLength(100)
+                .HasColumnType("character varying")
                 .HasColumnName("source");
             entity.Property(e => e.Sugar)
                 .HasPrecision(10, 4)
@@ -121,14 +122,12 @@ public partial class FoodDiaryDbContext : DbContext
 
             entity.ToTable("food_meal");
 
-            entity.HasIndex(e => e.MealId, "unq_food_meal_meal_id").IsUnique();
-
             entity.Property(e => e.FoodMealId)
                 .HasComment("There can be multiple times the same food and food amount within the same meal")
                 .HasColumnName("food_meal_id");
-            entity.Property(e => e.Amount)
+            entity.Property(e => e.ConsumedAmount)
                 .HasPrecision(10, 4)
-                .HasColumnName("amount");
+                .HasColumnName("consumed_amount");
             entity.Property(e => e.FoodAmountId).HasColumnName("food_amount_id");
             entity.Property(e => e.FoodId).HasColumnName("food_id");
             entity.Property(e => e.MealId).HasColumnName("meal_id");
@@ -142,6 +141,11 @@ public partial class FoodDiaryDbContext : DbContext
                 .HasForeignKey(d => d.FoodId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_food_meal_food");
+
+            entity.HasOne(d => d.Meal).WithMany(p => p.FoodMeals)
+                .HasForeignKey(d => d.MealId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_food_meal_meal");
         });
 
         modelBuilder.Entity<Meal>(entity =>
@@ -150,26 +154,16 @@ public partial class FoodDiaryDbContext : DbContext
 
             entity.ToTable("meal");
 
-            entity.HasIndex(e => e.DiaryId, "unq_meal_diary_id").IsUnique();
-
-            entity.Property(e => e.MealId)
-                .ValueGeneratedOnAdd()
-                .HasColumnName("meal_id");
+            entity.Property(e => e.MealId).HasColumnName("meal_id");
             entity.Property(e => e.DiaryId).HasColumnName("diary_id");
             entity.Property(e => e.Name)
-                .HasMaxLength(100)
+                .HasColumnType("character varying")
                 .HasColumnName("name");
 
-            entity.HasOne(d => d.Diary).WithMany(p => p.Meal)
+            entity.HasOne(d => d.Diary).WithMany(p => p.Meals)
                 .HasForeignKey(d => d.DiaryId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_meal_diary");
-
-            entity.HasMany(d => d.FoodMeals)
-                .WithOne(d => d.Meal)
-                .HasForeignKey(d => d.MealId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_meal_food_meal");
         });
 
         OnModelCreatingPartial(modelBuilder);
