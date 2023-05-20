@@ -36,7 +36,7 @@ CREATE  TABLE "public".food_meal (
 	food_id              integer  NOT NULL  ,
 	meal_id              integer  NOT NULL  ,
 	food_amount_id       integer  NOT NULL  ,
-	amount               numeric(10,4)  NOT NULL  ,
+	consumed_amount               numeric(10,4)  NOT NULL  ,
 	CONSTRAINT pk_food_meal PRIMARY KEY ( food_meal_id )
  );
 
