@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace FoodDiary.Core.Entities;
+﻿namespace FoodDiary.Core.Entities;
 
 public partial class Meal
 {
@@ -13,5 +10,5 @@ public partial class Meal
 
     public virtual Diary Diary { get; set; }
 
-    public virtual FoodMeal MealNavigation { get; set; }
+    public virtual ICollection<FoodMeal> FoodMeals { get; set; }
 }

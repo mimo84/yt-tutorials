@@ -160,14 +160,14 @@ public partial class FoodDiaryDbContext : DbContext
                 .HasMaxLength(100)
                 .HasColumnName("name");
 
-            entity.HasOne(d => d.Diary).WithOne(p => p.Meal)
-                .HasForeignKey<Meal>(d => d.DiaryId)
+            entity.HasOne(d => d.Diary).WithMany(p => p.Meal)
+                .HasForeignKey(d => d.DiaryId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_meal_diary");
 
-            entity.HasOne(d => d.MealNavigation).WithOne(p => p.Meal)
-                .HasPrincipalKey<FoodMeal>(p => p.MealId)
-                .HasForeignKey<Meal>(d => d.MealId)
+            entity.HasMany(d => d.FoodMeals)
+                .WithOne(d => d.Meal)
+                .HasForeignKey(d => d.MealId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_meal_food_meal");
         });
