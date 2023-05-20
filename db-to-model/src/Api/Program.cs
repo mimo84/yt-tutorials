@@ -19,6 +19,7 @@ builder.Services.AddDbContext<FoodDiaryDbContext>(options =>
 });
 
 builder.Services.AddScoped<ICentralRepository, CentralRepository>();
+builder.Services.AddScoped<IDiaryHandler, DiaryHandler>();
 
 var app = builder.Build();
 
