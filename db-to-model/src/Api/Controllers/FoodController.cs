@@ -25,7 +25,7 @@ public class FoodController : ControllerBase
     }
 
     [HttpPost("upload")]
-    public async Task<IActionResult> UploadFile([FromBody] IFormFile file)
+    public IActionResult UploadFile([FromBody] IFormFile file)
     {
         var data = new byte[file.Length];
 

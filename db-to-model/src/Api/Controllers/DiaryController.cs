@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
+using FoodDiary.Core.Dto;
 using FoodDiary.Core.Entities;
 using FoodDiary.Data.Contexts;
 using Microsoft.AspNetCore.Mvc;
@@ -27,7 +28,29 @@ public class DiaryController : ControllerBase
     [HttpGet("get/{id:int}", Name = "diary_by_id")]
     public async Task<Diary> Get(int id)
     {
-        var diaries = await dbContext.Diaries.Where(d => d.DiaryId == id).FirstOrDefaultAsync();
+        var diaries = await dbContext.Diaries.Where(d => d.DiaryId == id).SingleOrDefaultAsync();
         return diaries;
+    }
+
+    [HttpPost(Name = "add_diary")]
+    public async Task<Diary> AddDiary(DiaryIngressDto diaryEntryDto)
+    {
+        DateOnly diaryDate = new(diaryEntryDto.Date.Year, diaryEntryDto.Date.Month, diaryEntryDto.Date.Day);
+        Diary diary = await dbContext.Diaries.Where(d => d.Date == diaryDate).SingleOrDefaultAsync();
+
+        if (diary == null)
+        {
+            diary = new Diary()
+            {
+                Date = diaryDate,
+                Meal = new List<Meal>()
+            };
+            dbContext.Add(diary);
+        }
+
+        await dbContext.SaveChangesAsync();
+
+
+        return diary;
     }
 }
