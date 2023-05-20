@@ -46,6 +46,43 @@ public class DiaryController : ControllerBase
             dbContext.Diaries.Add(diary);
         }
 
+        if (diary.Meals == null)
+        {
+            diary.Meals = new List<Meal>();
+            dbContext.Meals.AddRange(diary.Meals);
+        }
+
+        foreach (var m in diaryEntryDto.MealEntries)
+        {
+            Meal newMeal = diary.Meals.Where(diaryMeal => diaryMeal.Name == m.Name).FirstOrDefault();
+            if (newMeal == null)
+            {
+                newMeal = new()
+                {
+                    Name = m.Name,
+                    Diary = diary,
+                    FoodMeals = new List<FoodMeal>(),
+                };
+                dbContext.Meals.Add(newMeal);
+            }
+
+
+            foreach (var f in m.FoodEntries)
+            {
+                var food = await dbContext.Foods.Where(dbf => dbf.FoodId == f.FoodId).SingleOrDefaultAsync();
+                var foodAmount = await dbContext.FoodAmounts.Where(dbfa => dbfa.FoodAmountId == f.FoodAmountId).SingleOrDefaultAsync();
+
+                FoodMeal foodMeal = new()
+                {
+                    ConsumedAmount = f.ConsumedAmount,
+                    Food = food,
+                    FoodAmount = foodAmount,
+                    Meal = newMeal,
+                };
+                dbContext.FoodMeals.Add(foodMeal);
+            }
+        }
+
         await dbContext.SaveChangesAsync();
 
 

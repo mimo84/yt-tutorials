@@ -41,7 +41,7 @@ public class CsvImporter
                     Iron: data.Iron ?? 0,
                     Calcium: data.Calcium ?? 0,
                     Source: data.Source,
-                    AmountName: $"{data.Amount} - ${data.FoodName}"
+                    AmountName: $"{data.Amount} - {data.FoodName}"
               )
             )).ToList();
         return foodWithAmountDtos;
