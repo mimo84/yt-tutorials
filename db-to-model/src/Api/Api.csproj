@@ -22,4 +22,8 @@
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="E2e" />
+  </ItemGroup>
+
 </Project>
