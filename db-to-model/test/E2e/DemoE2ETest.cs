@@ -83,8 +83,70 @@ public class DemoE2ETest : IClassFixture<CustomWebApplicationFactory<Program>>
 
         diary.Date.Should().Be(diaryDate);
         diary.DiaryId.Should().NotBe(null);
-        diary.Meals.Count.Should().Be(1);
+        diary.Meals.Count.Should().Be(11);
 
         stringResult.Should().Be("true");
+    }
+
+    [Fact]
+    public async void Diary_MealsWithTheSameNameShouldBeInsertedOnlyOnce()
+    {
+        var diaryDate = new DateOnly(2023, 4, 22);
+        var diaryDateWithTime = diaryDate.ToDateTime(new TimeOnly(0, 0, 0), DateTimeKind.Utc);
+        var isoString = diaryDateWithTime.ToString("s", System.Globalization.CultureInfo.InvariantCulture);
+        var mealName = "dinner";
+        var payload1 = $@"{{
+            ""date"": ""{isoString}"",
+            ""mealEntries"": [
+                {{
+                    ""name"": ""{mealName}"",
+                    ""foodEntries"": [
+                        {{
+                            ""foodId"": 1340,
+                            ""foodAmountId"": 1340,
+                            ""consumedAmount"": 180
+                        }}
+                    ]
+                }}
+            ]
+        }}";
+        var payload2 = $@"{{
+            ""date"": ""{isoString}"",
+            ""mealEntries"": [
+                {{
+                    ""name"": ""{mealName}"",
+                    ""foodEntries"": [
+                        {{
+                            ""foodId"": 1211,
+                            ""foodAmountId"": 1211,
+                            ""consumedAmount"": 130
+                        }}
+                    ]
+                }}
+            ]
+        }}";
+        HttpContent c1 = new StringContent(payload1, Encoding.UTF8, "application/json");
+        HttpContent c2 = new StringContent(payload2, Encoding.UTF8, "application/json");
+
+        var response1 = await _httpClient.PostAsync("/Diary", c1);
+        var response2 = await _httpClient.PostAsync("/Diary", c2);
+
+        response1.StatusCode.Should().Be(HttpStatusCode.OK);
+        response2.StatusCode.Should().Be(HttpStatusCode.OK);
+
+        // Using `SingleOrDefault` because we want the system to fail if more than one element is present
+        var diary = await dbContext.Diaries.Where(d => d.Date == diaryDate).Include(d => d.Meals).SingleOrDefaultAsync();
+
+        // If we don't find a diary, then we should throw an exception, also avoids a warning below
+        if (diary == null)
+        {
+            Assert.Fail("Diary not found in the database");
+            throw new Exception("Diary was not found in the database");
+        }
+
+        diary.Date.Should().Be(diaryDate);
+        diary.DiaryId.Should().NotBe(null);
+        diary.Meals.Count.Should().Be(1);
+        diary.Meals.First().Name.Should().Be(mealName);
     }
 }

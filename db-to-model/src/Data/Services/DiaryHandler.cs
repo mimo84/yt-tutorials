@@ -17,7 +17,7 @@ public class DiaryHandler : IDiaryHandler
     public async Task<bool> CreateFullDiaryAsync(DiaryIngressDto diaryEntryDto, CancellationToken cancellationToken)
     {
         DateOnly diaryDate = new(diaryEntryDto.Date.Year, diaryEntryDto.Date.Month, diaryEntryDto.Date.Day);
-        Diary diary = await dbContext.Diaries.Where(d => d.Date == diaryDate).SingleOrDefaultAsync(cancellationToken);
+        Diary diary = await dbContext.Diaries.Where(d => d.Date == diaryDate).Include(d => d.Meals).SingleOrDefaultAsync(cancellationToken);
 
         if (diary == null)
         {
