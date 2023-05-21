@@ -2,16 +2,22 @@ using System.Text;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Xunit;
+using static E2e.ConfigureWebApplicationFactory;
 
 namespace E2e;
 
-public class DemoE2ETest
+public class DemoE2ETest : IClassFixture<CustomWebApplicationFactory<Program>>
 {
-    private HttpClient _httpClient;
-    public DemoE2ETest()
+    private readonly HttpClient _httpClient;
+    private readonly CustomWebApplicationFactory<Program>
+        _factory;
+    public DemoE2ETest(CustomWebApplicationFactory<Program> factory)
     {
-        var webAppFactory = new WebApplicationFactory<Program>();
-        _httpClient = webAppFactory.CreateDefaultClient();
+        _factory = factory;
+        _httpClient = factory.CreateClient(new WebApplicationFactoryClientOptions
+        {
+            AllowAutoRedirect = false
+        });
     }
 
     [Fact]
@@ -19,6 +25,7 @@ public class DemoE2ETest
     {
         var response = await _httpClient.GetAsync("/swagger/index.html");
         var stringResult = await response.Content.ReadAsStringAsync();
+
         stringResult.Should().NotBeNullOrWhiteSpace();
     }
 
