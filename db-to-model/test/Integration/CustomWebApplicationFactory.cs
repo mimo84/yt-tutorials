@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
 
-namespace E2e;
+namespace Integration;
 
 public class ConfigureWebApplicationFactory
 {
@@ -33,7 +33,7 @@ public class ConfigureWebApplicationFactory
                 // this connection can be used by Entity Framework without getting the connection closed.
                 services.AddSingleton<DbConnection>(container =>
                 {
-                    var connection = new NpgsqlConnection("Server=127.0.0.1;Port=5432;Database=test_db;User Id=user_demo;Password=pg_strong_password;Include Error Detail=true");
+                    var connection = new NpgsqlConnection("Server=127.0.0.1;Port=5432;Database=test_Db;User Id=user_demo;Password=pg_strong_password;Include Error Detail=true");
                     connection.Open();
 
                     return connection;
@@ -43,7 +43,7 @@ public class ConfigureWebApplicationFactory
                 services.AddDbContext<FoodDiaryDbContext>((container, options) =>
                 {
                     var connection = container.GetRequiredService<DbConnection>();
-                    options.UseNpgsql("Server=127.0.0.1;Port=5432;Database=test_db;User Id=user_demo;Password=pg_strong_password;Include Error Detail=true");
+                    options.UseNpgsql("Server=127.0.0.1;Port=5432;Database=test_Db;User Id=user_demo;Password=pg_strong_password;Include Error Detail=true");
                 });
             });
 

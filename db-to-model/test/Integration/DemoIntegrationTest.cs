@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 using Xunit.Abstractions;
-using static E2e.ConfigureWebApplicationFactory;
+using static Integration.ConfigureWebApplicationFactory;
 
-namespace E2e;
+namespace Integration;
 
-public class DemoE2ETest : IClassFixture<CustomWebApplicationFactory<Program>>
+public class DemoIntegrationTest : IClassFixture<CustomWebApplicationFactory<Program>>
 {
     private readonly HttpClient _httpClient;
     private readonly CustomWebApplicationFactory<Program> factory;
@@ -19,7 +19,7 @@ public class DemoE2ETest : IClassFixture<CustomWebApplicationFactory<Program>>
     private readonly ITestOutputHelper testOutputHelper;
 
 
-    public DemoE2ETest(CustomWebApplicationFactory<Program> _factory, ITestOutputHelper _testOutputHelper)
+    public DemoIntegrationTest(CustomWebApplicationFactory<Program> _factory, ITestOutputHelper _testOutputHelper)
     {
         factory = _factory;
         testOutputHelper = _testOutputHelper;
@@ -46,7 +46,7 @@ public class DemoE2ETest : IClassFixture<CustomWebApplicationFactory<Program>>
     [Fact]
     public async void TestMe()
     {
-        var diaryDate = new DateOnly(2023, 5, 21);
+        var diaryDate = new DateOnly(2023, 5, 23);
         var diaryDateWithTime = diaryDate.ToDateTime(new TimeOnly(0, 0, 0), DateTimeKind.Utc);
         var isoString = diaryDateWithTime.ToString("s", System.Globalization.CultureInfo.InvariantCulture);
         var payload = $@"{{

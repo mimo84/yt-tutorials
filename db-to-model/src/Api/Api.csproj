@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="E2e" />
+    <InternalsVisibleTo Include="Integration" />
   </ItemGroup>
 
 </Project>
