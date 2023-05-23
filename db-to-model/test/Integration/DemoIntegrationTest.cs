@@ -2,6 +2,7 @@ using System.Net;
 using System.Text;
 using FluentAssertions;
 using FoodDiary.Data.Contexts;
+using Integration.Helpers;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,7 +28,10 @@ public class DemoIntegrationTest : IClassFixture<CustomWebApplicationFactory<Pro
         var scope = _factory.Services.CreateScope();
         var scopedServices = scope.ServiceProvider;
         dbContext = scopedServices.GetRequiredService<FoodDiaryDbContext>();
-
+        // Before any tests are run, we clean up the database state.
+        // We don't do the cleanup at the end so that if a test fails we
+        // can check what happened.
+        DatabaseUtility.RestoreDatabase(dbContext);
         _httpClient = factory.CreateClient(new WebApplicationFactoryClientOptions
         {
             AllowAutoRedirect = false
@@ -39,7 +43,7 @@ public class DemoIntegrationTest : IClassFixture<CustomWebApplicationFactory<Pro
     {
         var response = await _httpClient.GetAsync("/swagger/index.html");
         var stringResult = await response.Content.ReadAsStringAsync();
-
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
         stringResult.Should().NotBeNullOrWhiteSpace();
     }
 
@@ -83,8 +87,7 @@ public class DemoIntegrationTest : IClassFixture<CustomWebApplicationFactory<Pro
 
         diary.Date.Should().Be(diaryDate);
         diary.DiaryId.Should().NotBe(null);
-        diary.Meals.Count.Should().Be(11);
-
+        diary.Meals.Count.Should().Be(1);
         stringResult.Should().Be("true");
     }
 
