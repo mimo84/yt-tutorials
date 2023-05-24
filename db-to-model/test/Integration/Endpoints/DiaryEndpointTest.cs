@@ -7,24 +7,19 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
-using Xunit.Abstractions;
 using static Integration.ConfigureWebApplicationFactory;
 
-namespace Integration;
+namespace Integration.Endpoints;
 
-public class DemoIntegrationTest : IClassFixture<CustomWebApplicationFactory<Program>>
+public class DiaryEndpointTest : IClassFixture<CustomWebApplicationFactory<Program>>
 {
     private readonly HttpClient _httpClient;
     private readonly CustomWebApplicationFactory<Program> factory;
     private readonly FoodDiaryDbContext dbContext;
-    private readonly ITestOutputHelper testOutputHelper;
 
-
-    public DemoIntegrationTest(CustomWebApplicationFactory<Program> _factory, ITestOutputHelper _testOutputHelper)
+    public DiaryEndpointTest(CustomWebApplicationFactory<Program> _factory)
     {
         factory = _factory;
-        testOutputHelper = _testOutputHelper;
-
         var scope = _factory.Services.CreateScope();
         var scopedServices = scope.ServiceProvider;
         dbContext = scopedServices.GetRequiredService<FoodDiaryDbContext>();
