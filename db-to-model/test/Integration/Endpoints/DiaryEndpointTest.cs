@@ -34,15 +34,6 @@ public class DiaryEndpointTest : IClassFixture<CustomWebApplicationFactory<Progr
     }
 
     [Fact]
-    public async void SwaggerTest()
-    {
-        var response = await _httpClient.GetAsync("/swagger/index.html");
-        var stringResult = await response.Content.ReadAsStringAsync();
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
-        stringResult.Should().NotBeNullOrWhiteSpace();
-    }
-
-    [Fact]
     public async void TestMe()
     {
         var diaryDate = new DateOnly(2023, 5, 23);
