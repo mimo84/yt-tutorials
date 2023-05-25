@@ -1,5 +1,6 @@
 using FoodDiary.Api.Models;
 using FoodDiary.Core.Dto;
+using FoodDiary.Core.Entities;
 using FoodDiary.Core.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,10 +10,10 @@ namespace FoodDiary.Api.Controllers;
 [Route("[controller]")]
 public class FoodController : ControllerBase
 {
-    private readonly ICentralRepository centralRepository;
-    public FoodController(ICentralRepository _centralRepository)
+    private readonly IFoodHandler foodHandler;
+    public FoodController(IFoodHandler _foodHandler)
     {
-        centralRepository = _centralRepository;
+        foodHandler = _foodHandler;
     }
 
     [HttpPost("new", Name = "NewFood")]
@@ -20,25 +21,16 @@ public class FoodController : ControllerBase
         RequestEnvelope<FoodEnvelope<FoodWithAmountDto>> request,
         CancellationToken cancellationToken)
     {
-        await centralRepository.AddFoodWithAmountsAsync(request.Body.Food, cancellationToken);
+        await foodHandler.AddFoodWithAmountsAsync(request.Body.Food, cancellationToken);
         return new FoodEnvelope<bool>(true);
     }
 
-    [HttpPost("upload")]
-    public IActionResult UploadFile([FromBody] IFormFile file)
+    [HttpGet("find")]
+    public async Task<ActionResult<FoodEnvelope<List<Food>>>> FindFood([FromQuery] FoodQuery query, CancellationToken cancellationToken)
     {
-        var data = new byte[file.Length];
-
-        using (var bstream = file.OpenReadStream())
-        {
-            while (bstream.CanRead)
-            {
-                bstream.Read(data);
-            }
-        }
-
-        // etc
-
-        return Ok();
+        var foods = await foodHandler.FindFood(query.Name, cancellationToken);
+        var result = new FoodEnvelope<List<Food>>(foods);
+        return result;
     }
 }
+

@@ -16,7 +16,7 @@ public class CentralRepositoryTest
 
         var foodWithAmounts = new FoodWithAmountDto("This is food", foodAmounts);
 
-        var mockRepo = new Mock<ICentralRepository>();
+        var mockRepo = new Mock<IFoodHandler>();
         mockRepo
             .Setup(repo =>
                 repo.AddFoodWithAmountsAsync(
