@@ -14,10 +14,17 @@ public class FoodHandler : IFoodHandler
         dbContext = _dbContext;
     }
 
-    public async Task<List<Food>> FindFood(string name, CancellationToken cancellationToken)
+    public async Task<List<Food>> FindFood(string search, CancellationToken cancellationToken)
     {
-        List<Food> foods = await dbContext.Foods.Where(f => f.Name.ToLower().Contains(name.ToLower())).Take(10).ToListAsync(cancellationToken);
-        return foods;
+        IQueryable<Food> query = dbContext.Foods;
+        var searchTerms = search.Split(' ').ToList();
+        foreach (var term in searchTerms)
+        {
+            query = query.Where(f => EF.Functions.ILike(f.Name, '%' + term + '%'));
+        }
+
+        var results = await query.Take(10).ToListAsync(cancellationToken);
+        return results;
     }
 
     public async Task AddFoodWithAmountsAsync(FoodWithAmountDto foodAmountDto, CancellationToken cancellationToken)

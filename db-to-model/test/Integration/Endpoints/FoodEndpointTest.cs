@@ -1,3 +1,4 @@
+using System.Collections.Specialized;
 using System.Linq.Expressions;
 using System.Net;
 using System.Text.Json;
@@ -43,27 +44,38 @@ public class FoodEndpointTest : IClassFixture<CustomWebApplicationFactory<Progra
         });
     }
 
-    [Fact(DisplayName = "Get Food By Name")]
-    public async Task GetFoodNameTest()
+    [Theory(DisplayName = "Get Food By Name")]
+    [InlineData("tasty")]
+    [InlineData("woolworths")]
+    [InlineData("abalone")]
+    [InlineData("wpi")]
+    [InlineData("bacon")]
+    [InlineData("beef")]
+    [InlineData("broccoli")]
+    [InlineData("bRoccoli")]
+    [InlineData("OniOn")]
+    [InlineData("Oil")]
+    [InlineData("Olive")]
+    [InlineData("Stock")]
+    [InlineData("parsley")]
+    [InlineData("cucumber")]
+    public async Task GetFoodNameTest(string search)
     {
-        List<string> searches = new() { "tasty", "woolworths", "abalone", "wpi", "bacon", "beef", "broccoli", "bRoccoli", "OniOn", "Oil Olive", "Olive", "Stock", "parsley", "cucumber" };
 
-        foreach (var search in searches)
+        var response = await _httpClient.GetAsync($"/Food/find?Name={search}");
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+
+        var stringResult = await response.Content.ReadAsStringAsync();
+
+        var foodJson = JsonSerializer.Deserialize<FoodEnvelope<List<Food>>>(stringResult, jsonSerializerOptions) ?? throw new Exception($"Food {search} was not found");
+
+        foodJson.Food.Count.Should().BeLessThanOrEqualTo(10, "we return up to 10 foods");
+        foreach (var food in foodJson.Food)
         {
-            var response = await _httpClient.GetAsync($"/Food/find?Name={search}");
-            response.StatusCode.Should().Be(HttpStatusCode.OK);
-
-            var stringResult = await response.Content.ReadAsStringAsync();
-
-            var foodJson = JsonSerializer.Deserialize<FoodEnvelope<List<Food>>>(stringResult, jsonSerializerOptions) ?? throw new Exception($"Food {search} was not found");
-
-            foodJson.Food.Count.Should().BeLessThanOrEqualTo(10, "we return up to 10 foods");
-            foreach (var food in foodJson.Food)
-            {
-                food.Name.ToLower().Should().Contain(search.ToLower());
-                food.FoodId.Should().BePositive();
-            }
+            food.Name.ToLower().Should().Contain(search.ToLower());
+            food.FoodId.Should().BePositive();
         }
+
     }
 
     [Theory(DisplayName = "Get Food By Multiple Name Parts")]
@@ -77,15 +89,20 @@ public class FoodEndpointTest : IClassFixture<CustomWebApplicationFactory<Progra
     [InlineData("Margarine olive oil", "Margarine spread olive oil blend 65% fat reduced salt sodium 360mg/100 g")]
     public async Task GetFood(string search, string expected)
     {
-        IQueryable<Food> query = dbContext.Foods;
-        var searchTerms = search.Split(' ').ToList();
-        foreach (var term in searchTerms)
-        {
-            query = query.Where(f => EF.Functions.ILike(f.Name, '%' + term + '%'));
-        }
-        var results = await query.ToListAsync();
+        NameValueCollection queryString = System.Web.HttpUtility.ParseQueryString(string.Empty);
 
-        results.Count.Should().Be(1);
-        results[0].Name.Should().Be(expected);
+        queryString.Add("name", search);
+        var response = await _httpClient.GetAsync($"/food/find?name={queryString}");
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        var stringResult = await response.Content.ReadAsStringAsync();
+
+        var foodJson = JsonSerializer.Deserialize<FoodEnvelope<List<Food>>>(stringResult, jsonSerializerOptions) ?? throw new Exception($"Food {search} was not found");
+
+        foodJson.Food.Count.Should().BeLessThanOrEqualTo(10, "we return up to 10 foods");
+        foreach (var food in foodJson.Food)
+        {
+            food.Name.ToLower().Should().Be(expected.ToLower());
+            food.FoodId.Should().BePositive();
+        }
     }
 }
