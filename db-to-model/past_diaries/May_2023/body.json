@@ -1,0 +1,80 @@
+{
+  "date": "2023-05-01T23:39:25.508Z",
+  "mealEntries": [
+    {
+      "name": "Lunch",
+      "foodEntries": [
+        {
+          "foodName": "Pork forequarter shoulder roast lean raw",
+          "consumedAmount": "400"
+        },
+        {
+          "foodName": "Capsicum green fresh raw",
+          "consumedAmount": "190"
+        },
+        {
+          "foodName": "Onion mature red skinned peeled raw",
+          "consumedAmount": "75"
+        },
+        {
+          "foodName": "Oil olive",
+          "consumedAmount": "14"
+        }
+      ]
+    },
+    {
+      "name": "Snack 2",
+      "foodEntries": [
+        {
+          "foodName": "Mountain Bread Rye Wraps (serving)",
+          "consumedAmount": "1"
+        },
+        {
+          "foodName": "Eggs X-Large (700g/12 eggs)",
+          "consumedAmount": "2"
+        }
+      ]
+    },
+    {
+      "name": "Dinner",
+      "foodEntries": [
+        {
+          "foodName": "Nut pistachio raw unsalted",
+          "consumedAmount": "8"
+        },
+        {
+          "foodName": "Fountain Barbecue Bbq Sauce Reduced Sugar (100g)",
+          "consumedAmount": "30"
+        },
+        {
+          "foodName": "Raisin",
+          "consumedAmount": "10"
+        },
+        {
+          "foodName": "Oil olive",
+          "consumedAmount": "10"
+        },
+        {
+          "foodName": "Brussels sprout fresh raw",
+          "consumedAmount": "500"
+        },
+        {
+          "foodName": "Lamb boneless dice or strips lean raw",
+          "consumedAmount": "440"
+        },
+        {
+          "foodName": "Sourdough Bread 70% 5 Stagioni",
+          "consumedAmount": "60"
+        },
+        {
+          "foodName": "Tomato common raw",
+          "consumedAmount": "150"
+        },
+        {
+          "foodName": "Magnum Mini Ice Cream Classic (serving)",
+          "consumedAmount": "1"
+        }
+      ]
+    }
+  ]
+}

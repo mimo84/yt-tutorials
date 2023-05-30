@@ -1,0 +1,48 @@
+{
+  "date": "2023-05-28T14:00:00.000Z",
+  "mealEntries": [
+    {
+      "name": "Lunch",
+      "foodEntries": [
+        {
+          "foodName": "Lentils with Pork",
+          "consumedAmount": "1"
+        }
+      ]
+    },
+    {
+      "name": "Snack 2",
+      "foodEntries": [
+        {
+          "foodName": "Tomato cherry raw",
+          "consumedAmount": "200"
+        }
+      ]
+    },
+    {
+      "name": "Dinner",
+      "foodEntries": [
+        {
+          "foodName": "Slow-Cooker Beef Stew",
+          "consumedAmount": "1"
+        },
+        {
+          "foodName": "Rice brown uncooked",
+          "consumedAmount": "111.1111111111111"
+        },
+        {
+          "foodName": "Chobani No Fat Plain Yoghurt",
+          "consumedAmount": "150"
+        },
+        {
+          "foodName": "Brussels sprout fresh raw",
+          "consumedAmount": "250"
+        },
+        {
+          "foodName": "Oil olive",
+          "consumedAmount": "10"
+        }
+      ]
+    }
+  ]
+}
