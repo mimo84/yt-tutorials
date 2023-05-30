@@ -1102,7 +1102,6 @@ Water chestnut peeled canned drained,100,0.6,0.9,9.3,2.7,0,5.1,37.21,10,0,100,2.
 Water soda,100,0,0,0,0,0,0,0,3,0,0,0,2,Australian Government,,,
 Water tap,100,0,0,0,0,0,0,0,3,0,0,0,2,Australian Government,,,
 Watercress raw,100,2.9,0.4,0.8,3.8,0,0.7,0,48,0,570,3,85,Australian Government,,,
-Watercress raw,100,2.9,0.4,0.8,3.8,0,0.7,0,48,0,570,3,85,Australian Government,,,
 Wattle seed acacia ground,100,17.2,6.1,10.5,54.2,0,0,14.5,102,0,974,6,419,Australian Government,,,
 Wax jambu raw,100,0.7,0.2,4.5,1.9,0,4.5,0,1,0,38,0.8,13,Australian Government,,,
 Wheat bran unprocessed uncooked,100,14.8,4.1,22.6,41.8,0,2.7,19.8,6,0,1200,11,75,Australian Government,,,
@@ -1130,7 +1129,6 @@ Wine white semillon,100,0.2,0,0.2,0,9,0.2,0,6,0,57,0.21,9,Australian Government,
 Wine white sparkling,100,0.2,0,1,0,9.8,1,0,2,0,35,0.2,7,Australian Government,,,
 Wine white sweet dessert style,100,0.4,0,14.7,0,8.4,14.7,0,13,0,101,0.19,15,Australian Government,,,
 Yam wild harvested cooked,100,3.2,0.3,12.6,2.1,0,0.2,0,4,0,309,0.35,3,Australian Government,,,
-Yam wild harvested cooked,100,3.2,0.3,12.6,2.1,0,0.2,0,4,0,309,0.35,3,Australian Government,,,
 Yeast dry powder,100,36.4,5,6.3,26.9,0,0,18.79,170,0,1470,3.5,18,Australian Government,,,
 Yoghurt apricot pieces or flavoured regular fat 3% fat,100,4.2,3.2,11.1,0.1,0,11.1,68.27,65,8,220,0.18,110,Australian Government,,,
 Yoghurt natural regular fat 3% fat,100,5.1,3.2,5,0.1,0,4.9,71.9,58,15,230,0,175,Australian Government,,,
@@ -1140,8 +1138,6 @@ Yoghurt strawberry pieces or flavoured regular fat 3% fat,100,4.7,3.1,11.6,0.1,0
 Yoghurt vanilla flavoured 2% fat,100,5,1.9,14.5,0.2,0,13.5,71.2,52,8,230,0,170,Australian Government,,,
 Yoghurt vanilla flavoured low fat less than 0.5% fat,100,5.8,0.5,13.9,0.2,0,12.7,71.2,66,6,242,0.1,168,Australian Government,,,
 Zucchini golden fresh unpeeled raw,100,2.2,0.3,1.1,1,0,1.1,0,1,0,230,0.4,16,Australian Government,,,
-Zucchini golden fresh unpeeled raw,100,2.2,0.3,1.1,1,0,1.1,0,1,0,230,0.4,16,Australian Government,,,
-Zucchini green skin fresh unpeeled raw,100,0.9,0.3,1.7,1.1,0,1.7,0,1,0,188,0.5,18,Australian Government,,,
 Zucchini green skin fresh unpeeled raw,100,0.9,0.3,1.7,1.1,0,1.7,0,1,0,188,0.5,18,Australian Government,,,
 
 Aldi Fish frozen The Fishmonger Prawns Peeled raw,100,17.9,1,0.5,0,0,0.09,0.5,261,0,0,0,0,CalorieKing,,,
@@ -1152,7 +1148,6 @@ Hemp Seeds dry,100,31.2,57.1,1.6,6.2,0,1.6,5.3,6,0,0,0,0,CalorieKing,,,
 Seeds Sesame Seeds hulled raw,100,22.2,55.6,0.9,10.1,0,0.6,6.8,24,0,170,5.2,,CalorieKing,,,
 Seeds Sesame Seeds unhulled,100,17.7,49.6,23.4,11.8,0,0.3,0,11,0,468,0,,CalorieKing,,,
 Kimchi,100,1.8,0,3.6,1.8,0,0.9,0,429,0,0,0,0,CalorieKing,,,
-
 Coles Frozen Mixed Berries,100,1,0,12.9,2,0,12.1,0,0,0,0,0,0,Coles,,,
 Coles No Added Sugar Dark Chocolate,100,3.8,22.6,11.2,10,0,0,13.9,0,0,0,0,0,Coles,,,
 Coles wholemeal bread rolls ,100,7.2,1.9,34.5,0,0,0,0,0,0,0,0,0,Coles,,,
@@ -1190,16 +1185,10 @@ Coles Wholemeal & Grain Soft Wraps 8 Pack | 360g,1,3.8,3.5,20.6,2,0,1.8,1.8,167,
 Coles Burrito Tortilla Wraps 10 pack 400g,1,3.12,3.48,19.36,0,0,0,1.64,368,0,0,0,0,Coles,2,,
 Simson's Pantry Preservative Free Salt Reduced White Large Wraps 8 Pack (serving),1,5.4,4.6,32.7,2.6,0,1.2,2.4,277,0,0,0,0,Coles,2,,
 Simson's Pantry Preservative Free Salt Reduced White Large Wraps 8 Pack (100g),100,8.2,6.9,49.6,4,0,1.8,3.6,420,0,0,0,0,Coles,2,,
-
-
-
-
-
 Tumeric ground,100,7.83,9.88,64.93,21.1,0,3.21,3.12,38,0,2525,0,0,FatSecret,,,
 Basa Fillet (Aldi),100,14.3,1.1,0,0,0,0,0.5,65,0,0,0,0,FatSecret,,,
 Gnocchi ,100,4.4,0.5,33,1.3,0,0,0,129,0,80,0,0,FatSecret,,,
 De Cecco,100,14,1.5,69.2,2.9,0,3.4,0.3,5,0,142,1,18,FatSecret+AuGovt,,,
-
 Gelato 95% Sugar Free Vanilla,100,4.7,5.1,4.3,0,0,0,0,0,0,0,0,0,Gelatissimo,,,
 Gelato 96% Sugar Free Chocolate,100,1.5,5.1,4.7,0,0,0,0,0,0,0,0,0,Gelatissimo,,,
 Gelato 98% Sugar Free Strawberry,100,0.7,0.8,1.1,0,0,0,0,0,0,0,0,0,Gelatissimo,,,
@@ -1250,46 +1239,67 @@ Gelato Veronese Chocolate,100,4.4,8.3,27.2,0,0,0,0,0,0,0,0,0,Gelatissimo,,,
 Gelato White Chocolate,100,4.2,7.5,28.4,0,0,0,0,0,0,0,0,0,Gelatissimo,,,
 Gelato White Chocolate Hazelnut,100,4.1,7.8,26.9,0,0,0,0,0,0,0,0,0,Gelatissimo,,,
 Gelato Wild Cherry,100,3.9,6.4,25,0,0,0,0,0,0,0,0,0,Gelatissimo,,,
-
 "Black Eyed Peas, Cowpeas, Cooked",170,13,0.9,35,11,0,7,0,379,0,634,0,,FatSecret,,,
-
-
 Prosciutto di Parma DOP intero,100,25.9,18.3,0.3,0,0,0,6,1760,81,538,0.9,11,INRAN,,,
 Prosciutto di Parma DOP sgrassato,100,29.1,6.4,0,0,0,0,2,2040,89,618,1,13,INRAN,,,
-
 Dragon Fruit (Pitaya),100,1.2,0,13,3,0,5,0,0,0,0,0,0,Internet ,,,
-
-
-
-
-
-
-
+Risi e Bisi,4,103.69799999999998,116.196,139.43200000000002,66.366,0,49.372,68.5658,2962.2000000000003,283.2,3695.23,19.816200000000002,1583.96,Own Recipe,,,
+Moroccan Salad,4,88.3,64.65,229.55,30.15,0,89.9,218.8,2819.5,0,3034,9.195,308.5,Own Recipe,,,
+Rains Easy Chicken Curry,6,179.45,123.56,49.42,5,0,26.870000000000005,315.518,5667.400000000001,442.5,2832,3.936,161.9,Own Recipe,,,
+Minced Meat With Potatoes,8,385.99999999999994,133.50000000000003,287.5,27.500000000000004,0,25,57.45,1120,0,9500,11.250000000000002,75,Own Recipe,3895.5,,
+Chess Chicken,8,307.85,51.21000000000001,100.44999999999999,48.14,0,87.27,399.67799999999994,9259.8,708,7495.200000000001,10.991999999999999,543,Own Recipe,2020.89,,
+Fricasse De Frango,12,484.04,302.5,63.670000000000016,8.49,0,38.800000000000004,778.1899999999999,6251.4,944,5196.6,10.273,274.8,Own Recipe,4913.34,,
+Escondidinho De Carne,6,187.49200000000002,70.086,343.67,49.43,0,33.776,35.306,8484.56,1300,3023,8.38,1295.1999999999998,Own Recipe,2755.4220000000005,,
+Mr Chen's Thai Red Curry Paste,100,1.8,6.9,17,0,0,7.4,3.1,2760,0,0,0,0,Packaging,,,
+Hummus Recipe Ottolenghi,1945,41.61,98.06,33.690000000000005,36.33,0,2.9499999999999997,52.814,637.1,0,857.8,18.256,686.1,Own Recipe,1183.74,,
+Ciambellone Bicolore (100g),935,68.736,134.548,452.29200000000003,18.913999999999998,0,208.99,83.23239999999998,1431.28,1015.04,2513.92,10.36612,150.52,Own Recipe,3295.044,,
+Ciambellone Bicolore,16,68.736,134.548,452.29200000000003,18.913999999999998,0,208.99,83.23239999999998,1431.28,1015.04,2513.92,10.36612,150.52,Own Recipe,3295.044,,
+White Bean Burgers 2342,10,84.44200000000001,155.604,150.96299999999997,94.35399999999998,0,15.218000000000002,43.125699999999995,1740,0,2273.57,16.9633,472.74,Own Recipe,,,
+Pure di patate 23/01,2709,116.474,146.384,284.17999999999995,38.68800000000001,0,31.395999999999997,210.37369999999999,1426.69,307.8,399.57,0.3589,1919.02,Own Recipe,2920.0719999999997,,
+Sourdough Bread 70% Hydration + Linseed,1350,109.58,27.064000000000004,564.2719999999999,16.380000000000003,0,14.911999999999999,7.251999999999999,6904.863999999999,0,490.86000000000007,3.438,159.12,Own Recipe,,,
+Sourdough Bread 100% Caputo 70% Hydration,625,57.330000000000005,4.41,315.315,13.229999999999999,0,4.41,1.323,3523.77,0,8.82,0,9.24,Own Recipe,,,
+Teriyaki Sauce Homemade,440,16.955000000000002,0.0625,138.21,0.125,0,85.58,0,11176.55,0,0.6,0,0.3,Own Recipe,,,
+Pork & BBQ Beans P100 (no potato),6,332.84799999999996,197.879,217.66600000000003,40.852000000000004,0,72.3,189.20700000000002,7459.139999999999,210,9085.3,19.643,672.8,Own Recipe,1450.477,,
+Slow-Cooker BBQ Pulled Chicken,6,286.373,24.194,122.986,10.282,0,120.89500000000001,562.035,1829.54,737.5,5156.3,10.221,314.4,Own Recipe,,,
+Mint pork with Green Split Beans,6,248.806,157.706,182.744,77.256,0,29.14,212.792,12216.260000000002,258,2255.66,3.7066,174.28000000000003,Own Recipe,3185.37,,
+Mexican Quinoa with Beef,6,172.11,91.216,246.458,65.73,0,50.577,97.12900000000002,937.52,0,2720.8999999999996,12.325000000000001,189.85,Own Recipe,,,
+Beef Tzimmes,4,213.94500000000002,52.550000000000004,191.08,16.967,0,142.79999999999998,85.252,11114.91,0,1370,2.208,131,Own Recipe,2093.05,,
+Tofu Satay,4,135.92,185.12,134.68,20.21,0,13.94,106.512,2095.1,0,925.2,2.63,63.7,Own Recipe,,,
+Rice And Beans,4,45.69,17.321,358.548,33.47,0,15.192,10.111,297.92,0,444,0.796,49.7,Own Recipe,,,
+Red Curry With Lentils and Potatoes,4,59.17,99.45,408.91999999999996,34.87,0,21.07,63.117999999999995,617.1,0,2270,1.644,60.400000000000006,Own Recipe,,,
+Spezzatino con Patate 403.24,6,352.34999999999997,72.36000000000001,89.7,14.650000000000002,0,26.7,607.544,700,648,7506,26.62,180.5,Own Recipe,2419.44,,
+Lancashire Hot Pot & Pickled Cabbage 886.93,1,29.755000000000003,20.545,34.885,9.285000000000002,0,16.725,8.509,1242.5,78,1722,4.147,122.35,Own Recipe,,,
+High Hydration Sourdough Bread 6/02,1500,111.079,3.708,615.1659999999998,10.527999999999999,0,14.718,20.158,6916.078999999999,0,299.15999999999997,2.82,50.71999999999999,Own Recipe,,,
+Banana and Blueberry Loaves,1022,88.65899999999999,64.90899999999998,247.32600000000002,45.337,0,67.78,100.02430000000001,4141.38,761.28,3508.3,11.5748,288.34000000000003,Own Recipe,,,
+Fisherman's Pie,6,278.60999999999996,158.42000000000002,163.49,12.9,0,42.23,572.908,2867.9,418.2,1882.7999999999997,5.662,320.4,Own Recipe,,,
+Seeded Sourdough Bread 1/02,1515,148.81099999999998,63.42400000000001,565.0619999999998,29.904000000000003,0,13.566000000000003,48.763200000000005,6186.526,0,858.9800000000001,12.9289,249.2,Own Recipe,,,
+Full English Breakfast Wrap,10,262.29999999999995,211.2,221.9,9,0,8.9,185.17000000000002,7601,180,831,1.29,15,Own Recipe,4408.12,1260,
+Breakfast Protein Bars P62,10,117.74999999999999,131.25,150.63500000000002,27.450000000000003,0,44.085,159.58700000000002,193.8,10,1599.2,9.626000000000001,486.6,Own Recipe,,,
+Poppy-Seed Pancakes  P64,10,229.85499999999996,91.15,201.62,42.425,0,36.28,480.107,889.4,1318.8,2916.35,21.554,2375.9,Own Recipe,,,
+Brigadeiro,360,29.66,48.14,182.55000000000004,2.7699999999999996,0,181.65000000000003,249.26600000000002,359.90000000000003,135.7,1622.6999999999998,3.497,904.8000000000001,Own Recipe,,,
+Slow Cooker Beef Stew - 1520.885,6,236.035,37.345,60.16,33.79,0,43.535,181.924,1243.4,432,5660.3,21.291,359.8,Own Recipe,,,
+Bulgur With Minced Meat,8,454.43999999999994,84.49,541.9499999999999,73.24,0,16.259999999999998,921.2539999999999,1164.8,1216,9083.8,56.94800000000001,581,Own Recipe,4745.969999999999,,
+Pasta Salsiccia Zucca e Peperoni,6,158.41000000000003,86.06,380.38000000000005,35.1,0,76.94,343.8500000000001,7265.2,40.2,4229.8,3.9650000000000003,290.2,Own Recipe,2929.7000000000003,,
+Trippa Alla Fiorentina,2,85.28,66.443,31.89,15.48,0,28.799999999999997,165.351,3065.3,623.1999999999999,2433.9,7.863,1249.9,Own Recipe,1066.667,,
+Moroccan Fava Bean Soup,2,57.04,31.940000000000005,87.80000000000001,52.1,0,9.4,53.57,103.6,0,3417.6,25.96,504.00000000000006,Own Recipe,866.82,,
+Lebanese Green Split Pea Soup,2,58.142999999999994,6.996,162.132,52.061,0,21.836999999999996,15.1968,2102.15,0,3656.98,8.3042,252.41000000000003,Own Recipe,944.0640000000001,,
+Moroccan Red Lentil and Lamb Stew,8,305.987,88.12800000000001,381.631,85.04599999999999,0,39.531,458.446,4405.5,585,7283.5,28.779999999999998,285.2,Own Recipe,3543.624,,
+Fegato alla Veneziana,4,147.03,79.77,44.63,8.100000000000001,0,17.4,34.362,509.99999999999994,1975.1,2737.9,35.023,109.1,Own Recipe,1484.57,,
+Feijoada,8,310.016,30.351999999999997,257.982,126.13799999999999,0,42.514,26.31,10637.339999999998,0,484.2,0.9516,51.32,Own Recipe,2545.16,,
+Protein Pannacotta,5,57.74000000000001,16.740000000000002,30.2,0,0,29.1,276.71000000000004,180,40,556.7,4.13,442,Own Recipe,502.4200000000001,,
+Pure di Patate,2170,66.18,58.839999999999996,232.35000000000002,20.790000000000003,0,33.900000000000006,209.067,557.1,141.6,7598.7,8.703999999999999,1016.5,Own Recipe,1723.68,,
+Spanish-style meatballs,8,310.79900000000004,144.536,178.457,88.175,0,72.922,94.8738,7345.85,0,6326.3,18.108,612.9399999999999,Own Recipe,3257.8480000000004,,407.23100000000005
 Protein Breakfast Bar,10,99.07,131.99,128.965,28.13,0,20.015,91.592,86.5,0,1379.6,13.056,256.8,Own Recipe,2100.05,,
 Slow-Cooker Beef Stew,4,324.65,43.185,47.055,21.275,0,44.25,153.924,1412.275,615.6,6580.8,25.902,377.35,Own Recipe,1875.485,,
 Healthy Apricot Chicken,4,257.643,84.63,239.565,46.455,0,75.325,287.472,3190.595,620.94,11881.1,35.739,1094.45,Own Recipe,2750.502,,
 Lentils with Pork,4,241.999,36.215,215.204,86.24,0,31.71,89.61,526.86,0,4974.75,30.9255,426.85,Own Recipe,2154.747,,538.68675
 Pannacotta,5,17.802,11.082,59.5,0,0,59.5,224.3175,140.15,32.5,453.11,0.2655,358.4,Own Recipe,408.946,,466.0575
 Fruity beef casserole,4,229.692,75.02,173.718,25.082,0,149.746,92.004,12421.1,0,2598.1,3.331,282.92,Own Recipe,2288.82,,572.205
-
+Chilli Con Carne,8,464.86,78.33999999999999,210.78,114.30000000000001,0,62.03999999999999,852.1,3120.2,1660,7353,28.560000000000002,332.2,Own Recipe,3407.62,,567.9366666666666
 Sourdough Bread 70% 5 Stagioni,1350,130.06,8.361,631.72,18.58,0,13.935,0,7319.8,0,3.23,0,19.48,Own Recipe,3122.369,,
 Sourdough Bread 70% Caputo,1325,107.0075,1.861,601.103,0,0,14.888,1.861,7289.1835,0,3.23,0,19.49,Own Recipe,,,
-
-
-
-
 Bacon Short Cut 97% Fat Free (Aldi),50,10,1.5,0.7,0,0,0,0.6,545,0,0,0,0,FatSecret,,,
 Short Cut Bacon ,100,18,14,1,0,0,0,5,1148,48,279,0,0,FatSecret,,,
-
-
-
-
-
-
-
-Brigadeiro,360,29.7,48.1,182.6,2.8,0.0,181.7,249.3,359.9,135.7,1622.7,3.5,904.8,Own Recipe,,,
-
-
 5 Stagioni Gold,100,14.0,0.9,68.0,2,0,1.5,0,5,0,0,0,0,Packaging,,,
 Aldi Cottage Cheese,100,11.9,2.1,4.3,0,0,4.1,1.5,294,0,0,0,22,Packaging,,,
 Aldi Ham,100,13.7,2.6,3.8,0,0,3.8,0.9,1000,0,0,0,0,Packaging,,,
@@ -1374,30 +1384,9 @@ Noosa Chocolate Factory 73% Chocolate Slab,100,9,39,30,1,0,26,23,100,0,440,4.4,5
 Noosa Chocolate Factory 85% Chocolate Slab,100,10.5,46.5,17.8,1,0,13.2,28,5,0,440,4.4,52,Packaging,,,
 Noosa Chocolate Factory 66% Madagascar Slab,100,8.4,36.2,34.9,1,0,31,21.7,20,0,440,4.4,52,Packaging,,,
 Noosa Chocolate Factory Sea Salt 70% Cocoa,100,8.9,38.8,29.8,1,0,25.9,23,194,0,440,4.4,52,Packaging,,,
-
-
-
-
-
-
-
-
-
-
+Aldi Smoked Shortcut Bacon,100,16.2,9.8,1,0,0,1,3.9,1000,0,0,0,0,Packaging,,,
+Aldi Frozen Yogurt Sticks,1,1.3,0.9,6.8,0,0,6,0.6,14,0,0,0,0,Packaging,,,
 Tapioca pearls Ready in 5 Minutes,100,0.2,0.2,54,0,0,0,50.9,1,0,23,1.7,16,Australian Government,319.8,,
-
-
-
-
-
-
-
-
-
-
-
-
-
 Arnott's Malt O Milk Biscuit,3,1.4,2.6,15.9,0.5,0,5.8,1.3,54,0,0,0,0,Producer Website,,,
 Auricchio Pecorino Romano,100,24,32,0,0,0,0,18,5000,0,0,0,0,Producer Website,,,
 Aussie Bodies Cookies And Cream Bar,1,42,12.5,5,2.9,0,2.9,5.9,0,0,0,0,0,Producer Website,,,
@@ -1414,13 +1403,9 @@ VPA Premium Plant Vegan Protein,100,71.4,6.2,12.4,0,0,10.2,1.1,11,0,0,7.6,0,Prod
 Ricotta La casa del Formaggio,100,13,11.1,2.8,0,0,2.8,7.7,168,0,0,0,90,Producer Website,,,
 Korean Hot Pepper Paste,100,4.2,1.8,44.6,6,0,21.9,0,2387,0,0,0,0,Packaging,,,
 Tapioca Flour,100,1,0,85,0,0,4,0,0,0,0,0,0,Packaging,,,
-
-
-
 Sushi Roll Smoked Salmon Cream Cheese ,1,9.4,8.2,38.5,0,0,0,0,0,0,0,0,0,Sushi Hub,,,
 Sushi Roll Spicy Tuna Roll with Avocado,1,10.1,5.3,35.8,0,0,0,0,0,0,0,0,0,Sushi Hub,,,
 Inari Seaweed Salad,1,4.4,3.7,33.8,0,0,0,0,0,0,0,0,0,Sushi Hub,,,
-
 Beans black turtle mature seeds raw,100,21.25,0.9,38.4,15.5,0,2.12,0.232,9,0,1500,8.7,160,USDA,,,
 Beans Pinto Borlotti Dry ,100,23.7,1.24,38.6,4.1,0,0,0,0,0,1510,5.4,161,USDA,,,
 Broccoli fresh raw,100,2.57,0.3,1.9,3.4,0,0.4,0,22,0,336,0.84,32,USDA,,,
@@ -1437,30 +1422,9 @@ Squash winter spaghetti raw,100,0.64,0.57,6.91,1.5,0,2.76,0.117,17,0,108,0.31,23
 Yam raw,100,1.53,0.17,27.88,4.1,0,0.5,0.037,9,0,816,0.54,17,USDA,,,
 Tripe Beef Raw,100,12.1,3.69,0,0,0,0,1.29,97,122,67,0.59,69,USDA,,,
 Liver Beef Raw,100,20.4,3.63,3.89,0,0,0,1.23,69,275,313,4.9,5,USDA,,,
-
-
-
-
-
-
 Auricchio Provolone Dolce,100,23,30,0,0,0,0,0,1600,0,0,0,0,Website,,,
 Green Banana Flour,100,3.5,0,75,12,0,0,0,0,0,1230,0.94,18,Website,,,
 Lindt Lindor Average,8,4.5,47.8,43.2,0,0,41.8,35.6,73,0,0,0,0,Website,,,
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 Woolworths Light Sour Cream (100g),100,2.6,18,3.1,0,0,2.9,11.7,33,0,0,0,0,Woolworths,3.25,300mL,300
 Jarlsberg Original Cheese Block (100g),100,27,27,0,0,0,0,17,480,0,0,0,0,Woolworths,10.5,250G,250
 Woolworths Sesame Bagels (serving),1,8.7,6,48.9,5.1,0,6,1,530,0,0,0,0,Woolworths,2.5,4 Pack,>4<
@@ -1549,13 +1513,11 @@ Byron Bay Cookies Macadamia,8,6.8,43,44.2,0,0,16.7,27.6,170,0,0,0,0,Woolworths,,
 Snickers Chocolate Creamy Ice Bar,1,3.1,9.8,19.5,0,0,14,5.4,41,0,0,0,0,Woolworths,,,
 Peters Original Twin Pole Vanilla Choc,1,1.3,4.5,15.8,0,0,13.4,3.5,55,0,0,0,0,Woolworths,,,
 Olina's Bakehouse Artisan Cookies Triple Chocolate,1,0.9,3.4,9.9,0,0,7.1,2.6,60,0,0,0,0,Woolworths,2.5,,
-Woolworths Light Thickened Cream,1,0.60,3.70,0.80,0,0,0.70,2.70,7.0,0,0,0,0,Woolworths,2.6,,
 Just Caught Atlantic Salmon Skinless (serving),1,19,13.5,0,0,0,0,2.2,120,0,0,0,0,Woolworths,29,1Kg,1000
 Just Caught Atlantic Salmon Skinless (100g),100,19,13.5,0,0,0,0,2.2,120,0,0,0,0,Woolworths,29,1Kg,1000
 Ocean Chef Fish King Snapper Portions (serving),1,25.6,1.5,0,0,0,0,0.493,75,0,0,0,0,Woolworths,29,1Kg,1000
 Ocean Chef Fish King Snapper Portions (100g),100,20.5,1.2,0,0,0,0,0.394,60,0,0,0,0,Woolworths,29,1Kg,1000
 Woolworths Frozen Mixed Berries (serving),1,1.5,1.5,12.6,6.2,0,12.2,1.5,8,0,0,0,0,Woolworths,10,1Kg,1000
-Woolworths Frozen Mixed Berries (100g),100,1,1,8.4,4.1,0,8.1,1,5,0,0,0,0,Woolworths,10,1Kg,1000
 Umami Edamame Salad (serving),1,6.3,1,7.05,0,0,1.6,0.15,1.5,0,0,0,0,Woolworths,2.5,200G,200
 Umami Edamame Salad (100g),100,12.6,2,14.1,0,0,3.2,0.3,3,0,0,0,0,Woolworths,2.5,200G,200
 Bell Farms Chopped Spinach (serving),1,1.5,0,1.5,2.5,0,1,0,27,0,0,0,0,Woolworths,0.95,250G,250
@@ -1696,27 +1658,6 @@ Mountain Bread Natural Light Wraps (100g),100,11.3,1.4,57.4,2.9,0,2.3,0.4,450,0,
 Mountain Bread Rye Wraps (serving),1,2.6,0.3,13.3,0.7,0,0.6,0.08,102,0,0,0,0,Woolworths,4.5,200G,200
 Mountain Bread Rye Wraps (100g),100,10.4,1.2,53.1,2.8,0,2.3,0.3,410,0,0,0,0,Woolworths,4.5,200G,200
 Tiramisu Toscano (100g),100,3.7,9.9,35.5,0.8,0,20.3,7.4,105,0,0,0,0,Woolworths,7.5,500G,500
-
-
-
-
-
-
-
-
-
-
 Brown Basmati Rice ,100,8,2,76,6,0,0,0.6,0,0,0,1.8,40,Eat This Much,,,
 Vetta Smart Protein Pasta,100,24.9,2.2,50.5,10,0,2.4,0.3,35,0,0,0,0,Producer Website,,,
-
-
-
-
-
-
-
-
-
-
-
 Mr Chen's Thai Red Curry Paste,100,1.8,6.9,17,0,0,7.4,3.1,2760,0,0,0,0,Packaging,,,

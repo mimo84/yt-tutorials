@@ -7,10 +7,10 @@ using Xunit.Abstractions;
 
 namespace Unit.Samples;
 
-public class FileTest
+public class CsvFoodDbFileReadTest
 {
     private readonly ITestOutputHelper testOutputHelper;
-    public FileTest(ITestOutputHelper _testOutputHelper)
+    public CsvFoodDbFileReadTest(ITestOutputHelper _testOutputHelper)
     {
         testOutputHelper = _testOutputHelper;
     }
