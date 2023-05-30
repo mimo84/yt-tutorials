@@ -40,4 +40,12 @@ public class DiaryController : ControllerBase
 
         return true;
     }
+
+    [HttpPost("by_food_name", Name = "add_diary_food_names")]
+    public async Task<bool> AddDiaryByFoodName(DiaryIngressWithFoodNamesDto diaryEntryDto, CancellationToken cancellationToken)
+    {
+        await diaryHandler.CreateFullDiaryWithNamesAsync(diaryEntryDto, cancellationToken);
+
+        return true;
+    }
 }
