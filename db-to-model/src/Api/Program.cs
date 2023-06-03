@@ -6,6 +6,12 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+IConfiguration config = new ConfigurationBuilder()
+    .AddJsonFile("appsettings.json")
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json")
+    .AddEnvironmentVariables()
+    .Build();
+
 // Add services to the container.
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddControllers();
@@ -17,6 +23,19 @@ builder.Services.AddDbContext<FoodDiaryDbContext>(options =>
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("Database"));
 });
+
+builder.Services.AddCors(opt =>
+            {
+                opt.AddDefaultPolicy(
+                    policy =>
+                    {
+                        policy
+                            .WithOrigins(config.GetValue<string>("Cors:Origins").Split(','))
+                            .AllowAnyHeader()
+                            .AllowAnyMethod()
+                            .AllowCredentials();
+                    });
+            });
 
 builder.Services.AddScoped<ICentralRepository, CentralRepository>();
 builder.Services.AddScoped<IDiaryHandler, DiaryHandler>();
@@ -34,6 +53,7 @@ if (app.Environment.IsDevelopment())
 // app.UseHttpsRedirection();
 
 app.UseAuthorization();
+app.UseCors();
 
 app.MapControllers();
 
