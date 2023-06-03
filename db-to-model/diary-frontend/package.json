@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prepare": "husky install"
   },
   "dependencies": {
     "preact": "^10.13.2"
@@ -14,7 +15,10 @@
   "devDependencies": {
     "@preact/preset-vite": "^2.5.0",
     "autoprefixer": "^10.4.14",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.2",
     "postcss": "^8.4.24",
+    "prettier": "2.8.8",
     "tailwindcss": "^3.3.2",
     "typescript": "^5.0.2",
     "vite": "^4.3.9"
