@@ -17,8 +17,8 @@ public class ConfigureWebApplicationFactory
             builder.ConfigureAppConfiguration((hostContext, configApp) =>
             {
                 var env = hostContext.HostingEnvironment;
-                configApp.AddJsonFile("appsettings.json", optional: true);
-                configApp.AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
+                configApp.AddJsonFile("appsettings.json");
+                configApp.AddJsonFile($"appsettings.{env.EnvironmentName}.json");
                 configApp.AddEnvironmentVariables();
             });
         }
