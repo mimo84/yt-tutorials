@@ -63,7 +63,7 @@ try
 {
     var context = services.GetRequiredService<FoodDiaryDbContext>();
     var csvImporter = new CsvImporter();
-    List<FoodWithAmountDto> foods = csvImporter.ReadCsv("/Users/mimo/work/github_repos/yt-tutorials/db-to-model/test/Unit/TestData/file input.csv");
+    List<FoodWithAmountDto> foods = csvImporter.ReadCsv("/Users/mimo/work/github_repos/yt-tutorials/db-to-model/backend/test/Unit/TestData/file input.csv");
     await Seed.SeedData(context, foods);
 }
 catch (Exception ex)
