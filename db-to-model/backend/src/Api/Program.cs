@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using FoodDiary.Core.Dto;
 using FoodDiary.Core.Services;
 using FoodDiary.Data.Contexts;
@@ -14,7 +15,10 @@ IConfiguration config = new ConfigurationBuilder()
 
 // Add services to the container.
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+});
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

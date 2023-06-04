@@ -20,9 +20,9 @@ public class DiaryController : ControllerBase
     }
 
     [HttpGet("get", Name = "diaries")]
-    public async Task<Diary> Get()
+    public async Task<List<Diary>> Get(CancellationToken cancellationToken)
     {
-        var diaries = await dbContext.Diaries.FirstOrDefaultAsync();
+        var diaries = await dbContext.Diaries.Include("Meals").Select(x => x).ToListAsync(cancellationToken);
         return diaries;
     }
 
