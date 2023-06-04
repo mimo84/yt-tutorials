@@ -1,3 +1,5 @@
+using FoodDiary.Api.Mappers;
+using FoodDiary.Api.Models;
 using FoodDiary.Core.Dto;
 using FoodDiary.Core.Entities;
 using FoodDiary.Core.Services;
@@ -20,10 +22,11 @@ public class DiaryController : ControllerBase
     }
 
     [HttpGet("get", Name = "diaries")]
-    public async Task<List<Diary>> Get(CancellationToken cancellationToken)
+    public async Task<ActionResult<DiariesResponse>> Get(CancellationToken cancellationToken)
     {
-        var diaries = await dbContext.Diaries.Include("Meals").Select(x => x).ToListAsync(cancellationToken);
-        return diaries;
+        var diaries = await dbContext.Diaries.Include("Meals").Select(x => x).Take(2).ToListAsync(cancellationToken);
+        var result = DiariesMapper.MapFromDiariesEntity(diaries);
+        return result;
     }
 
     [HttpGet("get/{id:int}", Name = "diary_by_id")]

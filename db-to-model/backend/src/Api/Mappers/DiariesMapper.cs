@@ -1,0 +1,24 @@
+using FoodDiary.Api.Models;
+using FoodDiary.Core.Entities;
+
+namespace FoodDiary.Api.Mappers;
+
+public static class DiariesMapper
+{
+    public static DiaryResponse MapFromDiaryEntity(Diary diary)
+    {
+        var meals = diary.Meals.Select(m => MealsMapper.MapFromMealEntity(m)).ToList();
+        var result = new DiaryResponse(
+          DiaryId: diary.DiaryId,
+          DiaryDate: diary.Date,
+          Meals: meals
+        );
+        return result;
+    }
+
+    public static DiariesResponse MapFromDiariesEntity(List<Diary> diaries)
+    {
+        var response = diaries.Select(MapFromDiaryEntity).ToList();
+        return new DiariesResponse(Diaries: response);
+    }
+}
