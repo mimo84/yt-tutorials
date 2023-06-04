@@ -1,24 +1,29 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 
-interface fetchWrapProps {
+interface fetchWrapProps<T> {
   method: "get" | "post" | "put" | "delete";
   url: string;
-  body?: {};
+  body?: T;
   signal?: AbortSignal;
 }
 
-const fetchWrap = async ({ method, url, body, signal }: fetchWrapProps) => {
-  const config = {
+const fetchWrap = async <T, B = void>({
+  method,
+  url,
+  body,
+  signal,
+}: fetchWrapProps<B>) => {
+  const config: AxiosRequestConfig = {
     baseURL: "http://localhost:5066",
     signal: signal,
   };
 
   try {
     const { data } =
-      (method === "get" && (await axios.get(url, config))) ||
-      (method === "post" && (await axios.post(url, body, config))) ||
-      (method === "put" && (await axios.put(url, body, config))) ||
-      (method === "delete" && (await axios.delete(url, config))) ||
+      (method === "get" && (await axios.get<T>(url, config))) ||
+      (method === "post" && (await axios.post<T>(url, body, config))) ||
+      (method === "put" && (await axios.put<T>(url, body, config))) ||
+      (method === "delete" && (await axios.delete<T>(url, config))) ||
       {};
     return data;
   } catch (e: any) {
@@ -26,13 +31,14 @@ const fetchWrap = async ({ method, url, body, signal }: fetchWrapProps) => {
   }
 };
 
-export const GET = (url: string, signal?: AbortSignal) =>
-  fetchWrap({ method: "get", url, signal });
+export const GET = <T>(url: string, signal?: AbortSignal) =>
+  fetchWrap<T>({ method: "get", url, signal });
 
-export const POST = (url: string, body?: {}) =>
-  fetchWrap({ method: "post", url, body });
+export const POST = <T, B>(url: string, body: B) =>
+  fetchWrap<T, B>({ method: "post", url, body });
 
-export const PUT = (url: string, body?: {}) =>
-  fetchWrap({ method: "put", url, body });
+export const PUT = <T, B>(url: string, body: B) =>
+  fetchWrap<T, B>({ method: "put", url, body });
 
-export const DELETE = (url: string) => fetchWrap({ method: "delete", url });
+export const DELETE = <T>(url: string) =>
+  fetchWrap<T>({ method: "delete", url });

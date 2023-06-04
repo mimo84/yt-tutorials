@@ -1,3 +1,15 @@
 import { GET } from "./config";
 
-export const getDiary = (signal: AbortSignal) => GET(`/diary/get`, signal);
+export type DiaryWithMeals = {
+  diaries: {
+    diaryId: number;
+    diaryDate: string;
+    meals: {
+      mealId: number;
+      mealName: string;
+    }[];
+  }[];
+};
+
+export const getDiary = (signal: AbortSignal) =>
+  GET<DiaryWithMeals>(`/diary/get`, signal);
