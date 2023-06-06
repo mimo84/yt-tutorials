@@ -1,9 +1,11 @@
+using System.Net.NetworkInformation;
 using System.Text.Json.Serialization;
 using FoodDiary.Core.Dto;
 using FoodDiary.Core.Services;
 using FoodDiary.Data.Contexts;
 using FoodDiary.Data.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,6 +43,8 @@ builder.Services.AddCors(opt =>
 builder.Services.AddScoped<ICentralRepository, CentralRepository>();
 builder.Services.AddScoped<IDiaryHandler, DiaryHandler>();
 builder.Services.AddScoped<IFoodHandler, FoodHandler>();
+
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<PingHandler>());
 
 var app = builder.Build();
 

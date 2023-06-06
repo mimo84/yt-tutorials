@@ -1,7 +1,9 @@
 using FoodDiary.Api.Models;
 using FoodDiary.Core.Dto;
 using FoodDiary.Core.Entities;
+using FoodDiary.Core.Messages;
 using FoodDiary.Core.Services;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FoodDiary.Api.Controllers;
@@ -10,10 +12,13 @@ namespace FoodDiary.Api.Controllers;
 [Route("[controller]")]
 public class FoodController : ControllerBase
 {
+    private readonly IMediator mediator;
+
     private readonly IFoodHandler foodHandler;
-    public FoodController(IFoodHandler _foodHandler)
+    public FoodController(IFoodHandler _foodHandler, IMediator _mediator)
     {
         foodHandler = _foodHandler;
+        mediator = _mediator;
     }
 
     [HttpPost("new", Name = "NewFood")]
@@ -30,6 +35,13 @@ public class FoodController : ControllerBase
     {
         var foods = await foodHandler.FindFood(query.Name, cancellationToken);
         var result = new FoodEnvelope<List<Food>>(foods);
+        return result;
+    }
+
+    [HttpGet("ping")]
+    public async Task<string> Ping(CancellationToken cancellationToken)
+    {
+        var result = await mediator.Send(new Ping(), cancellationToken);
         return result;
     }
 }
