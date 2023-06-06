@@ -24,7 +24,14 @@ public class DiaryController : ControllerBase
     [HttpGet("get", Name = "diaries")]
     public async Task<ActionResult<DiariesResponse>> Get(CancellationToken cancellationToken)
     {
-        var diaries = await dbContext.Diaries.Include("Meals").Select(x => x).Take(2).ToListAsync(cancellationToken);
+        var diaries = await dbContext.
+            Diaries.OrderByDescending(d => d.Date)
+                .Include(d => d.Meals)
+                .ThenInclude(m => m.FoodMeals)
+                .ThenInclude(f => f.Food)
+                .ThenInclude(f => f.FoodAmounts)
+                .ToListAsync(cancellationToken);
+
         var result = DiariesMapper.MapFromDiariesEntity(diaries);
         return result;
     }
