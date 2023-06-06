@@ -38,13 +38,53 @@ export function Diary() {
     <>
       {diaries.map((d) => {
         return (
-          <div key={d.diaryId}>
-            <h2>Diary of {d.diaryDate}</h2>
-            {d.meals.map((m) => {
-              return <h3 key={m.mealId}>{m.mealName}</h3>;
-            })}
-            <hr />
-          </div>
+          <table className={"mt-6"} key={d.diaryId}>
+            <thead>
+              <tr>
+                <td colSpan={6} className={"bg-green-100"}>
+                  Diary of {d.diaryDate} - {Math.round(d.caloriesInDiary)}
+                </td>
+              </tr>
+            </thead>
+            <tbody>
+              {d.meals.map((m) => {
+                return (
+                  <>
+                    <tr key={m.mealId}>
+                      <td colSpan={6} className={"bg-slate-200"}>
+                        {m.mealName} - {m.caloriesInMeal}
+                      </td>
+                    </tr>
+
+                    {m.foodInMealResponse.map((f) => {
+                      return (
+                        <tr key={f.foodId}>
+                          <td className={"border-r-4 border-green-500"}>
+                            {f.foodName}
+                          </td>
+                          <td className={"border-r-4 border-green-500"}>
+                            {f.consumedAmount}
+                          </td>
+                          <td className={"border-r-4 border-green-500"}>
+                            {f.carbohydrates}
+                          </td>
+                          <td className={"border-r-4 border-green-500"}>
+                            {f.protein}
+                          </td>
+                          <td className={"border-r-4 border-green-500"}>
+                            {f.fat}
+                          </td>
+                          <td className={"border-r-4 border-green-500"}>
+                            {f.calories}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </>
+                );
+              })}
+            </tbody>
+          </table>
         );
       })}
     </>
