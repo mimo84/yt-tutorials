@@ -18,5 +18,3 @@ public record FoodInMealResponse(
 public record FoodDto(string Name);
 
 public record FoodWithAmountDto(string Name, FoodAmountDto FoodAmount);
-
-public record GetFoodsFromQuery(string Name) : IRequest<FoodEnvelope<List<Food>>>;

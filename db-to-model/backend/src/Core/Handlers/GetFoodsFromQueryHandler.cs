@@ -1,5 +1,6 @@
 using FoodDiary.Core.Dto;
 using FoodDiary.Core.Entities;
+using FoodDiary.Core.Messages;
 using FoodDiary.Core.Services;
 using MediatR;
 
