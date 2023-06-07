@@ -45,7 +45,6 @@ builder.Services.AddScoped<IFoodRepository, FoodRepository>();
 builder.Services.AddMediatR(cfg =>
 {
     cfg.RegisterServicesFromAssemblyContaining<GetFoodsFromQueryHandler>();
-    cfg.RegisterServicesFromAssemblyContaining<PingHandler>();
 });
 
 var app = builder.Build();

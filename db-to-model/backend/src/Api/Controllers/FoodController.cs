@@ -1,7 +1,6 @@
 using FoodDiary.Api.Models;
 using FoodDiary.Core.Dto;
 using FoodDiary.Core.Entities;
-using FoodDiary.Core.Messages;
 using FoodDiary.Core.Services;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -34,13 +33,6 @@ public class FoodController : ControllerBase
     public async Task<ActionResult<FoodEnvelope<List<Food>>>> FindFood([FromQuery] GetFoodsFromQuery query, CancellationToken cancellationToken)
     {
         return await mediator.Send(query, cancellationToken);
-    }
-
-    [HttpGet("ping")]
-    public async Task<string> Ping(CancellationToken cancellationToken)
-    {
-        var result = await mediator.Send(new Ping(), cancellationToken);
-        return result;
     }
 }
 
