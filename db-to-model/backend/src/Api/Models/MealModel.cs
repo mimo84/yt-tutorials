@@ -1,3 +1,5 @@
+using FoodDiary.Core.Dto;
+
 namespace FoodDiary.Api.Models;
 
 public record MealEnvelope<T>(T Meal);

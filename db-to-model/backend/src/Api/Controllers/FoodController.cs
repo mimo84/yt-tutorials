@@ -14,10 +14,10 @@ public class FoodController : ControllerBase
 {
     private readonly IMediator mediator;
 
-    private readonly IFoodHandler foodHandler;
-    public FoodController(IFoodHandler _foodHandler, IMediator _mediator)
+    private readonly IFoodRepository foodRepository;
+    public FoodController(IFoodRepository _FoodRepository, IMediator _mediator)
     {
-        foodHandler = _foodHandler;
+        foodRepository = _FoodRepository;
         mediator = _mediator;
     }
 
@@ -26,16 +26,14 @@ public class FoodController : ControllerBase
         RequestEnvelope<FoodEnvelope<FoodWithAmountDto>> request,
         CancellationToken cancellationToken)
     {
-        await foodHandler.AddFoodWithAmountsAsync(request.Body.Food, cancellationToken);
+        await foodRepository.AddFoodWithAmountsAsync(request.Body.Food, cancellationToken);
         return new FoodEnvelope<bool>(true);
     }
 
     [HttpGet("find")]
-    public async Task<ActionResult<FoodEnvelope<List<Food>>>> FindFood([FromQuery] FoodQuery query, CancellationToken cancellationToken)
+    public async Task<ActionResult<FoodEnvelope<List<Food>>>> FindFood([FromQuery] GetFoodsFromQuery query, CancellationToken cancellationToken)
     {
-        var foods = await foodHandler.FindFood(query.Name, cancellationToken);
-        var result = new FoodEnvelope<List<Food>>(foods);
-        return result;
+        return await mediator.Send(query, cancellationToken);
     }
 
     [HttpGet("ping")]

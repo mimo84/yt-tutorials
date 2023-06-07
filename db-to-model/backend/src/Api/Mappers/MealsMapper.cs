@@ -1,4 +1,5 @@
 using FoodDiary.Api.Models;
+using FoodDiary.Core.Dto;
 using FoodDiary.Core.Entities;
 
 namespace FoodDiary.Api.Mappers;

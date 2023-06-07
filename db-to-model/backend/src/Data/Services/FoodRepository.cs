@@ -6,10 +6,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FoodDiary.Data.Services;
 
-public class FoodHandler : IFoodHandler
+public class FoodRepository : IFoodRepository
 {
     private readonly FoodDiaryDbContext dbContext;
-    public FoodHandler(FoodDiaryDbContext _dbContext)
+    public FoodRepository(FoodDiaryDbContext _dbContext)
     {
         dbContext = _dbContext;
     }
