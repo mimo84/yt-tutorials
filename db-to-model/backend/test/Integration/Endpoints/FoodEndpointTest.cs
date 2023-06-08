@@ -1,15 +1,12 @@
 using System.Collections.Specialized;
-using System.Linq.Expressions;
 using System.Net;
 using System.Text.Json;
-using CsvHelper.Configuration;
 using FluentAssertions;
-using FoodDiary.Api.Models;
+using FoodDiary.Core.Dto;
 using FoodDiary.Core.Entities;
 using FoodDiary.Data.Contexts;
 using Integration.Helpers;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 using Xunit.Abstractions;
@@ -61,12 +58,10 @@ public class FoodEndpointTest : IClassFixture<CustomWebApplicationFactory<Progra
     [InlineData("cucumber")]
     public async Task GetFoodNameTest(string search)
     {
-
         var response = await _httpClient.GetAsync($"/Food/find?Name={search}");
         response.StatusCode.Should().Be(HttpStatusCode.OK);
 
         var stringResult = await response.Content.ReadAsStringAsync();
-
         var foodJson = JsonSerializer.Deserialize<FoodEnvelope<List<Food>>>(stringResult, jsonSerializerOptions) ?? throw new Exception($"Food {search} was not found");
 
         foodJson.Food.Count.Should().BeLessThanOrEqualTo(10, "we return up to 10 foods");
@@ -75,7 +70,6 @@ public class FoodEndpointTest : IClassFixture<CustomWebApplicationFactory<Progra
             food.Name.ToLower().Should().Contain(search.ToLower());
             food.FoodId.Should().BePositive();
         }
-
     }
 
     [Theory(DisplayName = "Get Food By Multiple Name Parts")]
