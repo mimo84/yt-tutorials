@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace FoodDiary.Core.Entities;
+﻿namespace FoodDiary.Core.Entities;
 
 public partial class FoodAmount
 {
