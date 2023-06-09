@@ -1,7 +1,7 @@
-using FoodDiary.Api.Mappers;
-using FoodDiary.Api.Models;
 using FoodDiary.Core.Dto;
 using FoodDiary.Core.Entities;
+using FoodDiary.Core.Mappers;
+using FoodDiary.Core.Models;
 using FoodDiary.Core.Services;
 using FoodDiary.Data.Contexts;
 using Microsoft.AspNetCore.Mvc;

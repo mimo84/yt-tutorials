@@ -1,4 +1,4 @@
-namespace FoodDiary.Api.Models;
+namespace FoodDiary.Core.Models;
 
 public record DiaryEnvelope<T>(T Diary);
 

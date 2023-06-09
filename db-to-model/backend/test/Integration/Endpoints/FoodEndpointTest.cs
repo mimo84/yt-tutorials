@@ -99,4 +99,28 @@ public class FoodEndpointTest : IClassFixture<CustomWebApplicationFactory<Progra
             food.FoodId.Should().BePositive();
         }
     }
+
+    [Fact]
+    public async Task FindAllFoods()
+    {
+        var response = await _httpClient.GetAsync("/food/all");
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        var stringResult = await response.Content.ReadAsStringAsync();
+        var i = 0;
+        var foodJson = JsonSerializer.Deserialize<FoodEnvelope<List<FoodWithNutritionInfoDto>>>(stringResult, jsonSerializerOptions) ?? throw new Exception($"All foods didn't return records as expected");
+        foodJson.Food.Count.Should().BeGreaterThan(100, "we are expecting a lot of foods to be returned");
+        foreach (var food in foodJson.Food)
+        {
+            food.Amount.Should().BeGreaterThan(0);
+            food.FoodId.Should().BeGreaterThan(0);
+
+            food.Calories.Should().BeGreaterThanOrEqualTo(0, "Some foods like salt, baking powder etc have no calories.");
+            food.Protein.Should().BeGreaterThanOrEqualTo(0);
+            food.Fat.Should().BeGreaterThanOrEqualTo(0);
+            food.Carbohydrates.Should().BeGreaterThanOrEqualTo(0);
+            i++;
+        }
+        testOutputHelper.WriteLine($">>>> {i} <<<<<<<< NUMBER OF FOODS TESTED");
+    }
+
 }

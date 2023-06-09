@@ -1,6 +1,3 @@
-using FoodDiary.Core.Entities;
-using MediatR;
-
 namespace FoodDiary.Core.Dto;
 
 public record FoodEnvelope<T>(T Food);
@@ -18,3 +15,5 @@ public record FoodInMealResponse(
 public record FoodDto(string Name);
 
 public record FoodWithAmountDto(string Name, FoodAmountDto FoodAmount);
+
+public record FoodWithNutritionInfoDto(int FoodId, string FoodName, decimal Amount, decimal Protein, decimal Fat, decimal Carbohydrates, decimal Calories);

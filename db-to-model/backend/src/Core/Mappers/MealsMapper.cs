@@ -1,8 +1,8 @@
-using FoodDiary.Api.Models;
 using FoodDiary.Core.Dto;
 using FoodDiary.Core.Entities;
+using FoodDiary.Core.Models;
 
-namespace FoodDiary.Api.Mappers;
+namespace FoodDiary.Core.Mappers;
 
 public static class MealsMapper
 {

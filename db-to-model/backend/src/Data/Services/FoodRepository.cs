@@ -1,5 +1,6 @@
 using FoodDiary.Core.Dto;
 using FoodDiary.Core.Entities;
+using FoodDiary.Core.Mappers;
 using FoodDiary.Core.Services;
 using FoodDiary.Data.Contexts;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,13 @@ public class FoodRepository : IFoodRepository
     public FoodRepository(FoodDiaryDbContext _dbContext)
     {
         dbContext = _dbContext;
+    }
+
+    public async Task<List<FoodWithNutritionInfoDto>> GetAllFoods(CancellationToken cancellationToken)
+    {
+        var results = await dbContext.Foods.Include(f => f.FoodAmounts).ToListAsync(cancellationToken);
+        var resultsDto = results.Select(FoodMapper.MapToFoodWithNutritionalInfo).ToList();
+        return resultsDto;
     }
 
     public async Task<List<Food>> FindFood(string search, CancellationToken cancellationToken)

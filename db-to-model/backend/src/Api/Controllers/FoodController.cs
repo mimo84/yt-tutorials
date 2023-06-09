@@ -35,5 +35,13 @@ public class FoodController : ControllerBase
     {
         return await mediator.Send(query, cancellationToken);
     }
+
+    [HttpGet("all")]
+    public async Task<ActionResult<FoodEnvelope<List<FoodWithNutritionInfoDto>>>> GetAllFoods(CancellationToken cancellationToken)
+    {
+        var message = new GetAllFoods();
+        return await mediator.Send(message, cancellationToken);
+    }
+
 }
 
