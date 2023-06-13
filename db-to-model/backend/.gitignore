@@ -226,5 +226,5 @@ AppPackages/
 #####
 
 appsettings.local.json
-
+appsettings.[P|p]roduction.json
 *.bak
