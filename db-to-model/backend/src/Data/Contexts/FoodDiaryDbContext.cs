@@ -1,9 +1,10 @@
 ﻿using FoodDiary.Core.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace FoodDiary.Data.Contexts;
 
-public partial class FoodDiaryDbContext : DbContext
+public partial class FoodDiaryDbContext : IdentityDbContext<AppUser>
 {
     public FoodDiaryDbContext()
     {
