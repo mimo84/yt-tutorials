@@ -1,8 +1,11 @@
+using FoodDiary.Api.Extensions;
 using FoodDiary.Core.Dto;
+using FoodDiary.Core.Entities;
 using FoodDiary.Core.Handlers;
 using FoodDiary.Core.Services;
 using FoodDiary.Data.Contexts;
 using FoodDiary.Data.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,9 +16,11 @@ IConfiguration config = new ConfigurationBuilder()
     .AddEnvironmentVariables()
     .Build();
 
+builder.Services.AddIdentityServices(builder.Configuration);
 // Add services to the container.
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -70,7 +75,8 @@ try
     var context = services.GetRequiredService<FoodDiaryDbContext>();
     var csvImporter = new CsvImporter();
     List<FoodWithAmountDto> foods = csvImporter.ReadCsv("/Users/mimo/work/github_repos/yt-tutorials/db-to-model/backend/test/Unit/TestData/file input.csv");
-    await Seed.SeedData(context, foods);
+    var userManager = services.GetRequiredService<UserManager<AppUser>>();
+    await Seed.SeedData(context, foods, userManager);
 }
 catch (Exception ex)
 {

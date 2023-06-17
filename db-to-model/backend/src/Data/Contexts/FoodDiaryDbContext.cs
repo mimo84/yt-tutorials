@@ -167,6 +167,8 @@ public partial class FoodDiaryDbContext : IdentityDbContext<AppUser>
                 .HasConstraintName("fk_meal_diary");
         });
 
+        base.OnModelCreating(modelBuilder);
+
         OnModelCreatingPartial(modelBuilder);
     }
 
