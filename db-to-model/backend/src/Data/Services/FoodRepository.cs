@@ -37,6 +37,11 @@ public class FoodRepository : IFoodRepository
 
     public async Task AddFoodWithAmountsAsync(FoodWithAmountDto foodAmountDto, CancellationToken cancellationToken)
     {
+        var alreadyThere = await dbContext.Foods.Where(f => f.Name == foodAmountDto.Name).AnyAsync(cancellationToken);
+        if (!alreadyThere)
+        {
+            return;
+        }
         Food food = new()
         {
             Name = foodAmountDto.Name
@@ -61,7 +66,8 @@ public class FoodRepository : IFoodRepository
             AmountName = foodAmountDto.FoodAmount.AmountName,
             Food = food,
         };
-        await dbContext.FoodAmounts.AddAsync(foodAmount, cancellationToken);
+        await dbContext.AddAsync(food, cancellationToken);
+        await dbContext.AddAsync(foodAmount, cancellationToken);
         await dbContext.SaveChangesAsync(cancellationToken);
     }
 }

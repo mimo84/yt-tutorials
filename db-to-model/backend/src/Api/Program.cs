@@ -5,6 +5,7 @@ using FoodDiary.Core.Handlers;
 using FoodDiary.Core.Services;
 using FoodDiary.Data.Contexts;
 using FoodDiary.Data.Services;
+using FoodDiary.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,6 +25,10 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddProblemDetails();
+builder.Services.ConfigureOptions<ProblemDetailsLogging>();
+
 
 builder.Services.AddDbContext<FoodDiaryDbContext>(options =>
 {
@@ -46,6 +51,7 @@ builder.Services.AddCors(opt =>
 builder.Services.AddScoped<ICentralRepository, CentralRepository>();
 builder.Services.AddScoped<IDiaryHandler, DiaryHandler>();
 builder.Services.AddScoped<IFoodRepository, FoodRepository>();
+builder.Services.AddScoped<IUserHandler, UserHandler>();
 
 builder.Services.AddMediatR(cfg =>
 {

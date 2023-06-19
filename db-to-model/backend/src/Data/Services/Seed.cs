@@ -1,14 +1,37 @@
 using FoodDiary.Core.Dto;
 using FoodDiary.Core.Entities;
 using FoodDiary.Data.Contexts;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace FoodDiary.Data.Services;
 
 public class Seed
 {
-    public static async Task SeedData(FoodDiaryDbContext dbContext, List<FoodWithAmountDto> foodWithAmountDtos)
+    public static async Task SeedData(FoodDiaryDbContext dbContext, List<FoodWithAmountDto> foodWithAmountDtos, UserManager<AppUser> userManager)
     {
+        if (!userManager.Users.Any())
+        {
+            var users = new List<AppUser>
+            {
+              new AppUser{
+                DisplayName = "Mimo",
+                UserName = "mimo",
+                Email = "mimo@email.com"
+              },
+              new AppUser{
+                DisplayName = "Bob",
+                UserName = "bob",
+                Email = "bob@email.com"
+              },
+            };
+
+            foreach (var user in users)
+            {
+                await userManager.CreateAsync(user, "MyT3stPa$$w0rd");
+            }
+        }
+
         var anyFoods = await dbContext.Foods.AnyAsync();
         if (anyFoods)
         {
