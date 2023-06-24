@@ -47,7 +47,12 @@ public class CentralRepository : ICentralRepository
         {
             UserName = newUserDto.UserName,
             Email = newUserDto.Email,
-            DisplayName = newUserDto.DisplayName
+            DisplayName = newUserDto.DisplayName,
+            Address = newUserDto.Address,
+            Bio = newUserDto.Bio,
+            FamilyName = newUserDto.FamilyName,
+            FirstName = newUserDto.FirstName,
+
         };
         var result = await userManager.CreateAsync(user, newUserDto.Password);
         if (result.Errors.Any())

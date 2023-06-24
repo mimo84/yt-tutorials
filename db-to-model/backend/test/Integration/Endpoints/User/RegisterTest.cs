@@ -45,16 +45,25 @@ public class RegisterTest : IClassFixture<CustomWebApplicationFactory<Program>>
         const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         var username = new string(Enumerable.Repeat(chars, 12)
             .Select(s => s[random.Next(s.Length)]).ToArray());
+        var address = new string(Enumerable.Repeat(chars, 82)
+            .Select(s => s[random.Next(s.Length)]).ToArray());
+        var firstName = new string(Enumerable.Repeat(chars, 15)
+            .Select(s => s[random.Next(s.Length)]).ToArray());
+        var familyName = new string(Enumerable.Repeat(chars, 19)
+            .Select(s => s[random.Next(s.Length)]).ToArray());
+        var bio = new string(Enumerable.Repeat(chars, 500)
+            .Select(s => s[random.Next(s.Length)]).ToArray());
 
+        var displayName = $"{firstName}{familyName}";
         var request = $@"{{
           ""userName"": ""{username}"",
           ""email"": ""{username}@email.com"",
           ""password"": ""123ABCabc%^&"",
-          ""displayName"": ""string"",
-          ""bio"": ""string"",
-          ""firstName"": ""string"",
-          ""familyName"": ""string"",
-          ""address"": ""string""
+          ""displayName"": ""{displayName}"",
+          ""bio"": ""{bio}"",
+          ""firstName"": ""{firstName}"",
+          ""familyName"": ""{familyName}"",
+          ""address"": ""{address}""
         }}";
         HttpContent requestContent = new StringContent(request, Encoding.UTF8, "application/json");
 
@@ -62,18 +71,22 @@ public class RegisterTest : IClassFixture<CustomWebApplicationFactory<Program>>
         var stringResult = await response.Content.ReadAsStringAsync();
         response.StatusCode.Should().Be(HttpStatusCode.OK);
         var result = JsonSerializer.Deserialize<UserDto>(stringResult, jsonSerializerOptions) ?? throw new Exception("Could not parse {stringResult}");
-        result.Address.Should().Be("string");
-        result.FamilyName.Should().Be("string");
-        result.FirstName.Should().Be("string");
-        result.Bio.Should().Be("string");
+        result.Address.Should().Be(address);
+        result.FamilyName.Should().Be(familyName);
+        result.FirstName.Should().Be(firstName);
+        result.Bio.Should().Be(bio);
+        result.DisplayName.Should().Be(displayName);
         result.Token.Should().NotBeNullOrEmpty();
     }
 
     [Fact]
     public async void ShouldNotRegisterExistingUser()
     {
+        const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        var username = new string(Enumerable.Repeat(chars, 12)
+            .Select(s => s[random.Next(s.Length)]).ToArray());
         var request = $@"{{
-          ""userName"": ""mimo@email.com"",
+          ""userName"": ""{username}"",
           ""email"": ""mimo@email.com"",
           ""password"": ""123ABCabc%^&"",
           ""displayName"": ""string"",
@@ -141,7 +154,10 @@ public class RegisterTest : IClassFixture<CustomWebApplicationFactory<Program>>
         }}";
         HttpContent requestContent = new StringContent(request, Encoding.UTF8, "application/json");
 
-        Func<Task> act = async () => await _httpClient.PostAsync("/user/register", requestContent);
-        var result = await act.Should().ThrowAsync<ProblemDetailsException>();
+        var response = await _httpClient.PostAsync("/user/register", requestContent);
+        var stringResult = await response.Content.ReadAsStringAsync();
+        response.StatusCode.Should().Be(HttpStatusCode.UnprocessableEntity);
+        var expectedValidation = JsonSerializer.Deserialize<HttpValidationProblemDetails>(stringResult, jsonSerializerOptions) ?? throw new Exception($"Could not parse {stringResult}");
+        expectedValidation.Detail.Should().Be("Cannot register user: Passwords must be at least 6 characters.Passwords must have at least one digit ('0'-'9').Passwords must have at least one uppercase ('A'-'Z').");
     }
 }
