@@ -1,3 +1,4 @@
+using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Text;
 using System.Text.Json;
@@ -47,6 +48,17 @@ public class LoginTest : IClassFixture<CustomWebApplicationFactory<Program>>
         var result = JsonSerializer.Deserialize<UserDto>(stringResult, jsonSerializerOptions) ?? throw new Exception("Could not parse {stringResult}");
         result.DisplayName.Should().Be("Mimo");
         result.Token.Should().NotBeNullOrEmpty();
+
+        var token = result.Token;
+        var handler = new JwtSecurityTokenHandler();
+        var jsonToken = handler.ReadToken(token);
+        var tokenS = jsonToken as JwtSecurityToken;
+        tokenS.Claims.First(claim => claim.Type == "unique_name").Value.Should().Be("mimo");
+        tokenS.Claims.First(claim => claim.Type == "nameid").Value.Should().NotBeNullOrWhiteSpace();
+        tokenS.Claims.First(claim => claim.Type == "email").Value.Should().Be("mimo@email.com");
+        tokenS.Claims.First(claim => claim.Type == "nbf").Value.Should().NotBeNullOrEmpty();
+        tokenS.Claims.First(claim => claim.Type == "exp").Value.Should().NotBeNullOrEmpty();
+        tokenS.Claims.First(claim => claim.Type == "iat").Value.Should().NotBeNullOrEmpty();
     }
 
     [Fact]
