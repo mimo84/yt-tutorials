@@ -6,6 +6,7 @@ using FoodDiary.Core.Services;
 using FoodDiary.Data.Contexts;
 using FoodDiary.Data.Services;
 using FoodDiary.Infrastructure.Extensions;
+using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,7 +27,29 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddProblemDetails();
+builder.Services.AddProblemDetails(options =>
+{
+    // Only include exception details in a development environment. There's really no need
+    // to set this as it's the default behavior. It's just included here for completeness :)
+    options.IncludeExceptionDetails = (ctx, ex) => builder.Environment.IsDevelopment();
+
+
+    // This will map NotImplementedException to the 501 Not Implemented status code.
+    options.MapToStatusCode<NotImplementedException>(StatusCodes.Status501NotImplemented);
+
+    // You can configure the middleware to re-throw certain types of exceptions, all exceptions or based on a predicate.
+    // This is useful if you have upstream middleware that  needs to do additional handling of exceptions.
+    options.Rethrow<NotSupportedException>();
+
+    // You can configure the middleware to ingore any exceptions of the specified type.
+    // This is useful if you have upstream middleware that  needs to do additional handling of exceptions.
+    // Note that unlike Rethrow, additional information will not be added to the exception.
+    options.Ignore<DivideByZeroException>();
+
+    // Because exceptions are handled polymorphically, this will act as a "catch all" mapping, which is why it's added last.
+    // If an exception other than NotImplementedException and HttpRequestException is thrown, this will handle it.
+    options.MapToStatusCode<Exception>(StatusCodes.Status500InternalServerError);
+});
 builder.Services.ConfigureOptions<ProblemDetailsLogging>();
 
 
@@ -71,7 +94,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseAuthorization();
 app.UseCors();
-
+app.UseProblemDetails();
 app.MapControllers();
 
 using var scope = app.Services.CreateScope();
