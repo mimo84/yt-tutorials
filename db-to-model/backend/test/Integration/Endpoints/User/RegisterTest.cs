@@ -1,11 +1,8 @@
 using System.Net;
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Nodes;
 using FluentAssertions;
-using FluentAssertions.Specialized;
 using FoodDiary.Core.Dto;
-using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Xunit;

@@ -1,9 +1,11 @@
 using FoodDiary.Core.Entities;
+using FoodDiary.Core.Services;
 using FoodDiary.Data.Contexts;
+using FoodDiary.Data.Services;
 
 namespace FoodDiary.Api.Extensions;
 
-public static class IdentityServicesExtensions
+public static class IdentityServices
 {
     public static IServiceCollection AddIdentityServices(this IServiceCollection services,
         IConfiguration config)
@@ -17,6 +19,7 @@ public static class IdentityServicesExtensions
         .AddEntityFrameworkStores<FoodDiaryDbContext>();
 
         services.AddAuthentication();
+        services.AddScoped<ITokenService, TokenService>();
 
         return services;
     }
