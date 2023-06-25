@@ -1,7 +1,10 @@
+using System.Text;
 using FoodDiary.Core.Entities;
 using FoodDiary.Core.Services;
 using FoodDiary.Data.Contexts;
 using FoodDiary.Data.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace FoodDiary.Api.Extensions;
 
@@ -18,7 +21,21 @@ public static class IdentityServices
         })
         .AddEntityFrameworkStores<FoodDiaryDbContext>();
 
-        services.AddAuthentication();
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"]));
+
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(opt =>
+            {
+                opt.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = key,
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
+
+        services.AddAuthorization();
         services.AddScoped<ITokenService, TokenService>();
 
         return services;
