@@ -75,7 +75,7 @@ public class CentralRepository : ICentralRepository
             throw new ProblemDetailsException(new ProblemDetails
             {
                 Status = 422,
-                Detail = $"Cannot find user with current email address."
+                Detail = $"Cannot find user with current email address. Try updating your email."
             });
         }
         return user;

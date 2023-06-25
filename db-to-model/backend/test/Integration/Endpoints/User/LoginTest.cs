@@ -93,4 +93,11 @@ public class LoginTest : IClassFixture<CustomWebApplicationFactory<Program>>
         var result = JsonSerializer.Deserialize<HttpValidationProblemDetails>(stringResult, jsonSerializerOptions) ?? throw new Exception("Could not parse {stringResult}");
         result.Title.Should().Be("Unauthorized");
     }
+
+    [Fact]
+    public async void ShouldNotAuthorizeUserEndpointWithNoAuth()
+    {
+        var response = await _httpClient.GetAsync("/user");
+        response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+    }
 }
