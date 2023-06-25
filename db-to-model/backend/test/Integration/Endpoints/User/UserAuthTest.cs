@@ -3,6 +3,7 @@ using System.Net.Http.Headers;
 using System.Text.Json;
 using FluentAssertions;
 using FoodDiary.Core.Dto;
+using Integration.Helpers.Auth;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
