@@ -69,7 +69,16 @@ public class CentralRepository : ICentralRepository
 
     public async Task<AppUser> GetUserByEmailAsync(string email, CancellationToken cancellationToken)
     {
-        return await userManager.Users.FirstOrDefaultAsync(x => x.Email == email, cancellationToken);
+        var user = await userManager.Users.FirstOrDefaultAsync(x => x.Email == email, cancellationToken);
+        if (user == default)
+        {
+            throw new ProblemDetailsException(new ProblemDetails
+            {
+                Status = 422,
+                Detail = $"Cannot find user with current email address."
+            });
+        }
+        return user;
     }
 
     public Task<AppUser> GetUserByUsernameAsync(string username, CancellationToken cancellationToken)
