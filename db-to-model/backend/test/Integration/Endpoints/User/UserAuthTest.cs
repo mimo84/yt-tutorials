@@ -32,7 +32,7 @@ public class UserTest : IClassFixture<CustomWebApplicationFactory<Program>>
             builder.ConfigureTestServices(services =>
             {
                 services.AddAuthentication(defaultScheme: "TestScheme")
-                    .AddScheme<AuthenticationSchemeOptions, TestAuthHandler>(
+                    .AddScheme<AuthenticationSchemeOptions, TestRegularUserAuthHandler>(
                         "TestScheme", options => { });
             });
         })
