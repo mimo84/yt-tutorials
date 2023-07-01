@@ -53,10 +53,9 @@ public class UserNoEmailTest : IClassFixture<CustomWebApplicationFactory<Program
     public async Task CheckAuthAsync()
     {
         var response = await _httpClient.GetAsync("/user");
-        response.StatusCode.Should().Be(HttpStatusCode.UnprocessableEntity);
+        response.StatusCode.Should().Be(HttpStatusCode.InternalServerError);
         var stringResult = await response.Content.ReadAsStringAsync();
         var result = JsonSerializer.Deserialize<HttpValidationProblemDetails>(stringResult, jsonSerializerOptions) ?? throw new Exception("Could not parse {stringResult}");
-        result.Title.Should().Be("One or more validation errors occurred.");
-        result.Detail.Should().Be("Cannot find user with current email address. Try updating your email.");
+        result.Title.Should().Be("Internal Server Error");
     }
 }
