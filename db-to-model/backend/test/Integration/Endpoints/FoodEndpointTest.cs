@@ -32,31 +32,14 @@ public class FoodEndpointTest : IClassFixture<CustomWebApplicationFactory<Progra
 
     public FoodEndpointTest(CustomWebApplicationFactory<Program> _factory, ITestOutputHelper _testOutputHelper)
     {
-
         factory = _factory;
         testOutputHelper = _testOutputHelper;
         var scope = _factory.Services.CreateScope();
         var scopedServices = scope.ServiceProvider;
         dbContext = scopedServices.GetRequiredService<FoodDiaryDbContext>();
         DatabaseUtility.RestoreDatabase(dbContext);
-        var client = _factory.WithWebHostBuilder(builder =>
-        {
-            builder.ConfigureTestServices(services =>
-            {
-                services.AddAuthentication(defaultScheme: "TestScheme")
-                    .AddScheme<AuthenticationSchemeOptions, TestRegularUserAuthHandler>(
-                        "TestScheme", options => { });
-            });
-        })
-        .CreateClient(new WebApplicationFactoryClientOptions
-        {
-            AllowAutoRedirect = false,
-        });
+        authHttpClient = AuthClientHelper.GetAuthClient(_factory);
 
-        client.DefaultRequestHeaders.Authorization =
-            new AuthenticationHeaderValue(scheme: "TestScheme");
-
-        authHttpClient = client;
     }
 
     [Theory(DisplayName = "Get Food By Name")]

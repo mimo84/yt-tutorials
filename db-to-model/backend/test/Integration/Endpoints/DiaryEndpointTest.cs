@@ -5,9 +5,6 @@ using FluentAssertions;
 using FoodDiary.Data.Contexts;
 using Integration.Helpers;
 using Integration.Helpers.Auth;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
@@ -31,25 +28,8 @@ public class DiaryEndpointTest : IClassFixture<CustomWebApplicationFactory<Progr
         // We don't do the cleanup at the end so that if a test fails we
         // can check what happened.
         DatabaseUtility.RestoreDatabase(dbContext);
-        factory = _factory;
-        var client = _factory.WithWebHostBuilder(builder =>
-        {
-            builder.ConfigureTestServices(services =>
-            {
-                services.AddAuthentication(defaultScheme: "TestScheme")
-                    .AddScheme<AuthenticationSchemeOptions, TestRegularUserAuthHandler>(
-                        "TestScheme", options => { });
-            });
-        })
-        .CreateClient(new WebApplicationFactoryClientOptions
-        {
-            AllowAutoRedirect = false,
-        });
 
-        client.DefaultRequestHeaders.Authorization =
-            new AuthenticationHeaderValue(scheme: "TestScheme");
-
-        authHttpClient = client;
+        authHttpClient = AuthClientHelper.GetAuthClient(_factory);
     }
 
     [Fact]

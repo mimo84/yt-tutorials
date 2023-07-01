@@ -28,24 +28,8 @@ public class UserTest : IClassFixture<CustomWebApplicationFactory<Program>>
     {
         factory = _factory;
         testOutputHelper = _testOutputHelper;
-        var client = _factory.WithWebHostBuilder(builder =>
-        {
-            builder.ConfigureTestServices(services =>
-            {
-                services.AddAuthentication(defaultScheme: "TestScheme")
-                    .AddScheme<AuthenticationSchemeOptions, TestRegularUserAuthHandler>(
-                        "TestScheme", options => { });
-            });
-        })
-        .CreateClient(new WebApplicationFactoryClientOptions
-        {
-            AllowAutoRedirect = false,
-        });
 
-        client.DefaultRequestHeaders.Authorization =
-            new AuthenticationHeaderValue(scheme: "TestScheme");
-
-        authHttpClient = client;
+        authHttpClient = AuthClientHelper.GetAuthClient(_factory);
     }
 
     [Fact]
