@@ -14,4 +14,6 @@ public partial class AppUser : IdentityUser
 
     public string Address { get; set; }
 
+    public ICollection<Diary> Diaries { get; set; }
+
 }
