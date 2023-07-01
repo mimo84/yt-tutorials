@@ -53,7 +53,6 @@ public class UserController : ControllerBase
         return await userHandler.LoginAsync(loginDto, cancellationToken);
     }
 
-    [Authorize]
     [HttpGet]
     public async Task<ActionResult<UserDto>> GetCurrentUser(CancellationToken cancellationToken)
     {

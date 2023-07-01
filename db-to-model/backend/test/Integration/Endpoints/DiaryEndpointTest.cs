@@ -1,9 +1,13 @@
 using System.Net;
+using System.Net.Http.Headers;
 using System.Text;
 using FluentAssertions;
 using FoodDiary.Data.Contexts;
 using Integration.Helpers;
+using Integration.Helpers.Auth;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
@@ -13,7 +17,7 @@ namespace Integration.Endpoints;
 
 public class DiaryEndpointTest : IClassFixture<CustomWebApplicationFactory<Program>>
 {
-    private readonly HttpClient _httpClient;
+    private readonly HttpClient authHttpClient;
     private readonly CustomWebApplicationFactory<Program> factory;
     private readonly FoodDiaryDbContext dbContext;
 
@@ -27,10 +31,25 @@ public class DiaryEndpointTest : IClassFixture<CustomWebApplicationFactory<Progr
         // We don't do the cleanup at the end so that if a test fails we
         // can check what happened.
         DatabaseUtility.RestoreDatabase(dbContext);
-        _httpClient = factory.CreateClient(new WebApplicationFactoryClientOptions
+        factory = _factory;
+        var client = _factory.WithWebHostBuilder(builder =>
         {
-            AllowAutoRedirect = false
+            builder.ConfigureTestServices(services =>
+            {
+                services.AddAuthentication(defaultScheme: "TestScheme")
+                    .AddScheme<AuthenticationSchemeOptions, TestRegularUserAuthHandler>(
+                        "TestScheme", options => { });
+            });
+        })
+        .CreateClient(new WebApplicationFactoryClientOptions
+        {
+            AllowAutoRedirect = false,
         });
+
+        client.DefaultRequestHeaders.Authorization =
+            new AuthenticationHeaderValue(scheme: "TestScheme");
+
+        authHttpClient = client;
     }
 
     [Fact]
@@ -56,7 +75,7 @@ public class DiaryEndpointTest : IClassFixture<CustomWebApplicationFactory<Progr
         }}";
         HttpContent c = new StringContent(payload, Encoding.UTF8, "application/json");
 
-        var response = await _httpClient.PostAsync("/Diary", c);
+        var response = await authHttpClient.PostAsync("/Diary", c);
         var stringResult = await response.Content.ReadAsStringAsync();
 
         response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -117,8 +136,8 @@ public class DiaryEndpointTest : IClassFixture<CustomWebApplicationFactory<Progr
         HttpContent c1 = new StringContent(payload1, Encoding.UTF8, "application/json");
         HttpContent c2 = new StringContent(payload2, Encoding.UTF8, "application/json");
 
-        var response1 = await _httpClient.PostAsync("/Diary", c1);
-        var response2 = await _httpClient.PostAsync("/Diary", c2);
+        var response1 = await authHttpClient.PostAsync("/Diary", c1);
+        var response2 = await authHttpClient.PostAsync("/Diary", c2);
 
         response1.StatusCode.Should().Be(HttpStatusCode.OK);
         response2.StatusCode.Should().Be(HttpStatusCode.OK);

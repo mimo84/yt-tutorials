@@ -1,12 +1,16 @@
 using System.Collections.Specialized;
 using System.Net;
+using System.Net.Http.Headers;
 using System.Text.Json;
 using FluentAssertions;
 using FoodDiary.Core.Dto;
 using FoodDiary.Core.Entities;
 using FoodDiary.Data.Contexts;
 using Integration.Helpers;
+using Integration.Helpers.Auth;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 using Xunit.Abstractions;
@@ -16,7 +20,7 @@ namespace Integration.Endpoints;
 
 public class FoodEndpointTest : IClassFixture<CustomWebApplicationFactory<Program>>
 {
-    private readonly HttpClient _httpClient;
+    private readonly HttpClient authHttpClient;
 
     private readonly ITestOutputHelper testOutputHelper;
     private readonly CustomWebApplicationFactory<Program> factory;
@@ -35,10 +39,24 @@ public class FoodEndpointTest : IClassFixture<CustomWebApplicationFactory<Progra
         var scopedServices = scope.ServiceProvider;
         dbContext = scopedServices.GetRequiredService<FoodDiaryDbContext>();
         DatabaseUtility.RestoreDatabase(dbContext);
-        _httpClient = factory.CreateClient(new WebApplicationFactoryClientOptions
+        var client = _factory.WithWebHostBuilder(builder =>
         {
-            AllowAutoRedirect = false
+            builder.ConfigureTestServices(services =>
+            {
+                services.AddAuthentication(defaultScheme: "TestScheme")
+                    .AddScheme<AuthenticationSchemeOptions, TestRegularUserAuthHandler>(
+                        "TestScheme", options => { });
+            });
+        })
+        .CreateClient(new WebApplicationFactoryClientOptions
+        {
+            AllowAutoRedirect = false,
         });
+
+        client.DefaultRequestHeaders.Authorization =
+            new AuthenticationHeaderValue(scheme: "TestScheme");
+
+        authHttpClient = client;
     }
 
     [Theory(DisplayName = "Get Food By Name")]
@@ -58,7 +76,7 @@ public class FoodEndpointTest : IClassFixture<CustomWebApplicationFactory<Progra
     [InlineData("cucumber")]
     public async Task GetFoodNameTest(string search)
     {
-        var response = await _httpClient.GetAsync($"/Food/find?Name={search}");
+        var response = await authHttpClient.GetAsync($"/Food/find?Name={search}");
         response.StatusCode.Should().Be(HttpStatusCode.OK);
 
         var stringResult = await response.Content.ReadAsStringAsync();
@@ -86,7 +104,7 @@ public class FoodEndpointTest : IClassFixture<CustomWebApplicationFactory<Progra
         NameValueCollection queryString = System.Web.HttpUtility.ParseQueryString(string.Empty);
 
         queryString.Add("name", search);
-        var response = await _httpClient.GetAsync($"/food/find?name={queryString}");
+        var response = await authHttpClient.GetAsync($"/food/find?name={queryString}");
         response.StatusCode.Should().Be(HttpStatusCode.OK);
         var stringResult = await response.Content.ReadAsStringAsync();
 
@@ -103,7 +121,7 @@ public class FoodEndpointTest : IClassFixture<CustomWebApplicationFactory<Progra
     [Fact]
     public async Task FindAllFoods()
     {
-        var response = await _httpClient.GetAsync("/food/all");
+        var response = await authHttpClient.GetAsync("/food/all");
         response.StatusCode.Should().Be(HttpStatusCode.OK);
         var stringResult = await response.Content.ReadAsStringAsync();
         var i = 0;
@@ -120,7 +138,5 @@ public class FoodEndpointTest : IClassFixture<CustomWebApplicationFactory<Progra
             food.Carbohydrates.Should().BeGreaterThanOrEqualTo(0);
             i++;
         }
-        testOutputHelper.WriteLine($">>>> {i} <<<<<<<< NUMBER OF FOODS TESTED");
     }
-
 }

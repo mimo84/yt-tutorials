@@ -16,7 +16,7 @@ namespace Integration.Endpoints.User;
 
 public class UserTest : IClassFixture<CustomWebApplicationFactory<Program>>
 {
-    private readonly HttpClient _httpClient;
+    private readonly HttpClient authHttpClient;
     private readonly CustomWebApplicationFactory<Program> factory;
     private readonly ITestOutputHelper testOutputHelper;
     private readonly JsonSerializerOptions jsonSerializerOptions = new()
@@ -45,13 +45,13 @@ public class UserTest : IClassFixture<CustomWebApplicationFactory<Program>>
         client.DefaultRequestHeaders.Authorization =
             new AuthenticationHeaderValue(scheme: "TestScheme");
 
-        _httpClient = client;
+        authHttpClient = client;
     }
 
     [Fact]
     public async Task CheckAuthAsync()
     {
-        var response = await _httpClient.GetAsync("/user");
+        var response = await authHttpClient.GetAsync("/user");
         response.StatusCode.Should().Be(HttpStatusCode.OK);
         var stringResult = await response.Content.ReadAsStringAsync();
         var result = JsonSerializer.Deserialize<UserDto>(stringResult, jsonSerializerOptions) ?? throw new Exception("Could not parse {stringResult}");

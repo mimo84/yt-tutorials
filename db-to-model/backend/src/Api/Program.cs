@@ -7,7 +7,9 @@ using FoodDiary.Data.Contexts;
 using FoodDiary.Data.Services;
 using FoodDiary.Infrastructure.Extensions;
 using Hellang.Middleware.ProblemDetails;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,7 +23,11 @@ IConfiguration config = new ConfigurationBuilder()
 builder.Services.AddIdentityServices(builder.Configuration);
 // Add services to the container.
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
-builder.Services.AddControllers();
+builder.Services.AddControllers(opt =>
+{
+    var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+    opt.Filters.Add(new AuthorizeFilter(policy));
+});
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
