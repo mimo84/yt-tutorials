@@ -1,8 +1,6 @@
 using FoodDiary.Api.Models;
 using FoodDiary.Core.Dto;
-using FoodDiary.Core.Entities;
 using FoodDiary.Core.Messages;
-using FoodDiary.Core.Services;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,10 +12,8 @@ public class FoodController : ControllerBase
 {
     private readonly IMediator mediator;
 
-    private readonly IFoodRepository foodRepository;
-    public FoodController(IFoodRepository _FoodRepository, IMediator _mediator)
+    public FoodController(IMediator _mediator)
     {
-        foodRepository = _FoodRepository;
         mediator = _mediator;
     }
 
@@ -26,14 +22,16 @@ public class FoodController : ControllerBase
         RequestEnvelope<FoodEnvelope<FoodWithAmountDto>> request,
         CancellationToken cancellationToken)
     {
-        await foodRepository.AddFoodWithAmountsAsync(request.Body.Food, cancellationToken);
+        var message = new AddFoodWithAmounts(request.Body);
+        await mediator.Send(message, cancellationToken);
         return new FoodEnvelope<bool>(true);
     }
 
     [HttpGet("find")]
-    public async Task<ActionResult<FoodEnvelope<List<Food>>>> FindFood([FromQuery] GetFoodsFromQuery query, CancellationToken cancellationToken)
+    public async Task<ActionResult<FoodEnvelope<List<FoodWithNutritionInfoDto>>>> FindFoodByName([FromQuery] GetFoodsFromQuery query, CancellationToken cancellationToken)
     {
-        return await mediator.Send(query, cancellationToken);
+        var message = new GetFoodsFromQuery(query.Name);
+        return await mediator.Send(message, cancellationToken);
     }
 
     [HttpGet("all")]

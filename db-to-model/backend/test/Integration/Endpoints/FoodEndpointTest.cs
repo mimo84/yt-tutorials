@@ -1,16 +1,12 @@
 using System.Collections.Specialized;
 using System.Net;
-using System.Net.Http.Headers;
+using System.Text;
 using System.Text.Json;
 using FluentAssertions;
 using FoodDiary.Core.Dto;
-using FoodDiary.Core.Entities;
 using FoodDiary.Data.Contexts;
 using Integration.Helpers;
 using Integration.Helpers.Auth;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 using Xunit.Abstractions;
@@ -59,17 +55,17 @@ public class FoodEndpointTest : IClassFixture<CustomWebApplicationFactory<Progra
     [InlineData("cucumber")]
     public async Task GetFoodNameTest(string search)
     {
-        var response = await authHttpClient.GetAsync($"/Food/find?Name={search}");
+        var response = await authHttpClient.GetAsync($"/food/find?Name={search}");
         response.StatusCode.Should().Be(HttpStatusCode.OK);
 
         var stringResult = await response.Content.ReadAsStringAsync();
-        var foodJson = JsonSerializer.Deserialize<FoodEnvelope<List<Food>>>(stringResult, jsonSerializerOptions) ?? throw new Exception($"Food {search} was not found");
+        var foodJson = JsonSerializer.Deserialize<FoodEnvelope<List<FoodWithNutritionInfoDto>>>(stringResult, jsonSerializerOptions) ?? throw new Exception($"Food {search} was not found");
 
         foodJson.Food.Count.Should().BeLessThanOrEqualTo(10, "we return up to 10 foods");
         foreach (var food in foodJson.Food)
         {
-            food.Name.ToLower().Should().Contain(search.ToLower());
-            food.FoodId.Should().BePositive();
+            food.FoodName.ToLower().Should().Contain(search.ToLower());
+            food.Amount.Should().BeGreaterThan(0);
         }
     }
 
@@ -91,12 +87,12 @@ public class FoodEndpointTest : IClassFixture<CustomWebApplicationFactory<Progra
         response.StatusCode.Should().Be(HttpStatusCode.OK);
         var stringResult = await response.Content.ReadAsStringAsync();
 
-        var foodJson = JsonSerializer.Deserialize<FoodEnvelope<List<Food>>>(stringResult, jsonSerializerOptions) ?? throw new Exception($"Food {search} was not found");
+        var foodJson = JsonSerializer.Deserialize<FoodEnvelope<List<FoodWithNutritionInfoDto>>>(stringResult, jsonSerializerOptions) ?? throw new Exception($"Food {search} was not found");
 
         foodJson.Food.Count.Should().BeLessThanOrEqualTo(10, "we return up to 10 foods");
         foreach (var food in foodJson.Food)
         {
-            food.Name.ToLower().Should().Be(expected.ToLower());
+            food.FoodName.ToLower().Should().Be(expected.ToLower());
             food.FoodId.Should().BePositive();
         }
     }
@@ -121,5 +117,54 @@ public class FoodEndpointTest : IClassFixture<CustomWebApplicationFactory<Progra
             food.Carbohydrates.Should().BeGreaterThanOrEqualTo(0);
             i++;
         }
+    }
+
+    [Fact]
+    public async void AddNewFood()
+    {
+        var foodName = "MyTestFoodName";
+        var payload = $@"{{
+            ""body"": {{
+                ""food"": {{
+                ""name"": ""{foodName}"",
+                ""foodAmount"": {{
+                    ""amount"": 130,
+                    ""protein"": 30,
+                    ""fat"": 10,
+                    ""carbohydrates"": 12,
+                    ""fiber"": 3,
+                    ""alcohol"": 0,
+                    ""sugar"": 1,
+                    ""saturatedFats"": 0.322,
+                    ""sodium"": 120,
+                    ""cholesterol"": 122,
+                    ""potassium"": 14,
+                    ""iron"": 12,
+                    ""calcium"": 126,
+                    ""source"": ""the testing process"",
+                    ""amountName"": ""my test foodName test""
+                    }}
+                }}
+            }}
+        }}";
+        HttpContent postContent = new StringContent(payload, Encoding.UTF8, "application/json");
+
+        var postResponse = await authHttpClient.PostAsync("/food/new", postContent);
+        postResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+
+        var requestResponse = await authHttpClient.GetAsync($"/food/find?Name={foodName}");
+        requestResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+        var stringResult = await requestResponse.Content.ReadAsStringAsync();
+
+        var foodJson = JsonSerializer.Deserialize<FoodEnvelope<List<FoodWithNutritionInfoDto>>>(stringResult, jsonSerializerOptions) ?? throw new Exception($"Food {foodName} was not found");
+
+        foodJson.Food.Count.Should().Be(1);
+        var insertedFood = foodJson.Food[0];
+        insertedFood.FoodName.Should().Be(foodName);
+        insertedFood.Amount.Should().Be(130);
+        insertedFood.Protein.Should().Be(30);
+        insertedFood.Fat.Should().Be(10);
+        insertedFood.Carbohydrates.Should().Be(12);
+        insertedFood.Calories.Should().BeGreaterThan(0);
     }
 }

@@ -1,6 +1,7 @@
 using FoodDiary.Core.Dto;
 using FoodDiary.Core.Entities;
 using FoodDiary.Core.Models;
+using FoodDiary.Infrastructure;
 
 namespace FoodDiary.Core.Mappers;
 
@@ -23,19 +24,19 @@ public static class MealsMapper
         var amount = food.FoodAmount.Amount;
         var ratio = Decimal.Divide(food.ConsumedAmount, amount);
 
-        var protein = ratio * food.FoodAmount.Protein;
-        var fat = ratio * food.FoodAmount.Fat;
-        var carbohydrates = ratio * food.FoodAmount.Carbohydrates;
-        var calories = 4 * protein + 8 * fat + 4 * carbohydrates;
+        var protein = ratio * food.FoodAmount.Protein ?? 0;
+        var fat = ratio * food.FoodAmount.Fat ?? 0;
+        var carbohydrates = ratio * food.FoodAmount.Carbohydrates ?? 0;
+        var calories = Helpers.CalculateCalories(protein, carbohydrates, fat);
 
         return new FoodInMealResponse(
           FoodId: food.FoodId,
           FoodName: food.Food.Name,
           ConsumedAmount: food.ConsumedAmount,
-          Fat: fat ?? 0,
-          Protein: protein ?? 0,
-          Carbohydrates: carbohydrates ?? 0,
-          Calories: calories ?? 0
+          Fat: fat,
+          Protein: protein,
+          Carbohydrates: carbohydrates,
+          Calories: calories
         );
     }
 }

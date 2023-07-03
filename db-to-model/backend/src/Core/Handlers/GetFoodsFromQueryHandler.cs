@@ -1,12 +1,11 @@
 using FoodDiary.Core.Dto;
-using FoodDiary.Core.Entities;
 using FoodDiary.Core.Messages;
 using FoodDiary.Core.Services;
 using MediatR;
 
 namespace FoodDiary.Core.Handlers;
 
-public class GetFoodsFromQueryHandler : IRequestHandler<GetFoodsFromQuery, FoodEnvelope<List<Food>>>
+public class GetFoodsFromQueryHandler : IRequestHandler<GetFoodsFromQuery, FoodEnvelope<List<FoodWithNutritionInfoDto>>>
 {
     private readonly IFoodRepository foodRepository;
     public GetFoodsFromQueryHandler(IFoodRepository _foodRepository)
@@ -14,10 +13,10 @@ public class GetFoodsFromQueryHandler : IRequestHandler<GetFoodsFromQuery, FoodE
         foodRepository = _foodRepository;
     }
 
-    public async Task<FoodEnvelope<List<Food>>> Handle(GetFoodsFromQuery request, CancellationToken cancellationToken)
+    public async Task<FoodEnvelope<List<FoodWithNutritionInfoDto>>> Handle(GetFoodsFromQuery request, CancellationToken cancellationToken)
     {
         var foods = await foodRepository.FindFood(request.Name, cancellationToken);
-        var result = new FoodEnvelope<List<Food>>(foods);
+        var result = new FoodEnvelope<List<FoodWithNutritionInfoDto>>(foods);
         return result;
     }
 }

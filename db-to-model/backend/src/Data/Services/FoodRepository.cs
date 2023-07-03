@@ -1,5 +1,6 @@
 using FoodDiary.Core.Dto;
 using FoodDiary.Core.Entities;
+using FoodDiary.Core.Extensions;
 using FoodDiary.Core.Mappers;
 using FoodDiary.Core.Services;
 using FoodDiary.Data.Contexts;
@@ -18,27 +19,27 @@ public class FoodRepository : IFoodRepository
     public async Task<List<FoodWithNutritionInfoDto>> GetAllFoods(CancellationToken cancellationToken)
     {
         var results = await dbContext.Foods.Include(f => f.FoodAmounts).ToListAsync(cancellationToken);
-        var resultsDto = results.Select(FoodMapper.MapToFoodWithNutritionalInfo).ToList();
+        var resultsDto = results.Select(f => f.AsDto()).ToList();
         return resultsDto;
     }
 
-    public async Task<List<Food>> FindFood(string search, CancellationToken cancellationToken)
+    public async Task<List<FoodWithNutritionInfoDto>> FindFood(string search, CancellationToken cancellationToken)
     {
-        IQueryable<Food> query = dbContext.Foods;
+        IQueryable<Food> query = dbContext.Foods.Include(f => f.FoodAmounts);
         var searchTerms = search.Split(' ').ToList();
-        foreach (var term in searchTerms)
+        foreach (var eachTerm in searchTerms)
         {
-            query = query.Where(f => EF.Functions.ILike(f.Name, '%' + term + '%'));
+            query = query.Where(f => EF.Functions.ILike(f.Name, '%' + eachTerm + '%'));
         }
 
         var results = await query.Take(10).ToListAsync(cancellationToken);
-        return results;
+        return results.Select(f => f.AsDto()).ToList();
     }
 
     public async Task AddFoodWithAmountsAsync(FoodWithAmountDto foodAmountDto, CancellationToken cancellationToken)
     {
         var alreadyThere = await dbContext.Foods.Where(f => f.Name == foodAmountDto.Name).AnyAsync(cancellationToken);
-        if (!alreadyThere)
+        if (alreadyThere)
         {
             return;
         }

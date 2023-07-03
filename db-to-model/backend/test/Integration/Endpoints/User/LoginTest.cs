@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Xunit;
 using Xunit.Abstractions;
+using Xunit.Sdk;
 using static Integration.ConfigureWebApplicationFactory;
 
 namespace Integration.Endpoints.User;
@@ -52,7 +53,7 @@ public class LoginTest : IClassFixture<CustomWebApplicationFactory<Program>>
         var token = result.Token;
         var handler = new JwtSecurityTokenHandler();
         var jsonToken = handler.ReadToken(token);
-        var tokenS = jsonToken as JwtSecurityToken;
+        var tokenS = jsonToken as JwtSecurityToken ?? throw new XunitException("Token could not be found");
         tokenS.Claims.First(claim => claim.Type == "unique_name").Value.Should().Be("mimo");
         tokenS.Claims.First(claim => claim.Type == "nameid").Value.Should().NotBeNullOrWhiteSpace();
         tokenS.Claims.First(claim => claim.Type == "email").Value.Should().Be("mimo@email.com");
