@@ -1,11 +1,8 @@
 using FoodDiary.Core.Dto;
-using FoodDiary.Core.Entities;
-using FoodDiary.Core.Mappers;
+using FoodDiary.Core.Messages;
 using FoodDiary.Core.Models;
-using FoodDiary.Core.Repositories;
-using FoodDiary.Data.Contexts;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace FoodDiary.Api.Controllers;
 
@@ -13,49 +10,39 @@ namespace FoodDiary.Api.Controllers;
 [Route("[controller]")]
 public class DiaryController : ControllerBase
 {
-    private readonly FoodDiaryDbContext dbContext;
-    private readonly IDiaryRepository diaryHandler;
-    public DiaryController(FoodDiaryDbContext _dbContext, IDiaryRepository _diaryHandler)
+    private readonly IMediator mediator;
+    public DiaryController(IMediator _mediator)
     {
-        dbContext = _dbContext;
-        diaryHandler = _diaryHandler;
+        mediator = _mediator;
     }
 
     [HttpGet("get", Name = "diaries")]
-    public async Task<ActionResult<DiariesResponse>> Get(CancellationToken cancellationToken)
+    public async Task<DiaryEnvelope<DiariesResponse>> Get(CancellationToken cancellationToken)
     {
-        var diaries = await dbContext.
-            Diaries.OrderByDescending(d => d.Date)
-                .Include(d => d.Meals)
-                .ThenInclude(m => m.FoodMeals)
-                .ThenInclude(f => f.Food)
-                .ThenInclude(f => f.FoodAmounts)
-                .ToListAsync(cancellationToken);
-
-        var result = DiariesMapper.MapFromDiariesEntity(diaries);
-        return result;
+        var message = new GetAllDiaries();
+        var response = await mediator.Send(message, cancellationToken);
+        return response;
     }
 
     [HttpGet("get/{id:int}", Name = "diary_by_id")]
-    public async Task<Diary> Get(int id)
+    public async Task<DiaryEnvelope<DiaryResponse>> Get(int id, CancellationToken cancellationToken)
     {
-        var diaries = await dbContext.Diaries.Where(d => d.DiaryId == id).SingleOrDefaultAsync();
-        return diaries;
+        var message = new GetDiaryById(id);
+        var response = await mediator.Send(message, cancellationToken);
+        return response;
     }
 
     [HttpPost(Name = "add_diary")]
     public async Task<bool> AddDiary(DiaryIngressDto diaryEntryDto, CancellationToken cancellationToken)
     {
-        await diaryHandler.CreateFullDiaryAsync(diaryEntryDto, cancellationToken);
-
-        return true;
+        var message = new AddNewDiary(diaryEntryDto);
+        return await mediator.Send(message, cancellationToken);
     }
 
     [HttpPost("by_food_name", Name = "add_diary_food_names")]
     public async Task<bool> AddDiaryByFoodName(DiaryIngressWithFoodNamesDto diaryEntryDto, CancellationToken cancellationToken)
     {
-        await diaryHandler.CreateFullDiaryWithNamesAsync(diaryEntryDto, cancellationToken);
-
-        return true;
+        var message = new AddNewDiaryWithFoodNames(diaryEntryDto);
+        return await mediator.Send(message, cancellationToken);
     }
 }

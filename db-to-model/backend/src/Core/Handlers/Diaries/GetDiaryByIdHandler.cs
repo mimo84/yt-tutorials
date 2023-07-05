@@ -1,14 +1,24 @@
+using FoodDiary.Core.Mappers;
+using FoodDiary.Core.Messages;
 using FoodDiary.Core.Models;
 using FoodDiary.Core.Repositories;
 using MediatR;
 
 namespace FoodDiary.Core.Handlers.Diaries;
 
-public class GetDiaryByIdHandler : IRequest<DiaryEnvelope<DiaryResponse>>
+public class GetDiaryByIdHandler : IRequestHandler<GetDiaryById, DiaryEnvelope<DiaryResponse>>
 {
-    private readonly IDiaryRepository diaryHandler;
-    public GetDiaryByIdHandler(IDiaryRepository _diaryHandler)
+    private readonly IDiaryRepository diaryRepository;
+    public GetDiaryByIdHandler(IDiaryRepository _diaryRepository)
     {
-        diaryHandler = _diaryHandler;
+        diaryRepository = _diaryRepository;
+    }
+
+    public async Task<DiaryEnvelope<DiaryResponse>> Handle(GetDiaryById request, CancellationToken cancellationToken)
+    {
+        var diary = await diaryRepository.GetDiaryById(request.Id, cancellationToken);
+        var diaryResponse = DiariesMapper.MapFromDiaryEntity(diary);
+        var result = new DiaryEnvelope<DiaryResponse>(diaryResponse);
+        return result;
     }
 }

@@ -14,6 +14,24 @@ public class DiaryRepository : IDiaryRepository
         dbContext = _dbContext;
     }
 
+    public async Task<Diary> GetDiaryById(int id, CancellationToken cancellationToken)
+    {
+        var diary = await dbContext.Diaries.Where(d => d.DiaryId == id).SingleAsync(cancellationToken);
+        return diary;
+    }
+
+    public async Task<List<Diary>> GetAllDiaries(CancellationToken cancellationToken)
+    {
+        var diaries = await dbContext.Diaries.OrderByDescending(d => d.Date)
+                    .Include(d => d.Meals)
+                    .ThenInclude(m => m.FoodMeals)
+                    .ThenInclude(f => f.Food)
+                    .ThenInclude(f => f.FoodAmounts)
+                    .ToListAsync(cancellationToken);
+
+        return diaries;
+    }
+
     public async Task<bool> CreateFullDiaryAsync(DiaryIngressDto diaryEntryDto, CancellationToken cancellationToken)
     {
         DateOnly diaryDate = new(diaryEntryDto.Date.Year, diaryEntryDto.Date.Month, diaryEntryDto.Date.Day);
