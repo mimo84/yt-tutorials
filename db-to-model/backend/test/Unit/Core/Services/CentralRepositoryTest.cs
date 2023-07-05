@@ -1,7 +1,6 @@
 using FluentAssertions;
 using FoodDiary.Core.Dto;
-using FoodDiary.Core.Entities;
-using FoodDiary.Core.Services;
+using FoodDiary.Core.Repositories;
 using Moq;
 using Xunit;
 

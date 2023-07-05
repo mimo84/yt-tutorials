@@ -1,8 +1,8 @@
 using FoodDiary.Core.Dto;
 
-namespace FoodDiary.Core.Services;
+namespace FoodDiary.Core.Repositories;
 
-public interface IUserHandler
+public interface IUserRepository
 {
     public Task<UserDto> CreateAsync(NewUserDto newUser, CancellationToken cancellationToken);
 

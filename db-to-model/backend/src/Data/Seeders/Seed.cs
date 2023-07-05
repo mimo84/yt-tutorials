@@ -4,7 +4,7 @@ using FoodDiary.Data.Contexts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace FoodDiary.Data.Services;
+namespace FoodDiary.Data.Seeders;
 
 public class Seed
 {

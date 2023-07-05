@@ -1,8 +1,8 @@
 using FoodDiary.Core.Dto;
 
-namespace FoodDiary.Core.Services;
+namespace FoodDiary.Core.Repositories;
 
-public interface IDiaryHandler
+public interface IDiaryRepository
 {
     public Task<bool> CreateFullDiaryAsync(DiaryIngressDto diaryEntryDto, CancellationToken cancellationToken);
 

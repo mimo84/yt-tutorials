@@ -1,9 +1,9 @@
 using FoodDiary.Core.Dto;
 using FoodDiary.Core.Messages;
-using FoodDiary.Core.Services;
+using FoodDiary.Core.Repositories;
 using MediatR;
 
-namespace FoodDiary.Core.Handlers;
+namespace FoodDiary.Core.Handlers.Foods;
 
 public class GetFoodsFromQueryHandler : IRequestHandler<GetFoodsFromQuery, FoodEnvelope<List<FoodWithNutritionInfoDto>>>
 {

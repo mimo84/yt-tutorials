@@ -1,8 +1,8 @@
 using FoodDiary.Core.Messages;
-using FoodDiary.Core.Services;
+using FoodDiary.Core.Repositories;
 using MediatR;
 
-namespace FoodDiary.Core.Handlers;
+namespace FoodDiary.Core.Handlers.Foods;
 
 public class AddFoodWithAmountsHandler : IRequestHandler<AddFoodWithAmounts, Task>
 {

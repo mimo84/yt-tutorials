@@ -1,6 +1,6 @@
 using FoodDiary.Core.Dto;
 using FoodDiary.Core.Entities;
-using FoodDiary.Infrastructure;
+using FoodDiary.Core.Helpers;
 
 namespace FoodDiary.Core.Extensions;
 
@@ -12,7 +12,7 @@ public static class FoodExtensions
         var protein = nutritionInfo.Protein ?? 0;
         var fat = nutritionInfo.Fat ?? 0;
         var carbohydrates = nutritionInfo.Carbohydrates ?? 0;
-        var calories = Helpers.CalculateCalories(protein, carbohydrates, fat);
+        var calories = Nutrition.CalculateCalories(protein, carbohydrates, fat);
         return new FoodWithNutritionInfoDto(
           food.FoodId,
           food.Name,

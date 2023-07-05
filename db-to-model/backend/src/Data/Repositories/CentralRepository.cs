@@ -1,13 +1,13 @@
 using FoodDiary.Core.Dto;
 using FoodDiary.Core.Entities;
-using FoodDiary.Core.Services;
+using FoodDiary.Core.Repositories;
 using FoodDiary.Data.Contexts;
 using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace FoodDiary.Data.Services;
+namespace FoodDiary.Data.Repositories;
 
 public class CentralRepository : ICentralRepository
 {

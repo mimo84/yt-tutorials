@@ -1,9 +1,11 @@
 using FoodDiary.Api.Extensions;
 using FoodDiary.Core.Dto;
 using FoodDiary.Core.Entities;
-using FoodDiary.Core.Handlers;
-using FoodDiary.Core.Services;
+using FoodDiary.Core.Handlers.Foods;
+using FoodDiary.Core.Repositories;
 using FoodDiary.Data.Contexts;
+using FoodDiary.Data.Repositories;
+using FoodDiary.Data.Seeders;
 using FoodDiary.Data.Services;
 using FoodDiary.Infrastructure.Extensions;
 using Hellang.Middleware.ProblemDetails;
@@ -78,9 +80,9 @@ builder.Services.AddCors(opt =>
             });
 
 builder.Services.AddScoped<ICentralRepository, CentralRepository>();
-builder.Services.AddScoped<IDiaryHandler, DiaryHandler>();
+builder.Services.AddScoped<IDiaryRepository, DiaryRepository>();
 builder.Services.AddScoped<IFoodRepository, FoodRepository>();
-builder.Services.AddScoped<IUserHandler, UserHandler>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddMediatR(cfg =>
 {

@@ -1,18 +1,19 @@
 using FoodDiary.Core.Dto;
 using FoodDiary.Core.Entities;
+using FoodDiary.Core.Repositories;
 using FoodDiary.Core.Services;
 using Microsoft.AspNetCore.Identity;
 
-namespace FoodDiary.Data.Services;
+namespace FoodDiary.Data.Repositories;
 
-public class UserHandler : IUserHandler
+public class UserRepository : IUserRepository
 {
     private readonly ICentralRepository repository;
     private readonly UserManager<AppUser> userManager;
 
     private readonly ITokenService tokenService;
 
-    public UserHandler(ICentralRepository _repository, UserManager<AppUser> _userManager, ITokenService _tokenService)
+    public UserRepository(ICentralRepository _repository, UserManager<AppUser> _userManager, ITokenService _tokenService)
     {
         repository = _repository;
         userManager = _userManager;

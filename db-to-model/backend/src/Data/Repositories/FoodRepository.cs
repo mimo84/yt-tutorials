@@ -2,11 +2,11 @@ using FoodDiary.Core.Dto;
 using FoodDiary.Core.Entities;
 using FoodDiary.Core.Extensions;
 using FoodDiary.Core.Mappers;
-using FoodDiary.Core.Services;
+using FoodDiary.Core.Repositories;
 using FoodDiary.Data.Contexts;
 using Microsoft.EntityFrameworkCore;
 
-namespace FoodDiary.Data.Services;
+namespace FoodDiary.Data.Repositories;
 
 public class FoodRepository : IFoodRepository
 {

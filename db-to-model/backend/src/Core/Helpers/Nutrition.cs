@@ -1,6 +1,6 @@
-namespace FoodDiary.Infrastructure;
+namespace FoodDiary.Core.Helpers;
 
-public static class Helpers
+public static class Nutrition
 {
     public static decimal CalculateCalories(decimal Protein, decimal Carbohydrates, decimal Fat)
     {

@@ -1,6 +1,6 @@
 using System.Security.Claims;
 using FoodDiary.Core.Dto;
-using FoodDiary.Core.Services;
+using FoodDiary.Core.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,8 +12,8 @@ namespace FoodDiary.Api.Controllers;
 public class UserController : ControllerBase
 {
     private readonly ICentralRepository centralRepository;
-    private readonly IUserHandler userHandler;
-    public UserController(ICentralRepository _centralRepository, IUserHandler _userHandler)
+    private readonly IUserRepository userHandler;
+    public UserController(ICentralRepository _centralRepository, IUserRepository _userHandler)
     {
         centralRepository = _centralRepository;
         userHandler = _userHandler;

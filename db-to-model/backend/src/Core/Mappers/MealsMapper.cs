@@ -1,7 +1,7 @@
 using FoodDiary.Core.Dto;
 using FoodDiary.Core.Entities;
+using FoodDiary.Core.Helpers;
 using FoodDiary.Core.Models;
-using FoodDiary.Infrastructure;
 
 namespace FoodDiary.Core.Mappers;
 
@@ -27,7 +27,7 @@ public static class MealsMapper
         var protein = ratio * food.FoodAmount.Protein ?? 0;
         var fat = ratio * food.FoodAmount.Fat ?? 0;
         var carbohydrates = ratio * food.FoodAmount.Carbohydrates ?? 0;
-        var calories = Helpers.CalculateCalories(protein, carbohydrates, fat);
+        var calories = Nutrition.CalculateCalories(protein, carbohydrates, fat);
 
         return new FoodInMealResponse(
           FoodId: food.FoodId,

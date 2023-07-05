@@ -2,7 +2,7 @@ using FoodDiary.Core.Dto;
 using FoodDiary.Core.Entities;
 using FoodDiary.Core.Mappers;
 using FoodDiary.Core.Models;
-using FoodDiary.Core.Services;
+using FoodDiary.Core.Repositories;
 using FoodDiary.Data.Contexts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,8 +14,8 @@ namespace FoodDiary.Api.Controllers;
 public class DiaryController : ControllerBase
 {
     private readonly FoodDiaryDbContext dbContext;
-    private readonly IDiaryHandler diaryHandler;
-    public DiaryController(FoodDiaryDbContext _dbContext, IDiaryHandler _diaryHandler)
+    private readonly IDiaryRepository diaryHandler;
+    public DiaryController(FoodDiaryDbContext _dbContext, IDiaryRepository _diaryHandler)
     {
         dbContext = _dbContext;
         diaryHandler = _diaryHandler;

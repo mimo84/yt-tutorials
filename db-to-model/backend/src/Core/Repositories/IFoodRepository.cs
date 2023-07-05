@@ -1,6 +1,6 @@
 using FoodDiary.Core.Dto;
 
-namespace FoodDiary.Core.Services;
+namespace FoodDiary.Core.Repositories;
 
 public interface IFoodRepository
 {

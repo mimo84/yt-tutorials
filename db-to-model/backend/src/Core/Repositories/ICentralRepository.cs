@@ -1,7 +1,7 @@
 using FoodDiary.Core.Dto;
 using FoodDiary.Core.Entities;
 
-namespace FoodDiary.Core.Services;
+namespace FoodDiary.Core.Repositories;
 
 public interface ICentralRepository
 {

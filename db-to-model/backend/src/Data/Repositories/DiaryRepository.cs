@@ -1,15 +1,15 @@
 using FoodDiary.Core.Dto;
 using FoodDiary.Core.Entities;
-using FoodDiary.Core.Services;
+using FoodDiary.Core.Repositories;
 using FoodDiary.Data.Contexts;
 using Microsoft.EntityFrameworkCore;
 
-namespace FoodDiary.Data.Services;
+namespace FoodDiary.Data.Repositories;
 
-public class DiaryHandler : IDiaryHandler
+public class DiaryRepository : IDiaryRepository
 {
     private readonly FoodDiaryDbContext dbContext;
-    public DiaryHandler(FoodDiaryDbContext _dbContext)
+    public DiaryRepository(FoodDiaryDbContext _dbContext)
     {
         dbContext = _dbContext;
     }
