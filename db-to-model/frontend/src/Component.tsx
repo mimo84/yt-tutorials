@@ -1,7 +1,8 @@
-import { Fragment } from "preact";
+
 import { Combobox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
-import { useState } from "preact/hooks";
+import { Fragment, useState } from "react";
+
 
 type Person = { id: number; name: string };
 const people: Person[] = [
@@ -60,7 +61,7 @@ export default function Component() {
                 filteredPeople.map((person) => (
                   <Combobox.Option
                     key={person.id}
-                    className={({ active }: { active: Boolean }) =>
+                    className={({ active }: { active: boolean }) =>
                       `relative cursor-default select-none py-2 pl-10 pr-4 ${
                         active ? "bg-teal-600 text-white" : "text-gray-900"
                       }`
@@ -71,8 +72,8 @@ export default function Component() {
                       selected,
                       active,
                     }: {
-                      selected: Boolean;
-                      active: Boolean;
+                      selected: boolean;
+                      active: boolean;
                     }) => (
                       <>
                         <span

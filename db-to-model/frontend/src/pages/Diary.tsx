@@ -1,11 +1,11 @@
-import { useEffect, useState } from "preact/hooks";
+import { useEffect, useState } from "react";
 import { DiaryWithMeals, getDiary } from "../api/diary";
 
 export function Diary() {
   const [loading, setLoading] = useState(false);
   const [diary, setDiary] = useState<DiaryWithMeals>({ diaries: [] });
 
-  useEffect(() => {
+  useEffect( () => {
     const controller = new AbortController();
     const { signal } = controller;
 
@@ -18,10 +18,10 @@ export function Diary() {
         }
         setDiary(fetchedDiary);
         setLoading(false);
-      } catch {}
+      } catch { /* empty */ }
     };
 
-    initArticles();
+     void initArticles();
 
     return () => {
       controller.abort();
