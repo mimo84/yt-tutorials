@@ -1,18 +1,43 @@
-import About from "./pages/About";
-import { Diary } from "./pages/Diary";
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
-import Home from "./pages/Home";
+import About from './pages/About'
+import { Diary } from './pages/Diary'
+import {
+  RouterProvider,
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+} from 'react-router-dom'
+import Home from './pages/Home'
+import Layout from './components/Layout/Layout'
+import NotFound from './pages/NotFound'
+import Login from './pages/Login'
+import { AuthProvider } from './components/Auth/AuthProvider'
+import RequireAuth from './components/Auth/RequireAuth'
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/" element={<Layout />}>
+      <Route index element={<Home />} />
+      <Route path="about" element={<About />} />
+      <Route path="login" element={<Login />} />
+      <Route
+        path="/protected/diary"
+        element={
+          <RequireAuth>
+            <Diary />
+          </RequireAuth>
+        }
+      />
+      <Route path="/" element={<Home />} />
+      <Route path="/about" element={<About />} />
+      <Route path="*" element={<NotFound />} />
+    </Route>
+  )
+)
+
 export function App() {
   return (
-    <BrowserRouter>
-      <Link className="mr-1" to="/">Home</Link>
-      <Link className="mr-1" to="/about">About</Link>
-      <Link className="mr-1" to="/diary">Diary</Link>
-      <Routes>
-        <Route path="/" element={<Home />}/>
-        <Route path="/about" element={<About />}/>
-        <Route path="/diary" element={<Diary />}/>
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   )
 }

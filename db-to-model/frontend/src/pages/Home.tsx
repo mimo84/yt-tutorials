@@ -1,8 +1,15 @@
-function Home(){
-  return <>
-    <h2>Home</h2>
-    <p>Welcome to the food diary project!</p>
-  </>
+import PageBody from '../components/Layout/PageBody'
+import PageHeading from '../components/Layout/PageHeading'
+
+function Home() {
+  return (
+    <>
+      <PageHeading>Home</PageHeading>
+      <PageBody>
+        <p>Welcome to the food diary project!</p>
+      </PageBody>
+    </>
+  )
 }
 
-export default Home;
+export default Home

@@ -1,5 +1,12 @@
-import { render } from "react-dom";
-import { App } from "./app.tsx";
-import "./index.css";
+import ReactDOM from 'react-dom/client'
+import { App } from './app.tsx'
+import './index.css'
+import React from 'react'
 
-render(<App />, document.getElementById("app") as HTMLElement);
+const rootNode = document.getElementById('app') as HTMLElement
+
+ReactDOM.createRoot(rootNode).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+)

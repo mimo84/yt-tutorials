@@ -1,92 +1,102 @@
-import { useEffect, useState } from "react";
-import { DiaryWithMeals, getDiary } from "../api/diary";
+import { useEffect, useState } from 'react'
+import { DiaryWithMeals, getDiary } from '../api/diary'
+import PageBody from '../components/Layout/PageBody'
+import PageHeading from '../components/Layout/PageHeading'
+import Loading from '../components/Loading/Loading'
 
 export function Diary() {
-  const [loading, setLoading] = useState(false);
-  const [diary, setDiary] = useState<DiaryWithMeals>({ diaries: [] });
+  const [loading, setLoading] = useState(false)
+  const [diary, setDiary] = useState<DiaryWithMeals>({ diary: { diaries: [] } })
 
-  useEffect( () => {
-    const controller = new AbortController();
-    const { signal } = controller;
+  useEffect(() => {
+    const controller = new AbortController()
+    const { signal } = controller
 
-    const initArticles = async () => {
-      setLoading(true);
+    const initDiaries = async () => {
+      setLoading(true)
       try {
-        const fetchedDiary = await getDiary(signal);
+        const fetchedDiary = await getDiary(signal)
         if (!fetchedDiary) {
-          throw new Error("Could not fetch diaries");
+          throw new Error('Could not fetch diaries')
         }
-        setDiary(fetchedDiary);
-        setLoading(false);
-      } catch { /* empty */ }
-    };
+        setDiary(fetchedDiary)
+        setLoading(false)
+      } catch {
+        /* empty */
+      }
+    }
 
-     void initArticles();
+    void initDiaries()
 
     return () => {
-      controller.abort();
-    };
-  }, []);
+      controller.abort()
+    }
+  }, [])
 
   if (loading) {
-    return <h1>Loading...</h1>;
+    return <Loading />
   }
 
-  const { diaries } = diary;
+  const {
+    diary: { diaries },
+  } = diary
 
   return (
     <>
-      {diaries.map((d) => {
-        return (
-          <table className={"mt-6"} key={d.diaryId}>
-            <thead>
-              <tr>
-                <td colSpan={6} className={"bg-green-100"}>
-                  Diary of {d.diaryDate} - {Math.round(d.caloriesInDiary)}
-                </td>
-              </tr>
-            </thead>
-            <tbody>
-              {d.meals.map((m) => {
-                return (
-                  <>
-                    <tr key={m.mealId}>
-                      <td colSpan={6} className={"bg-slate-200"}>
-                        {m.mealName} - {m.caloriesInMeal}
-                      </td>
-                    </tr>
+      <PageHeading>Diary</PageHeading>
+      <PageBody>
+        {diaries.map((d) => {
+          return (
+            <table className={'mt-6'} key={d.diaryId}>
+              <thead>
+                <tr>
+                  <td colSpan={6} className={'bg-green-100'}>
+                    Diary of {d.diaryDate} - {Math.round(d.caloriesInDiary)}
+                  </td>
+                </tr>
+              </thead>
+              <tbody>
+                {d.meals.map((m) => {
+                  return (
+                    <>
+                      <tr key={m.mealId}>
+                        <td colSpan={6} className={'bg-slate-200'}>
+                          {m.mealName} - {m.caloriesInMeal}
+                        </td>
+                      </tr>
 
-                    {m.foodInMealResponse.map((f) => {
-                      return (
-                        <tr key={f.foodId}>
-                          <td className={"border-r-4 border-green-500"}>
-                            {f.foodName}
-                          </td>
-                          <td className={"border-r-4 border-green-500"}>
-                            {f.consumedAmount}
-                          </td>
-                          <td className={"border-r-4 border-green-500"}>
-                            {f.carbohydrates}
-                          </td>
-                          <td className={"border-r-4 border-green-500"}>
-                            {f.protein}
-                          </td>
-                          <td className={"border-r-4 border-green-500"}>
-                            {f.fat}
-                          </td>
-                          <td className={"border-r-4 border-green-500"}>
-                            {f.calories}
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </>
-                );
-              })}
-            </tbody>
-          </table>
-        );
-      })}
+                      {m.foodInMealResponse.map((f) => {
+                        return (
+                          <tr key={f.foodId}>
+                            <td className={'border-r-4 border-green-500'}>
+                              {f.foodName}
+                            </td>
+                            <td className={'border-r-4 border-green-500'}>
+                              {f.consumedAmount}
+                            </td>
+                            <td className={'border-r-4 border-green-500'}>
+                              {f.carbohydrates}
+                            </td>
+                            <td className={'border-r-4 border-green-500'}>
+                              {f.protein}
+                            </td>
+                            <td className={'border-r-4 border-green-500'}>
+                              {f.fat}
+                            </td>
+                            <td className={'border-r-4 border-green-500'}>
+                              {f.calories}
+                            </td>
+                          </tr>
+                        )
+                      })}
+                    </>
+                  )
+                })}
+              </tbody>
+            </table>
+          )
+        })}
+      </PageBody>
     </>
-  );
+  )
 }
