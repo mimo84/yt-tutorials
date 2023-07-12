@@ -11,12 +11,12 @@ export default function DesktopNavigation() {
         <Link to="/">
           <img
             className="block h-8 w-auto lg:hidden"
-            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+            src="https://tailwindui.com/img/logos/mark.svg?color=red&shade=600"
             alt="Your Company"
           />
           <img
             className="hidden h-8 w-auto lg:block"
-            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+            src="https://tailwindui.com/img/logos/mark.svg?color=red&shade=600"
             alt="Your Company"
           />
         </Link>
@@ -27,8 +27,8 @@ export default function DesktopNavigation() {
           className={({ isActive }) =>
             classNames(
               isActive
-                ? 'border-indigo-500 text-gray-900'
-                : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700',
+                ? 'text-skin-accent border-skin-fill'
+                : 'hover:border-background-fill text-skin-accent border-transparent hover:text-skin-hover',
               'inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium'
             )
           }
@@ -41,8 +41,8 @@ export default function DesktopNavigation() {
             className={({ isActive }) =>
               classNames(
                 isActive
-                  ? 'border-indigo-500 text-gray-900'
-                  : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700',
+                  ? 'text-skin-accent border-skin-fill'
+                  : 'hover:border-background-fill text-skin-accent border-transparent hover:text-skin-hover',
                 'inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium'
               )
             }
@@ -55,8 +55,8 @@ export default function DesktopNavigation() {
           className={({ isActive }) =>
             classNames(
               isActive
-                ? 'border-indigo-500 text-gray-900'
-                : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700',
+                ? 'text-skin-accent border-skin-fill'
+                : 'hover:border-background-fill text-skin-accent border-transparent hover:text-skin-hover',
               'inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium'
             )
           }

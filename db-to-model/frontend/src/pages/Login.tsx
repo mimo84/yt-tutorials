@@ -1,13 +1,12 @@
 import { useNavigate, useLocation } from 'react-router-dom'
 import { AuthProps } from '../components/Auth/AuthProvider'
 import { useAuth } from '../components/Auth/useAuth'
-
+import imgUrl from '../images/healthy-food-bg-white.jpg'
 interface LocationState {
   from?: {
     pathname?: string
   }
 }
-
 export default function Login() {
   const navigate = useNavigate()
   const location = useLocation()
@@ -191,9 +190,13 @@ export default function Login() {
         <div className="relative hidden w-0 flex-1 lg:block">
           <img
             className="absolute inset-0 h-full w-full object-cover"
-            src="https://images.unsplash.com/photo-1496917756835-20cb06e75b4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1908&q=80"
+            src={imgUrl}
             alt=""
           />
+          <a href="https://www.freepik.com/free-photo/buddha-bowl-dish-with-vegetables-legumes-top-view_13807905.htm#query=healthy%20food&position=1&from_view=search&track=ais">
+            Image by jcomp
+          </a>{' '}
+          on Freepik
         </div>
       </div>
     </>

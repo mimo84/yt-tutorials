@@ -1,3 +1,77 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --color-fill: 250 169 22; /* orange */
+    --color-primary: 251 255 254; /* white */
+    --color-accent: 109 103 110; /* grey */
+    --color-contrast: 27 27 30; /* black */
+    --color-secondary: 150 3 26; /* carmine */
+
+    --color-text-base: var(--color-primary);
+    --color-text-muted: var(--color-contrast);
+    --color-text-inverted: var(--color-accent);
+    --color-text-hover: var(--color-secondary);
+
+    --color-bg-fill: var(--color-fill);
+    --color-bg-accent: var(--color-accent);
+    --color-bg-primary: var(--color-primary);
+
+    --color-border-fill: var(--color-secondary);
+    --color-border-accent: var(--color-accent);
+
+    --color-ring-base: var(--color-accent);
+    --color-ring-focus: var(--color-secondary);
+    --color-ring-text: var(--color-contrast);
+  }
+
+  .theme-lake {
+    --color-fill: 102 199 244; /* cyan */
+    --color-primary: 251 255 254; /* white */
+    --color-accent: 255 16 83; /* magenta */
+    --color-contrast: 27 27 30; /* black */
+    --color-secondary: 255 255 255; /* carmine */
+
+    --color-text-base: var(--color-primary);
+    --color-text-muted: var(--color-contrast);
+    --color-text-inverted: var(--color-accent);
+    --color-text-hover: var(--color-secondary);
+
+    --color-bg-fill: var(--color-fill);
+    --color-bg-accent: var(--color-accent);
+    --color-bg-primary: var(--color-primary);
+
+    --color-border-fill: var(--color-secondary);
+    --color-border-accent: var(--color-accent);
+
+    --color-ring-base: var(--color-accent);
+    --color-ring-focus: var(--color-secondary);
+    --color-ring-text: var(--color-contrast);
+  }
+
+  .theme-summer {
+    --color-fill: 242 87 87; /* red-orange */
+    --color-primary: 242 232 99; /* maize */
+    --color-accent: 97 232 225; /* cyan */
+    --color-contrast: 234 242 227; /* icy-white */
+    --color-secondary: 242 205 96; /* yellow */
+
+    --color-text-base: var(--color-primary);
+    --color-text-muted: var(--color-contrast);
+    --color-text-inverted: var(--color-accent);
+    --color-text-hover: var(--color-secondary);
+
+    --color-bg-fill: var(--color-fill);
+    --color-bg-accent: var(--color-accent);
+    --color-bg-primary: var(--color-primary);
+
+    --color-border-fill: var(--color-secondary);
+    --color-border-accent: var(--color-accent);
+
+    --color-ring-base: var(--color-accent);
+    --color-ring-focus: var(--color-secondary);
+    --color-ring-text: var(--color-contrast);
+  }
+}
