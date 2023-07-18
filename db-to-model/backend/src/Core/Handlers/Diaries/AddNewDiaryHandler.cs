@@ -14,7 +14,7 @@ public class AddNewDiaryHandler : IRequestHandler<AddNewDiary, bool>
 
     public async Task<bool> Handle(AddNewDiary request, CancellationToken cancellationToken)
     {
-        await diaryRepository.CreateFullDiaryAsync(request.Request, cancellationToken);
+        await diaryRepository.CreateFullDiaryAsync(request.Request, request.User, cancellationToken);
 
         return true;
     }

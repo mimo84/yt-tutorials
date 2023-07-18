@@ -12,11 +12,11 @@ namespace FoodDiary.Api.Controllers;
 public class UserController : ControllerBase
 {
     private readonly ICentralRepository centralRepository;
-    private readonly IUserRepository userHandler;
-    public UserController(ICentralRepository _centralRepository, IUserRepository _userHandler)
+    private readonly IUserRepository userRepository;
+    public UserController(ICentralRepository _centralRepository, IUserRepository _userRepository)
     {
         centralRepository = _centralRepository;
-        userHandler = _userHandler;
+        userRepository = _userRepository;
     }
 
     [AllowAnonymous]
@@ -29,7 +29,7 @@ public class UserController : ControllerBase
 
         await centralRepository.CheckUserAsync(user, loginDto.Password);
 
-        return await userHandler.LoginAsync(loginDto, cancellationToken);
+        return await userRepository.LoginAsync(loginDto, cancellationToken);
     }
 
     [AllowAnonymous]
@@ -50,13 +50,13 @@ public class UserController : ControllerBase
 
         await centralRepository.AddUserAsync(registerDto, cancellationToken);
         var loginDto = new LoginUserDto(Email: registerDto.Email, Password: registerDto.Password);
-        return await userHandler.LoginAsync(loginDto, cancellationToken);
+        return await userRepository.LoginAsync(loginDto, cancellationToken);
     }
 
     [HttpGet]
     public async Task<ActionResult<UserDto>> GetCurrentUser(CancellationToken cancellationToken)
     {
-        var user = await userHandler.GetAsync(User.FindFirstValue(ClaimTypes.Email), cancellationToken);
+        var user = await userRepository.GetAsync(User.FindFirstValue(ClaimTypes.Email), cancellationToken);
         return user;
     }
 }

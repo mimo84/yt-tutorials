@@ -10,7 +10,7 @@ public interface IDiaryRepository
 
     public Task<List<Diary>> GetAllDiaries(CancellationToken cancellationToken);
 
-    public Task<bool> CreateFullDiaryAsync(DiaryIngressDto diaryEntryDto, CancellationToken cancellationToken);
+    public Task<bool> CreateFullDiaryAsync(DiaryIngressDto diaryEntryDto, AppUser user, CancellationToken cancellationToken);
 
-    public Task<bool> CreateFullDiaryWithNamesAsync(DiaryIngressWithFoodNamesDto diaryEntryDto, CancellationToken cancellationToken);
+    public Task<bool> CreateFullDiaryWithNamesAsync(DiaryIngressWithFoodNamesDto diaryEntryDto, AppUser user, CancellationToken cancellationToken);
 }

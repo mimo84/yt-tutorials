@@ -6,7 +6,7 @@ public partial class Diary
 {
     public int DiaryId { get; set; }
 
-    public DateOnly Date { get; set; }
+    public DateTime Date { get; set; }
 
     [Column("user_id")]
     public string AppUserId { get; set; }

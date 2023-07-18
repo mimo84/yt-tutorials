@@ -9,6 +9,7 @@ namespace FoodDiary.Data.Repositories;
 public class DiaryRepository : IDiaryRepository
 {
     private readonly FoodDiaryDbContext dbContext;
+
     public DiaryRepository(FoodDiaryDbContext _dbContext)
     {
         dbContext = _dbContext;
@@ -32,17 +33,18 @@ public class DiaryRepository : IDiaryRepository
         return diaries;
     }
 
-    public async Task<bool> CreateFullDiaryAsync(DiaryIngressDto diaryEntryDto, CancellationToken cancellationToken)
+    public async Task<bool> CreateFullDiaryAsync(DiaryIngressDto diaryEntryDto, AppUser user, CancellationToken cancellationToken)
     {
-        DateOnly diaryDate = new(diaryEntryDto.Date.Year, diaryEntryDto.Date.Month, diaryEntryDto.Date.Day);
-        Diary diary = await dbContext.Diaries.Where(d => d.Date == diaryDate).Include(d => d.Meals).SingleOrDefaultAsync(cancellationToken);
+        DateTime diaryDate = new(diaryEntryDto.Date.Year, diaryEntryDto.Date.Month, diaryEntryDto.Date.Day);
+        Diary diary = await dbContext.Diaries.Where(d => d.Date == diaryDate && d.AppUser == user).Include(d => d.Meals).SingleOrDefaultAsync(cancellationToken);
 
         if (diary == null)
         {
             diary = new Diary()
             {
                 Date = diaryDate,
-                Meals = new List<Meal>()
+                Meals = new List<Meal>(),
+                AppUser = user
             };
             dbContext.Diaries.Add(diary);
         }
@@ -89,10 +91,10 @@ public class DiaryRepository : IDiaryRepository
         return true;
     }
 
-    public async Task<bool> CreateFullDiaryWithNamesAsync(DiaryIngressWithFoodNamesDto diaryEntryDto, CancellationToken cancellationToken)
+    public async Task<bool> CreateFullDiaryWithNamesAsync(DiaryIngressWithFoodNamesDto diaryEntryDto, AppUser user, CancellationToken cancellationToken)
     {
-        DateOnly diaryDate = new(diaryEntryDto.Date.Year, diaryEntryDto.Date.Month, diaryEntryDto.Date.Day);
-        Diary diary = await dbContext.Diaries.Where(d => d.Date == diaryDate).Include(d => d.Meals).SingleOrDefaultAsync(cancellationToken);
+        DateTime diaryDate = new(diaryEntryDto.Date.Year, diaryEntryDto.Date.Month, diaryEntryDto.Date.Day);
+        Diary diary = await dbContext.Diaries.Where(d => d.Date == diaryDate && d.AppUser == user).Include(d => d.Meals).SingleOrDefaultAsync(cancellationToken);
 
         if (diary == null)
         {
@@ -100,7 +102,8 @@ public class DiaryRepository : IDiaryRepository
             diary = new Diary()
             {
                 Date = diaryDate,
-                Meals = new List<Meal>()
+                Meals = new List<Meal>(),
+                AppUser = user
             };
             dbContext.Diaries.Add(diary);
         }

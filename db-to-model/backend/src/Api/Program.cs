@@ -63,7 +63,7 @@ builder.Services.ConfigureOptions<ProblemDetailsLogging>();
 
 builder.Services.AddDbContext<FoodDiaryDbContext>(options =>
 {
-    options.UseNpgsql(builder.Configuration.GetConnectionString("Database"));
+    options.UseSqlite(builder.Configuration.GetConnectionString("Database"));
 });
 
 builder.Services.AddCors(opt =>

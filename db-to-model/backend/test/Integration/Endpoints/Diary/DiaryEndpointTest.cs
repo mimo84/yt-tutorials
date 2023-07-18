@@ -35,9 +35,8 @@ public class DiaryEndpointTest : IClassFixture<CustomWebApplicationFactory<Progr
     [Fact]
     public async void TestMe()
     {
-        var diaryDate = new DateOnly(2023, 5, 23);
-        var diaryDateWithTime = diaryDate.ToDateTime(new TimeOnly(0, 0, 0), DateTimeKind.Utc);
-        var isoString = diaryDateWithTime.ToString("s", System.Globalization.CultureInfo.InvariantCulture);
+        var diaryDate = new DateTime(2023, 5, 23);
+        var isoString = diaryDate.ToString("s", System.Globalization.CultureInfo.InvariantCulture);
         var payload = $@"{{
             ""date"": ""{isoString}"",
             ""mealEntries"": [
@@ -79,9 +78,8 @@ public class DiaryEndpointTest : IClassFixture<CustomWebApplicationFactory<Progr
     [Fact]
     public async void Diary_MealsWithTheSameNameShouldBeInsertedOnlyOnce()
     {
-        var diaryDate = new DateOnly(2023, 4, 22);
-        var diaryDateWithTime = diaryDate.ToDateTime(new TimeOnly(0, 0, 0), DateTimeKind.Utc);
-        var isoString = diaryDateWithTime.ToString("s", System.Globalization.CultureInfo.InvariantCulture);
+        var diaryDate = new DateTime(2023, 4, 22);
+        var isoString = diaryDate.ToString("s", System.Globalization.CultureInfo.InvariantCulture);
         var mealName = "dinner";
         var payload1 = $@"{{
             ""date"": ""{isoString}"",

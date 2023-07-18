@@ -6,9 +6,6 @@ public partial class FoodAmount
 
     public int FoodAmountId { get; set; }
 
-    /// <summary>
-    /// This is to help the user to know what kind of &quot;amount&quot; it is, is it a serving, is it based on weight.
-    /// </summary>
     public string AmountName { get; set; }
 
     public decimal Amount { get; set; }

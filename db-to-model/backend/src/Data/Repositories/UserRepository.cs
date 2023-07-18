@@ -42,4 +42,9 @@ public class UserRepository : IUserRepository
         var token = tokenService.CreateToken(user);
         return new UserDto(DisplayName: user.DisplayName, Token: token, Bio: user.Bio, FirstName: user.FirstName, FamilyName: user.FamilyName, Address: user.Address);
     }
+
+    public async Task<AppUser> GetAppUserAsync(string email, CancellationToken cancellationToken)
+    {
+        return await repository.GetUserByEmailAsync(email, cancellationToken);
+    }
 }

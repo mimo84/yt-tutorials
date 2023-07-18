@@ -29,7 +29,7 @@ public class FoodRepository : IFoodRepository
         var searchTerms = search.Split(' ').ToList();
         foreach (var eachTerm in searchTerms)
         {
-            query = query.Where(f => EF.Functions.ILike(f.Name, '%' + eachTerm + '%'));
+            query = query.Where(f => EF.Functions.Like(f.Name.ToLower(), '%' + eachTerm.ToLower() + '%'));
         }
 
         var results = await query.Take(10).ToListAsync(cancellationToken);

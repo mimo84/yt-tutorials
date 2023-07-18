@@ -7,8 +7,8 @@ public static class DatabaseUtility
 {
     public static void RestoreDatabase(FoodDiaryDbContext db)
     {
-        db.Database.ExecuteSqlRaw("TRUNCATE TABLE public.food_meal RESTART IDENTITY CASCADE;");
-        db.Database.ExecuteSqlRaw("TRUNCATE TABLE public.meal RESTART IDENTITY CASCADE;");
-        db.Database.ExecuteSqlRaw("TRUNCATE TABLE public.diary RESTART IDENTITY CASCADE;");
+        db.Database.ExecuteSqlRaw("DELETE FROM food_meal;");
+        db.Database.ExecuteSqlRaw("DELETE FROM meal;");
+        db.Database.ExecuteSqlRaw("DELETE FROM diary;");
     }
 }

@@ -1,6 +1,8 @@
+using System.Security.Claims;
 using FoodDiary.Core.Dto;
 using FoodDiary.Core.Messages;
 using FoodDiary.Core.Models;
+using FoodDiary.Core.Repositories;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,9 +13,13 @@ namespace FoodDiary.Api.Controllers;
 public class DiaryController : ControllerBase
 {
     private readonly IMediator mediator;
-    public DiaryController(IMediator _mediator)
+
+    private readonly IUserRepository userRepository;
+
+    public DiaryController(IMediator _mediator, IUserRepository _userRepository)
     {
         mediator = _mediator;
+        userRepository = _userRepository;
     }
 
     [HttpGet("get", Name = "diaries")]
@@ -35,14 +41,16 @@ public class DiaryController : ControllerBase
     [HttpPost(Name = "add_diary")]
     public async Task<bool> AddDiary(DiaryIngressDto diaryEntryDto, CancellationToken cancellationToken)
     {
-        var message = new AddNewDiary(diaryEntryDto);
+        var user = await userRepository.GetAppUserAsync(User.FindFirstValue(ClaimTypes.Email), cancellationToken);
+        var message = new AddNewDiary(diaryEntryDto, user);
         return await mediator.Send(message, cancellationToken);
     }
 
     [HttpPost("by_food_name", Name = "add_diary_food_names")]
     public async Task<bool> AddDiaryByFoodName(DiaryIngressWithFoodNamesDto diaryEntryDto, CancellationToken cancellationToken)
     {
-        var message = new AddNewDiaryWithFoodNames(diaryEntryDto);
+        var user = await userRepository.GetAppUserAsync(User.FindFirstValue(ClaimTypes.Email), cancellationToken);
+        var message = new AddNewDiaryWithFoodNames(diaryEntryDto, user);
         return await mediator.Send(message, cancellationToken);
     }
 }
