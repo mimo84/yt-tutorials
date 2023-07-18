@@ -37,7 +37,8 @@ public class DiaryEndpointTest : IClassFixture<CustomWebApplicationFactory<Progr
     {
         var diaryDate = new DateTime(2023, 5, 23);
         var isoString = diaryDate.ToString("s", System.Globalization.CultureInfo.InvariantCulture);
-        var payload = $@"{{
+        var payload =
+            $@"{{
             ""date"": ""{isoString}"",
             ""mealEntries"": [
                 {{
@@ -60,7 +61,10 @@ public class DiaryEndpointTest : IClassFixture<CustomWebApplicationFactory<Progr
         response.StatusCode.Should().Be(HttpStatusCode.OK);
 
         // Using `SingleOrDefault` because we want the system to fail if more than one element is present
-        var diary = await dbContext.Diaries.Where(d => d.Date == diaryDate).Include(d => d.Meals).SingleOrDefaultAsync();
+        var diary = await dbContext.Diaries
+            .Where(d => d.Date == diaryDate)
+            .Include(d => d.Meals)
+            .SingleOrDefaultAsync();
 
         // If we don't find a diary, then we should throw an exception, also avoids a warning below
         if (diary == null)
@@ -81,7 +85,8 @@ public class DiaryEndpointTest : IClassFixture<CustomWebApplicationFactory<Progr
         var diaryDate = new DateTime(2023, 4, 22);
         var isoString = diaryDate.ToString("s", System.Globalization.CultureInfo.InvariantCulture);
         var mealName = "dinner";
-        var payload1 = $@"{{
+        var payload1 =
+            $@"{{
             ""date"": ""{isoString}"",
             ""mealEntries"": [
                 {{
@@ -96,7 +101,8 @@ public class DiaryEndpointTest : IClassFixture<CustomWebApplicationFactory<Progr
                 }}
             ]
         }}";
-        var payload2 = $@"{{
+        var payload2 =
+            $@"{{
             ""date"": ""{isoString}"",
             ""mealEntries"": [
                 {{
@@ -121,7 +127,10 @@ public class DiaryEndpointTest : IClassFixture<CustomWebApplicationFactory<Progr
         response2.StatusCode.Should().Be(HttpStatusCode.OK);
 
         // Using `SingleOrDefault` because we want the system to fail if more than one element is present
-        var diary = await dbContext.Diaries.Where(d => d.Date == diaryDate).Include(d => d.Meals).SingleOrDefaultAsync();
+        var diary = await dbContext.Diaries
+            .Where(d => d.Date == diaryDate)
+            .Include(d => d.Meals)
+            .SingleOrDefaultAsync();
 
         // If we don't find a diary, then we should throw an exception, also avoids a warning below
         if (diary == null)

@@ -11,42 +11,54 @@ namespace FoodDiary.Data.Repositories;
 public class FoodRepository : IFoodRepository
 {
     private readonly FoodDiaryDbContext dbContext;
+
     public FoodRepository(FoodDiaryDbContext _dbContext)
     {
         dbContext = _dbContext;
     }
 
-    public async Task<List<FoodWithNutritionInfoDto>> GetAllFoods(CancellationToken cancellationToken)
+    public async Task<List<FoodWithNutritionInfoDto>> GetAllFoods(
+        CancellationToken cancellationToken
+    )
     {
-        var results = await dbContext.Foods.Include(f => f.FoodAmounts).ToListAsync(cancellationToken);
+        var results = await dbContext.Foods
+            .Include(f => f.FoodAmounts)
+            .ToListAsync(cancellationToken);
         var resultsDto = results.Select(f => f.AsDto()).ToList();
         return resultsDto;
     }
 
-    public async Task<List<FoodWithNutritionInfoDto>> FindFood(string search, CancellationToken cancellationToken)
+    public async Task<List<FoodWithNutritionInfoDto>> FindFood(
+        string search,
+        CancellationToken cancellationToken
+    )
     {
         IQueryable<Food> query = dbContext.Foods.Include(f => f.FoodAmounts);
         var searchTerms = search.Split(' ').ToList();
         foreach (var eachTerm in searchTerms)
         {
-            query = query.Where(f => EF.Functions.Like(f.Name.ToLower(), '%' + eachTerm.ToLower() + '%'));
+            query = query.Where(
+                f => EF.Functions.Like(f.Name.ToLower(), '%' + eachTerm.ToLower() + '%')
+            );
         }
 
         var results = await query.Take(10).ToListAsync(cancellationToken);
         return results.Select(f => f.AsDto()).ToList();
     }
 
-    public async Task AddFoodWithAmountsAsync(FoodWithAmountDto foodAmountDto, CancellationToken cancellationToken)
+    public async Task AddFoodWithAmountsAsync(
+        FoodWithAmountDto foodAmountDto,
+        CancellationToken cancellationToken
+    )
     {
-        var alreadyThere = await dbContext.Foods.Where(f => f.Name == foodAmountDto.Name).AnyAsync(cancellationToken);
+        var alreadyThere = await dbContext.Foods
+            .Where(f => f.Name == foodAmountDto.Name)
+            .AnyAsync(cancellationToken);
         if (alreadyThere)
         {
             return;
         }
-        Food food = new()
-        {
-            Name = foodAmountDto.Name
-        };
+        Food food = new() { Name = foodAmountDto.Name };
 
         var foodAmount = new FoodAmount()
         {

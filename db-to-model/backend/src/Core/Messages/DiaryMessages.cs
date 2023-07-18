@@ -11,4 +11,5 @@ public record GetAllDiaries() : IRequest<DiaryEnvelope<DiariesResponse>>;
 
 public record AddNewDiary(DiaryIngressDto Request, AppUser User) : IRequest<bool>;
 
-public record AddNewDiaryWithFoodNames(DiaryIngressWithFoodNamesDto Request, AppUser User) : IRequest<bool>;
+public record AddNewDiaryWithFoodNames(DiaryIngressWithFoodNamesDto Request, AppUser User)
+    : IRequest<bool>;

@@ -22,7 +22,11 @@ public interface IFoo
 public class Bar
 {
     public virtual Baz Baz { get; set; }
-    public virtual bool Submit() { return false; }
+
+    public virtual bool Submit()
+    {
+        return false;
+    }
 }
 
 public class Baz
@@ -75,7 +79,7 @@ public class MoqTests
 
         // access invocation arguments when returning a value
         mock.Setup(x => x.DoSomethingStringy(It.IsAny<string>()))
-                .Returns((string s) => s.ToLower());
+            .Returns((string s) => s.ToLower());
 
         mock.Object.DoSomethingStringy("WhatEVeR").Should().Be("whatever");
     }
@@ -91,7 +95,9 @@ public class MoqTests
 
         Action act = () => mock.Object.DoSomething("reset");
 
-        act.Should().Throw<InvalidOperationException>().WithMessage("Operation is not valid due to the current state of the object.");
+        act.Should()
+            .Throw<InvalidOperationException>()
+            .WithMessage("Operation is not valid due to the current state of the object.");
     }
 
     [Fact]

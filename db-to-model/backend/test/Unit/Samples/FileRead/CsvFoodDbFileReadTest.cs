@@ -10,6 +10,7 @@ namespace Unit.Samples;
 public class CsvFoodDbFileReadTest
 {
     private readonly ITestOutputHelper testOutputHelper;
+
     public CsvFoodDbFileReadTest(ITestOutputHelper _testOutputHelper)
     {
         testOutputHelper = _testOutputHelper;

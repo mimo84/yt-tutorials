@@ -7,6 +7,7 @@ namespace FoodDiary.Core.Handlers.Foods;
 public class AddFoodWithAmountsHandler : IRequestHandler<AddFoodWithAmounts, Task>
 {
     private readonly IFoodRepository foodRepository;
+
     public AddFoodWithAmountsHandler(IFoodRepository _foodRepository)
     {
         foodRepository = _foodRepository;
@@ -14,9 +15,10 @@ public class AddFoodWithAmountsHandler : IRequestHandler<AddFoodWithAmounts, Tas
 
     public async Task<Task> Handle(AddFoodWithAmounts request, CancellationToken cancellationToken)
     {
-        await foodRepository.AddFoodWithAmountsAsync(request.FoodWithAmount.Food, cancellationToken);
+        await foodRepository.AddFoodWithAmountsAsync(
+            request.FoodWithAmount.Food,
+            cancellationToken
+        );
         return Task.CompletedTask;
-
     }
 }
-

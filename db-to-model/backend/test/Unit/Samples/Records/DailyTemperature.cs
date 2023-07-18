@@ -12,33 +12,31 @@ public static class DataSet
 {
     public static DailyTemperature[] DailyTemperatureData = new DailyTemperature[]
     {
-    new DailyTemperature(HighTemp: 57, LowTemp: 30),
-    new DailyTemperature(60, 35),
-    new DailyTemperature(63, 33),
-    new DailyTemperature(68, 29),
-    new DailyTemperature(72, 47),
-    new DailyTemperature(75, 55),
-    new DailyTemperature(77, 55),
-    new DailyTemperature(72, 58),
-    new DailyTemperature(70, 47),
-    new DailyTemperature(77, 59),
-    new DailyTemperature(85, 65),
-    new DailyTemperature(87, 65),
-    new DailyTemperature(85, 72),
-    new DailyTemperature(83, 68),
-    new DailyTemperature(77, 65),
-    new DailyTemperature(72, 58),
-    new DailyTemperature(77, 55),
-    new DailyTemperature(76, 53),
-    new DailyTemperature(80, 60),
-    new DailyTemperature(85, 66)
+        new DailyTemperature(HighTemp: 57, LowTemp: 30),
+        new DailyTemperature(60, 35),
+        new DailyTemperature(63, 33),
+        new DailyTemperature(68, 29),
+        new DailyTemperature(72, 47),
+        new DailyTemperature(75, 55),
+        new DailyTemperature(77, 55),
+        new DailyTemperature(72, 58),
+        new DailyTemperature(70, 47),
+        new DailyTemperature(77, 59),
+        new DailyTemperature(85, 65),
+        new DailyTemperature(87, 65),
+        new DailyTemperature(85, 72),
+        new DailyTemperature(83, 68),
+        new DailyTemperature(77, 65),
+        new DailyTemperature(72, 58),
+        new DailyTemperature(77, 55),
+        new DailyTemperature(76, 53),
+        new DailyTemperature(80, 60),
+        new DailyTemperature(85, 66)
     };
 }
 
 public class LearningRecords
 {
-
-
     [Fact]
     public void CheckValuesArePresent()
     {
@@ -52,20 +50,29 @@ public class LearningRecords
 
 // Abstract class means that cannot be used directly, but only to extend from it, similar to an interface
 // in this example `DegreeDays` is used as the base class for `HeatingDegreeDays` and `CoolingDegreeDays`.
-public abstract record DegreeDays(double BaseTemperature, IEnumerable<DailyTemperature> TempRecords);
+public abstract record DegreeDays(
+    double BaseTemperature,
+    IEnumerable<DailyTemperature> TempRecords
+);
 
 // sealed class means that cannot be inherited, we do this because we don't plan to use this class
 // to be further extended somewhere else.
-public sealed record HeatingDegreeDays(double BaseTemperature, IEnumerable<DailyTemperature> TempRecords)
-    : DegreeDays(BaseTemperature, TempRecords)
+public sealed record HeatingDegreeDays(
+    double BaseTemperature,
+    IEnumerable<DailyTemperature> TempRecords
+) : DegreeDays(BaseTemperature, TempRecords)
 {
-    public double DegreeDays => TempRecords.Where(s => s.Mean < BaseTemperature).Sum(s => BaseTemperature - s.Mean);
+    public double DegreeDays =>
+        TempRecords.Where(s => s.Mean < BaseTemperature).Sum(s => BaseTemperature - s.Mean);
 }
 
-public sealed record CoolingDegreeDays(double BaseTemperature, IEnumerable<DailyTemperature> TempRecords)
-    : DegreeDays(BaseTemperature, TempRecords)
+public sealed record CoolingDegreeDays(
+    double BaseTemperature,
+    IEnumerable<DailyTemperature> TempRecords
+) : DegreeDays(BaseTemperature, TempRecords)
 {
-    public double DegreeDays => TempRecords.Where(s => s.Mean > BaseTemperature).Sum(s => s.Mean - BaseTemperature);
+    public double DegreeDays =>
+        TempRecords.Where(s => s.Mean > BaseTemperature).Sum(s => s.Mean - BaseTemperature);
 }
 
 public class DegreeDaysTest

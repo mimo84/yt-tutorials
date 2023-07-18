@@ -23,24 +23,45 @@ public class CentralRepository : ICentralRepository
 
     public async Task AddUserAsync(NewUserDto newUserDto, CancellationToken cancellationToken)
     {
-        if (await dbContext.Users.AnyAsync(x => x.UserName == newUserDto.UserName, cancellationToken))
+        if (
+            await dbContext.Users.AnyAsync(
+                x => x.UserName == newUserDto.UserName,
+                cancellationToken
+            )
+        )
         {
-            throw new ProblemDetailsException(new ValidationProblemDetails
-            {
-                Status = 422,
-                Detail = "Cannot register user",
-                Errors = { new KeyValuePair<string, string[]>("UserName", new[] { "UserName not available" }) }
-            });
+            throw new ProblemDetailsException(
+                new ValidationProblemDetails
+                {
+                    Status = 422,
+                    Detail = "Cannot register user",
+                    Errors =
+                    {
+                        new KeyValuePair<string, string[]>(
+                            "UserName",
+                            new[] { "UserName not available" }
+                        )
+                    }
+                }
+            );
         }
 
         if (await dbContext.Users.AnyAsync(x => x.Email == newUserDto.Email, cancellationToken))
         {
-            throw new ProblemDetailsException(new ValidationProblemDetails
-            {
-                Status = 422,
-                Detail = "Cannot register user",
-                Errors = { new KeyValuePair<string, string[]>("Email", new[] { "Email address already in use" }) }
-            });
+            throw new ProblemDetailsException(
+                new ValidationProblemDetails
+                {
+                    Status = 422,
+                    Detail = "Cannot register user",
+                    Errors =
+                    {
+                        new KeyValuePair<string, string[]>(
+                            "Email",
+                            new[] { "Email address already in use" }
+                        )
+                    }
+                }
+            );
         }
 
         var user = new AppUser()
@@ -52,29 +73,38 @@ public class CentralRepository : ICentralRepository
             Bio = newUserDto.Bio,
             FamilyName = newUserDto.FamilyName,
             FirstName = newUserDto.FirstName,
-
         };
         var result = await userManager.CreateAsync(user, newUserDto.Password);
         if (result.Errors.Any())
         {
             var errorDetail = string.Join("", result.Errors.Select(e => e.Description).ToArray());
-            throw new ProblemDetailsException(new ProblemDetails
-            {
-                Status = 422,
-                Detail = $"Cannot register user: {errorDetail}"
-            });
+            throw new ProblemDetailsException(
+                new ProblemDetails { Status = 422, Detail = $"Cannot register user: {errorDetail}" }
+            );
         }
         return;
     }
 
-    public async Task<AppUser> GetUserByEmailAsync(string email, CancellationToken cancellationToken)
+    public async Task<AppUser> GetUserByEmailAsync(
+        string email,
+        CancellationToken cancellationToken
+    )
     {
-        return await userManager.Users.FirstOrDefaultAsync(x => x.Email == email, cancellationToken);
+        return await userManager.Users.FirstOrDefaultAsync(
+            x => x.Email == email,
+            cancellationToken
+        );
     }
 
-    public Task<AppUser> GetUserByUsernameAsync(string username, CancellationToken cancellationToken)
+    public Task<AppUser> GetUserByUsernameAsync(
+        string username,
+        CancellationToken cancellationToken
+    )
     {
-        return userManager.Users.FirstOrDefaultAsync(x => x.UserName == username, cancellationToken);
+        return userManager.Users.FirstOrDefaultAsync(
+            x => x.UserName == username,
+            cancellationToken
+        );
     }
 
     public async Task CheckUserAsync(AppUser user, string password)
@@ -82,12 +112,20 @@ public class CentralRepository : ICentralRepository
         var checkedUser = await userManager.CheckPasswordAsync(user, password);
         if (!checkedUser)
         {
-            throw new ProblemDetailsException(new ValidationProblemDetails
-            {
-                Status = 422,
-                Detail = "Incorrect Credentials",
-                Errors = { new KeyValuePair<string, string[]>("Credentials", new[] { "incorrect credentials" }) }
-            });
+            throw new ProblemDetailsException(
+                new ValidationProblemDetails
+                {
+                    Status = 422,
+                    Detail = "Incorrect Credentials",
+                    Errors =
+                    {
+                        new KeyValuePair<string, string[]>(
+                            "Credentials",
+                            new[] { "incorrect credentials" }
+                        )
+                    }
+                }
+            );
         }
     }
 }

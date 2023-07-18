@@ -12,10 +12,10 @@ public static class MealsMapper
         var foodInMeal = meal.FoodMeals.Select(f => MapFromFoodMealEntity(f)).ToList();
         var totalCaloriesInMeal = foodInMeal.Sum(f => f.Calories);
         return new MealResponse(
-          MealId: meal.MealId,
-          MealName: meal.Name,
-          FoodInMealResponse: foodInMeal,
-          CaloriesInMeal: totalCaloriesInMeal
+            MealId: meal.MealId,
+            MealName: meal.Name,
+            FoodInMealResponse: foodInMeal,
+            CaloriesInMeal: totalCaloriesInMeal
         );
     }
 
@@ -30,13 +30,13 @@ public static class MealsMapper
         var calories = Nutrition.CalculateCalories(protein, carbohydrates, fat);
 
         return new FoodInMealResponse(
-          FoodId: food.FoodId,
-          FoodName: food.Food.Name,
-          ConsumedAmount: food.ConsumedAmount,
-          Fat: fat,
-          Protein: protein,
-          Carbohydrates: carbohydrates,
-          Calories: calories
+            FoodId: food.FoodId,
+            FoodName: food.Food.Name,
+            ConsumedAmount: food.ConsumedAmount,
+            Fat: fat,
+            Protein: protein,
+            Carbohydrates: carbohydrates,
+            Calories: calories
         );
     }
 }

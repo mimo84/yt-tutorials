@@ -11,22 +11,24 @@ public static class AuthClientHelper
 {
     public static HttpClient GetAuthClient(CustomWebApplicationFactory<Program> _factory)
     {
-        var client = _factory.WithWebHostBuilder(builder =>
-        {
-            builder.ConfigureTestServices(services =>
+        var client = _factory
+            .WithWebHostBuilder(builder =>
             {
-                services.AddAuthentication(defaultScheme: "TestScheme")
-                    .AddScheme<AuthenticationSchemeOptions, TestRegularUserAuthHandler>(
-                        "TestScheme", options => { });
-            });
-        })
-        .CreateClient(new WebApplicationFactoryClientOptions
-        {
-            AllowAutoRedirect = false,
-        });
+                builder.ConfigureTestServices(services =>
+                {
+                    services
+                        .AddAuthentication(defaultScheme: "TestScheme")
+                        .AddScheme<AuthenticationSchemeOptions, TestRegularUserAuthHandler>(
+                            "TestScheme",
+                            options => { }
+                        );
+                });
+            })
+            .CreateClient(new WebApplicationFactoryClientOptions { AllowAutoRedirect = false, });
 
-        client.DefaultRequestHeaders.Authorization =
-            new AuthenticationHeaderValue(scheme: "TestScheme");
+        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+            scheme: "TestScheme"
+        );
 
         return client;
     }

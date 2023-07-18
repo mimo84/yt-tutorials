@@ -14,13 +14,13 @@ public static class FoodExtensions
         var carbohydrates = nutritionInfo.Carbohydrates ?? 0;
         var calories = Nutrition.CalculateCalories(protein, carbohydrates, fat);
         return new FoodWithNutritionInfoDto(
-          food.FoodId,
-          food.Name,
-          nutritionInfo.Amount,
-          protein,
-          fat,
-          carbohydrates,
-          calories
+            food.FoodId,
+            food.Name,
+            nutritionInfo.Amount,
+            protein,
+            fat,
+            carbohydrates,
+            calories
         );
     }
 }

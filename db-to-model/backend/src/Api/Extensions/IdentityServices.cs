@@ -10,20 +10,24 @@ namespace FoodDiary.Api.Extensions;
 
 public static class IdentityServices
 {
-    public static IServiceCollection AddIdentityServices(this IServiceCollection services,
-        IConfiguration config)
+    public static IServiceCollection AddIdentityServices(
+        this IServiceCollection services,
+        IConfiguration config
+    )
     {
         // AddIdentity would add redirection behaviours which can create issues
-        services.AddIdentityCore<AppUser>(opt =>
-        {
-            opt.Password.RequireNonAlphanumeric = false;
-            opt.User.RequireUniqueEmail = true;
-        })
-        .AddEntityFrameworkStores<FoodDiaryDbContext>();
+        services
+            .AddIdentityCore<AppUser>(opt =>
+            {
+                opt.Password.RequireNonAlphanumeric = false;
+                opt.User.RequireUniqueEmail = true;
+            })
+            .AddEntityFrameworkStores<FoodDiaryDbContext>();
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"]));
 
-        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        services
+            .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(opt =>
             {
                 opt.TokenValidationParameters = new TokenValidationParameters
@@ -41,4 +45,3 @@ public static class IdentityServices
         return services;
     }
 }
-

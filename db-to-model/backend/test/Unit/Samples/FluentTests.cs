@@ -19,6 +19,5 @@ public class FluentTests
 
         collection.Should().OnlyContain(n => n > 0, "we only want positive numbers");
         collection.Should().HaveCount(4, "we should only have four elements in the list");
-
     }
 }

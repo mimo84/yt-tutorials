@@ -20,7 +20,8 @@ public class FoodController : ControllerBase
     [HttpPost("new", Name = "NewFood")]
     public async Task<FoodEnvelope<bool>> CreateAsync(
         RequestEnvelope<FoodEnvelope<FoodWithAmountDto>> request,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken
+    )
     {
         var message = new AddFoodWithAmounts(request.Body);
         await mediator.Send(message, cancellationToken);
@@ -28,18 +29,21 @@ public class FoodController : ControllerBase
     }
 
     [HttpGet("find")]
-    public async Task<ActionResult<FoodEnvelope<List<FoodWithNutritionInfoDto>>>> FindFoodByName([FromQuery] GetFoodsFromQuery query, CancellationToken cancellationToken)
+    public async Task<ActionResult<FoodEnvelope<List<FoodWithNutritionInfoDto>>>> FindFoodByName(
+        [FromQuery] GetFoodsFromQuery query,
+        CancellationToken cancellationToken
+    )
     {
         var message = new GetFoodsFromQuery(query.Name);
         return await mediator.Send(message, cancellationToken);
     }
 
     [HttpGet("all")]
-    public async Task<ActionResult<FoodEnvelope<List<FoodWithNutritionInfoDto>>>> GetAllFoods(CancellationToken cancellationToken)
+    public async Task<ActionResult<FoodEnvelope<List<FoodWithNutritionInfoDto>>>> GetAllFoods(
+        CancellationToken cancellationToken
+    )
     {
         var message = new GetAllFoods();
         return await mediator.Send(message, cancellationToken);
     }
-
 }
-

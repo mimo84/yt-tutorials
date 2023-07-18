@@ -13,6 +13,7 @@ public record DiaryIngressWithFoodNamesDto(DateTime Date, IList<DiaryMealsWithNa
 public record DiaryMealsWithNames(string Name, IList<DiaryFoodWithNames> FoodEntries);
 
 public record DiaryFoodWithNames(string FoodName, decimal ConsumedAmount);
+
 /* Egress */
 public record DiaryEntryDto(DateTime Date, IList<DiaryMealEgress> DiaryMealDtos);
 

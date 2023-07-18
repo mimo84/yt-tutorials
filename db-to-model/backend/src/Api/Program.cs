@@ -23,6 +23,7 @@ IConfiguration config = new ConfigurationBuilder()
     .Build();
 
 builder.Services.AddIdentityServices(builder.Configuration);
+
 // Add services to the container.
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddControllers(opt =>
@@ -40,7 +41,6 @@ builder.Services.AddProblemDetails(options =>
     // Only include exception details in a development environment. There's really no need
     // to set this as it's the default behavior. It's just included here for completeness :)
     options.IncludeExceptionDetails = (ctx, ex) => builder.Environment.IsDevelopment();
-
 
     // This will map NotImplementedException to the 501 Not Implemented status code.
     options.MapToStatusCode<NotImplementedException>(StatusCodes.Status501NotImplemented);
@@ -60,24 +60,22 @@ builder.Services.AddProblemDetails(options =>
 });
 builder.Services.ConfigureOptions<ProblemDetailsLogging>();
 
-
 builder.Services.AddDbContext<FoodDiaryDbContext>(options =>
 {
     options.UseSqlite(builder.Configuration.GetConnectionString("Database"));
 });
 
 builder.Services.AddCors(opt =>
-            {
-                opt.AddDefaultPolicy(
-                    policy =>
-                    {
-                        policy
-                            .WithOrigins(config.GetValue<string>("Cors:Origins").Split(','))
-                            .AllowAnyHeader()
-                            .AllowAnyMethod()
-                            .AllowCredentials();
-                    });
-            });
+{
+    opt.AddDefaultPolicy(policy =>
+    {
+        policy
+            .WithOrigins(config.GetValue<string>("Cors:Origins").Split(','))
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+    });
+});
 
 builder.Services.AddScoped<ICentralRepository, CentralRepository>();
 builder.Services.AddScoped<IDiaryRepository, DiaryRepository>();
@@ -111,7 +109,9 @@ try
 {
     var context = services.GetRequiredService<FoodDiaryDbContext>();
     var csvImporter = new CsvImporter();
-    List<FoodWithAmountDto> foods = csvImporter.ReadCsv("/Users/mimo/work/github_repos/yt-tutorials/db-to-model/backend/test/Unit/TestData/file input.csv");
+    List<FoodWithAmountDto> foods = csvImporter.ReadCsv(
+        "/Users/mimo/work/github_repos/yt-tutorials/db-to-model/backend/test/Unit/TestData/file input.csv"
+    );
     var userManager = services.GetRequiredService<UserManager<AppUser>>();
     await Seed.SeedData(context, foods, userManager);
 }
@@ -122,4 +122,5 @@ catch (Exception ex)
 }
 
 app.Run();
+
 public partial class Program { }

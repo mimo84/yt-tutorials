@@ -11,10 +11,10 @@ public static class DiariesMapper
         var caloriesInDiary = meals.Sum(m => m.CaloriesInMeal);
 
         var result = new DiaryResponse(
-          DiaryId: diary.DiaryId,
-          DiaryDate: diary.Date,
-          Meals: meals,
-          CaloriesInDiary: caloriesInDiary
+            DiaryId: diary.DiaryId,
+            DiaryDate: diary.Date,
+            Meals: meals,
+            CaloriesInDiary: caloriesInDiary
         );
         return result;
     }

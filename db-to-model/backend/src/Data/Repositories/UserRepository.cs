@@ -13,7 +13,11 @@ public class UserRepository : IUserRepository
 
     private readonly ITokenService tokenService;
 
-    public UserRepository(ICentralRepository _repository, UserManager<AppUser> _userManager, ITokenService _tokenService)
+    public UserRepository(
+        ICentralRepository _repository,
+        UserManager<AppUser> _userManager,
+        ITokenService _tokenService
+    )
     {
         repository = _repository;
         userManager = _userManager;
@@ -25,7 +29,14 @@ public class UserRepository : IUserRepository
         await repository.AddUserAsync(newUser, cancellationToken);
         var user = await repository.GetUserByEmailAsync(newUser.Email, cancellationToken);
         var token = tokenService.CreateToken(user);
-        return new UserDto(DisplayName: user.DisplayName, Token: token, Bio: string.Empty, FirstName: user.FirstName, FamilyName: user.FamilyName, Address: user.Address);
+        return new UserDto(
+            DisplayName: user.DisplayName,
+            Token: token,
+            Bio: string.Empty,
+            FirstName: user.FirstName,
+            FamilyName: user.FamilyName,
+            Address: user.Address
+        );
     }
 
     public async Task<UserDto> LoginAsync(LoginUserDto login, CancellationToken cancellationToken)
@@ -33,14 +44,28 @@ public class UserRepository : IUserRepository
         var user = await repository.GetUserByEmailAsync(login.Email, cancellationToken);
         await userManager.CheckPasswordAsync(user, login.Password);
         var token = tokenService.CreateToken(user);
-        return new UserDto(DisplayName: user.DisplayName, Token: token, Bio: user.Bio, FirstName: user.FirstName, FamilyName: user.FamilyName, Address: user.Address);
+        return new UserDto(
+            DisplayName: user.DisplayName,
+            Token: token,
+            Bio: user.Bio,
+            FirstName: user.FirstName,
+            FamilyName: user.FamilyName,
+            Address: user.Address
+        );
     }
 
     public async Task<UserDto> GetAsync(string email, CancellationToken cancellationToken)
     {
         var user = await repository.GetUserByEmailAsync(email, cancellationToken);
         var token = tokenService.CreateToken(user);
-        return new UserDto(DisplayName: user.DisplayName, Token: token, Bio: user.Bio, FirstName: user.FirstName, FamilyName: user.FamilyName, Address: user.Address);
+        return new UserDto(
+            DisplayName: user.DisplayName,
+            Token: token,
+            Bio: user.Bio,
+            FirstName: user.FirstName,
+            FamilyName: user.FamilyName,
+            Address: user.Address
+        );
     }
 
     public async Task<AppUser> GetAppUserAsync(string email, CancellationToken cancellationToken)

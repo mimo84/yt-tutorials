@@ -9,12 +9,16 @@ namespace FoodDiary.Core.Handlers.Diaries;
 public class GetAllDiariesHandler : IRequestHandler<GetAllDiaries, DiaryEnvelope<DiariesResponse>>
 {
     private readonly IDiaryRepository diaryRepository;
+
     public GetAllDiariesHandler(IDiaryRepository _diaryRepository)
     {
         diaryRepository = _diaryRepository;
     }
 
-    public async Task<DiaryEnvelope<DiariesResponse>> Handle(GetAllDiaries request, CancellationToken cancellationToken)
+    public async Task<DiaryEnvelope<DiariesResponse>> Handle(
+        GetAllDiaries request,
+        CancellationToken cancellationToken
+    )
     {
         var diary = await diaryRepository.GetAllDiaries(cancellationToken);
         var diaryResponse = DiariesMapper.MapFromDiariesEntity(diary);

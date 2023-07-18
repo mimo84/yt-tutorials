@@ -21,12 +21,13 @@ public class FoodEndpointTest : IClassFixture<CustomWebApplicationFactory<Progra
     private readonly ITestOutputHelper testOutputHelper;
     private readonly CustomWebApplicationFactory<Program> factory;
     private readonly FoodDiaryDbContext dbContext;
-    private readonly JsonSerializerOptions jsonSerializerOptions = new()
-    {
-        PropertyNameCaseInsensitive = true
-    };
+    private readonly JsonSerializerOptions jsonSerializerOptions =
+        new() { PropertyNameCaseInsensitive = true };
 
-    public FoodEndpointTest(CustomWebApplicationFactory<Program> _factory, ITestOutputHelper _testOutputHelper)
+    public FoodEndpointTest(
+        CustomWebApplicationFactory<Program> _factory,
+        ITestOutputHelper _testOutputHelper
+    )
     {
         factory = _factory;
         testOutputHelper = _testOutputHelper;
@@ -35,7 +36,6 @@ public class FoodEndpointTest : IClassFixture<CustomWebApplicationFactory<Progra
         dbContext = scopedServices.GetRequiredService<FoodDiaryDbContext>();
         DatabaseUtility.RestoreDatabase(dbContext);
         authHttpClient = AuthClientHelper.GetAuthClient(_factory);
-
     }
 
     [Theory(DisplayName = "Get Food By Name")]
@@ -59,7 +59,11 @@ public class FoodEndpointTest : IClassFixture<CustomWebApplicationFactory<Progra
         response.StatusCode.Should().Be(HttpStatusCode.OK);
 
         var stringResult = await response.Content.ReadAsStringAsync();
-        var foodJson = JsonSerializer.Deserialize<FoodEnvelope<List<FoodWithNutritionInfoDto>>>(stringResult, jsonSerializerOptions) ?? throw new Exception($"Food {search} was not found");
+        var foodJson =
+            JsonSerializer.Deserialize<FoodEnvelope<List<FoodWithNutritionInfoDto>>>(
+                stringResult,
+                jsonSerializerOptions
+            ) ?? throw new Exception($"Food {search} was not found");
 
         foodJson.Food.Count.Should().BeLessThanOrEqualTo(10, "we return up to 10 foods");
         foreach (var food in foodJson.Food)
@@ -77,7 +81,10 @@ public class FoodEndpointTest : IClassFixture<CustomWebApplicationFactory<Progra
     [InlineData("Fat 97%", "Bacon Short Cut 97% Fat Free (Aldi)")]
     [InlineData("Free 97% Fat Short", "Bacon Short Cut 97% Fat Free (Aldi)")]
     [InlineData("Cut 97", "Bacon Short Cut 97% Fat Free (Aldi)")]
-    [InlineData("Margarine olive oil", "Margarine spread olive oil blend 65% fat reduced salt sodium 360mg/100 g")]
+    [InlineData(
+        "Margarine olive oil",
+        "Margarine spread olive oil blend 65% fat reduced salt sodium 360mg/100 g"
+    )]
     public async Task GetFood(string search, string expected)
     {
         NameValueCollection queryString = System.Web.HttpUtility.ParseQueryString(string.Empty);
@@ -87,7 +94,11 @@ public class FoodEndpointTest : IClassFixture<CustomWebApplicationFactory<Progra
         response.StatusCode.Should().Be(HttpStatusCode.OK);
         var stringResult = await response.Content.ReadAsStringAsync();
 
-        var foodJson = JsonSerializer.Deserialize<FoodEnvelope<List<FoodWithNutritionInfoDto>>>(stringResult, jsonSerializerOptions) ?? throw new Exception($"Food {search} was not found");
+        var foodJson =
+            JsonSerializer.Deserialize<FoodEnvelope<List<FoodWithNutritionInfoDto>>>(
+                stringResult,
+                jsonSerializerOptions
+            ) ?? throw new Exception($"Food {search} was not found");
 
         foodJson.Food.Count.Should().BeLessThanOrEqualTo(10, "we return up to 10 foods");
         foreach (var food in foodJson.Food)
@@ -104,14 +115,25 @@ public class FoodEndpointTest : IClassFixture<CustomWebApplicationFactory<Progra
         response.StatusCode.Should().Be(HttpStatusCode.OK);
         var stringResult = await response.Content.ReadAsStringAsync();
         var i = 0;
-        var foodJson = JsonSerializer.Deserialize<FoodEnvelope<List<FoodWithNutritionInfoDto>>>(stringResult, jsonSerializerOptions) ?? throw new Exception($"All foods didn't return records as expected");
-        foodJson.Food.Count.Should().BeGreaterThan(100, "we are expecting a lot of foods to be returned");
+        var foodJson =
+            JsonSerializer.Deserialize<FoodEnvelope<List<FoodWithNutritionInfoDto>>>(
+                stringResult,
+                jsonSerializerOptions
+            ) ?? throw new Exception($"All foods didn't return records as expected");
+        foodJson.Food.Count
+            .Should()
+            .BeGreaterThan(100, "we are expecting a lot of foods to be returned");
         foreach (var food in foodJson.Food)
         {
             food.Amount.Should().BeGreaterThan(0);
             food.FoodId.Should().BeGreaterThan(0);
 
-            food.Calories.Should().BeGreaterThanOrEqualTo(0, "Some foods like salt, baking powder etc have no calories.");
+            food.Calories
+                .Should()
+                .BeGreaterThanOrEqualTo(
+                    0,
+                    "Some foods like salt, baking powder etc have no calories."
+                );
             food.Protein.Should().BeGreaterThanOrEqualTo(0);
             food.Fat.Should().BeGreaterThanOrEqualTo(0);
             food.Carbohydrates.Should().BeGreaterThanOrEqualTo(0);
@@ -123,7 +145,8 @@ public class FoodEndpointTest : IClassFixture<CustomWebApplicationFactory<Progra
     public async void AddNewFood()
     {
         var foodName = "MyTestFoodName";
-        var payload = $@"{{
+        var payload =
+            $@"{{
             ""body"": {{
                 ""food"": {{
                 ""name"": ""{foodName}"",
@@ -156,7 +179,11 @@ public class FoodEndpointTest : IClassFixture<CustomWebApplicationFactory<Progra
         requestResponse.StatusCode.Should().Be(HttpStatusCode.OK);
         var stringResult = await requestResponse.Content.ReadAsStringAsync();
 
-        var foodJson = JsonSerializer.Deserialize<FoodEnvelope<List<FoodWithNutritionInfoDto>>>(stringResult, jsonSerializerOptions) ?? throw new Exception($"Food {foodName} was not found");
+        var foodJson =
+            JsonSerializer.Deserialize<FoodEnvelope<List<FoodWithNutritionInfoDto>>>(
+                stringResult,
+                jsonSerializerOptions
+            ) ?? throw new Exception($"Food {foodName} was not found");
 
         foodJson.Food.Count.Should().Be(1);
         var insertedFood = foodJson.Food[0];

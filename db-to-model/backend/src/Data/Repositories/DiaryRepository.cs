@@ -17,26 +17,37 @@ public class DiaryRepository : IDiaryRepository
 
     public async Task<Diary> GetDiaryById(int id, CancellationToken cancellationToken)
     {
-        var diary = await dbContext.Diaries.Where(d => d.DiaryId == id).SingleAsync(cancellationToken);
+        var diary = await dbContext.Diaries
+            .Where(d => d.DiaryId == id)
+            .SingleAsync(cancellationToken);
         return diary;
     }
 
     public async Task<List<Diary>> GetAllDiaries(CancellationToken cancellationToken)
     {
-        var diaries = await dbContext.Diaries.OrderByDescending(d => d.Date)
-                    .Include(d => d.Meals)
-                    .ThenInclude(m => m.FoodMeals)
-                    .ThenInclude(f => f.Food)
-                    .ThenInclude(f => f.FoodAmounts)
-                    .ToListAsync(cancellationToken);
+        var diaries = await dbContext.Diaries
+            .OrderByDescending(d => d.Date)
+            .Include(d => d.Meals)
+            .ThenInclude(m => m.FoodMeals)
+            .ThenInclude(f => f.Food)
+            .ThenInclude(f => f.FoodAmounts)
+            .ToListAsync(cancellationToken);
 
         return diaries;
     }
 
-    public async Task<bool> CreateFullDiaryAsync(DiaryIngressDto diaryEntryDto, AppUser user, CancellationToken cancellationToken)
+    public async Task<bool> CreateFullDiaryAsync(
+        DiaryIngressDto diaryEntryDto,
+        AppUser user,
+        CancellationToken cancellationToken
+    )
     {
-        DateTime diaryDate = new(diaryEntryDto.Date.Year, diaryEntryDto.Date.Month, diaryEntryDto.Date.Day);
-        Diary diary = await dbContext.Diaries.Where(d => d.Date == diaryDate && d.AppUser == user).Include(d => d.Meals).SingleOrDefaultAsync(cancellationToken);
+        DateTime diaryDate =
+            new(diaryEntryDto.Date.Year, diaryEntryDto.Date.Month, diaryEntryDto.Date.Day);
+        Diary diary = await dbContext.Diaries
+            .Where(d => d.Date == diaryDate && d.AppUser == user)
+            .Include(d => d.Meals)
+            .SingleOrDefaultAsync(cancellationToken);
 
         if (diary == null)
         {
@@ -57,7 +68,9 @@ public class DiaryRepository : IDiaryRepository
 
         foreach (var m in diaryEntryDto.MealEntries)
         {
-            Meal newMeal = diary.Meals.Where(diaryMeal => diaryMeal.Name == m.Name).FirstOrDefault();
+            Meal newMeal = diary.Meals
+                .Where(diaryMeal => diaryMeal.Name == m.Name)
+                .FirstOrDefault();
             if (newMeal == null)
             {
                 newMeal = new()
@@ -69,19 +82,23 @@ public class DiaryRepository : IDiaryRepository
                 dbContext.Meals.Add(newMeal);
             }
 
-
             foreach (var f in m.FoodEntries)
             {
-                var food = await dbContext.Foods.Where(dbf => dbf.FoodId == f.FoodId).SingleOrDefaultAsync(cancellationToken);
-                var foodAmount = await dbContext.FoodAmounts.Where(dbfa => dbfa.FoodAmountId == f.FoodAmountId).SingleOrDefaultAsync(cancellationToken);
+                var food = await dbContext.Foods
+                    .Where(dbf => dbf.FoodId == f.FoodId)
+                    .SingleOrDefaultAsync(cancellationToken);
+                var foodAmount = await dbContext.FoodAmounts
+                    .Where(dbfa => dbfa.FoodAmountId == f.FoodAmountId)
+                    .SingleOrDefaultAsync(cancellationToken);
 
-                FoodMeal foodMeal = new()
-                {
-                    ConsumedAmount = f.ConsumedAmount,
-                    Food = food,
-                    FoodAmount = foodAmount,
-                    Meal = newMeal,
-                };
+                FoodMeal foodMeal =
+                    new()
+                    {
+                        ConsumedAmount = f.ConsumedAmount,
+                        Food = food,
+                        FoodAmount = foodAmount,
+                        Meal = newMeal,
+                    };
                 dbContext.FoodMeals.Add(foodMeal);
             }
         }
@@ -91,10 +108,18 @@ public class DiaryRepository : IDiaryRepository
         return true;
     }
 
-    public async Task<bool> CreateFullDiaryWithNamesAsync(DiaryIngressWithFoodNamesDto diaryEntryDto, AppUser user, CancellationToken cancellationToken)
+    public async Task<bool> CreateFullDiaryWithNamesAsync(
+        DiaryIngressWithFoodNamesDto diaryEntryDto,
+        AppUser user,
+        CancellationToken cancellationToken
+    )
     {
-        DateTime diaryDate = new(diaryEntryDto.Date.Year, diaryEntryDto.Date.Month, diaryEntryDto.Date.Day);
-        Diary diary = await dbContext.Diaries.Where(d => d.Date == diaryDate && d.AppUser == user).Include(d => d.Meals).SingleOrDefaultAsync(cancellationToken);
+        DateTime diaryDate =
+            new(diaryEntryDto.Date.Year, diaryEntryDto.Date.Month, diaryEntryDto.Date.Day);
+        Diary diary = await dbContext.Diaries
+            .Where(d => d.Date == diaryDate && d.AppUser == user)
+            .Include(d => d.Meals)
+            .SingleOrDefaultAsync(cancellationToken);
 
         if (diary == null)
         {
@@ -117,7 +142,9 @@ public class DiaryRepository : IDiaryRepository
 
         foreach (var m in diaryEntryDto.MealEntries)
         {
-            Meal newMeal = diary.Meals.Where(diaryMeal => diaryMeal.Name == m.Name).FirstOrDefault();
+            Meal newMeal = diary.Meals
+                .Where(diaryMeal => diaryMeal.Name == m.Name)
+                .FirstOrDefault();
             if (newMeal == null)
             {
                 newMeal = new()
@@ -129,21 +156,25 @@ public class DiaryRepository : IDiaryRepository
                 dbContext.Meals.Add(newMeal);
             }
 
-
             foreach (var f in m.FoodEntries)
             {
                 Console.WriteLine($"This is what we're looking for: {f.FoodName}");
-                var food = await dbContext.Foods.Where(dbf => dbf.Name == f.FoodName).SingleOrDefaultAsync(cancellationToken);
+                var food = await dbContext.Foods
+                    .Where(dbf => dbf.Name == f.FoodName)
+                    .SingleOrDefaultAsync(cancellationToken);
                 Console.WriteLine($"Looking for food: {food.Name}");
-                var foodAmount = await dbContext.FoodAmounts.Where(dbfa => dbfa.FoodId == food.FoodId).SingleOrDefaultAsync(cancellationToken);
+                var foodAmount = await dbContext.FoodAmounts
+                    .Where(dbfa => dbfa.FoodId == food.FoodId)
+                    .SingleOrDefaultAsync(cancellationToken);
 
-                FoodMeal foodMeal = new()
-                {
-                    ConsumedAmount = f.ConsumedAmount,
-                    Food = food,
-                    FoodAmount = foodAmount,
-                    Meal = newMeal,
-                };
+                FoodMeal foodMeal =
+                    new()
+                    {
+                        ConsumedAmount = f.ConsumedAmount,
+                        Food = food,
+                        FoodAmount = foodAmount,
+                        Meal = newMeal,
+                    };
                 dbContext.FoodMeals.Add(foodMeal);
             }
         }

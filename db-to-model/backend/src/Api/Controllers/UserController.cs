@@ -6,13 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FoodDiary.Api.Controllers;
 
-
 [Route("[controller]")]
 [ApiController]
 public class UserController : ControllerBase
 {
     private readonly ICentralRepository centralRepository;
     private readonly IUserRepository userRepository;
+
     public UserController(ICentralRepository _centralRepository, IUserRepository _userRepository)
     {
         centralRepository = _centralRepository;
@@ -21,11 +21,15 @@ public class UserController : ControllerBase
 
     [AllowAnonymous]
     [HttpPost("login")]
-    public async Task<ActionResult<UserDto>> Login(LoginUserDto loginDto, CancellationToken cancellationToken)
+    public async Task<ActionResult<UserDto>> Login(
+        LoginUserDto loginDto,
+        CancellationToken cancellationToken
+    )
     {
         var user = await centralRepository.GetUserByEmailAsync(loginDto.Email, cancellationToken);
 
-        if (user == null) return Unauthorized();
+        if (user == null)
+            return Unauthorized();
 
         await centralRepository.CheckUserAsync(user, loginDto.Password);
 
@@ -34,15 +38,24 @@ public class UserController : ControllerBase
 
     [AllowAnonymous]
     [HttpPost("register")]
-    public async Task<ActionResult<UserDto>> Register(NewUserDto registerDto, CancellationToken cancellationToken)
+    public async Task<ActionResult<UserDto>> Register(
+        NewUserDto registerDto,
+        CancellationToken cancellationToken
+    )
     {
-        if (await centralRepository.GetUserByUsernameAsync(registerDto.UserName, cancellationToken) != default)
+        if (
+            await centralRepository.GetUserByUsernameAsync(registerDto.UserName, cancellationToken)
+            != default
+        )
         {
             ModelState.AddModelError("username", "Username taken");
             return ValidationProblem();
         }
 
-        if (await centralRepository.GetUserByEmailAsync(registerDto.Email, cancellationToken) != default)
+        if (
+            await centralRepository.GetUserByEmailAsync(registerDto.Email, cancellationToken)
+            != default
+        )
         {
             ModelState.AddModelError("email", "Email taken");
             return ValidationProblem();
@@ -56,7 +69,10 @@ public class UserController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<UserDto>> GetCurrentUser(CancellationToken cancellationToken)
     {
-        var user = await userRepository.GetAsync(User.FindFirstValue(ClaimTypes.Email), cancellationToken);
+        var user = await userRepository.GetAsync(
+            User.FindFirstValue(ClaimTypes.Email),
+            cancellationToken
+        );
         return user;
     }
 }

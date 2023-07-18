@@ -19,25 +19,26 @@ public class LoginTest : IClassFixture<CustomWebApplicationFactory<Program>>
     private readonly CustomWebApplicationFactory<Program> factory;
     private readonly ITestOutputHelper testOutputHelper;
 
-    private readonly JsonSerializerOptions jsonSerializerOptions = new()
-    {
-        PropertyNameCaseInsensitive = true
-    };
+    private readonly JsonSerializerOptions jsonSerializerOptions =
+        new() { PropertyNameCaseInsensitive = true };
 
-    public LoginTest(CustomWebApplicationFactory<Program> _factory, ITestOutputHelper _testOutputHelper)
+    public LoginTest(
+        CustomWebApplicationFactory<Program> _factory,
+        ITestOutputHelper _testOutputHelper
+    )
     {
         factory = _factory;
         testOutputHelper = _testOutputHelper;
-        _httpClient = factory.CreateClient(new WebApplicationFactoryClientOptions
-        {
-            AllowAutoRedirect = false
-        });
+        _httpClient = factory.CreateClient(
+            new WebApplicationFactoryClientOptions { AllowAutoRedirect = false }
+        );
     }
 
     [Fact]
     public async void ShouldLoginSeededUser()
     {
-        var request = $@"{{
+        var request =
+            $@"{{
             ""email"": ""mimo@email.com"",
             ""password"": ""MyT3stPa$$w0rd""
         }}";
@@ -46,14 +47,17 @@ public class LoginTest : IClassFixture<CustomWebApplicationFactory<Program>>
         var response = await _httpClient.PostAsync("/user/login", requestContent);
         response.StatusCode.Should().Be(HttpStatusCode.OK);
         var stringResult = await response.Content.ReadAsStringAsync();
-        var result = JsonSerializer.Deserialize<UserDto>(stringResult, jsonSerializerOptions) ?? throw new Exception("Could not parse {stringResult}");
+        var result =
+            JsonSerializer.Deserialize<UserDto>(stringResult, jsonSerializerOptions)
+            ?? throw new Exception("Could not parse {stringResult}");
         result.DisplayName.Should().Be("Mimo");
         result.Token.Should().NotBeNullOrEmpty();
 
         var token = result.Token;
         var handler = new JwtSecurityTokenHandler();
         var jsonToken = handler.ReadToken(token);
-        var tokenS = jsonToken as JwtSecurityToken ?? throw new XunitException("Token could not be found");
+        var tokenS =
+            jsonToken as JwtSecurityToken ?? throw new XunitException("Token could not be found");
         tokenS.Claims.First(claim => claim.Type == "unique_name").Value.Should().Be("mimo");
         tokenS.Claims.First(claim => claim.Type == "nameid").Value.Should().NotBeNullOrWhiteSpace();
         tokenS.Claims.First(claim => claim.Type == "email").Value.Should().Be("mimo@email.com");
@@ -65,7 +69,8 @@ public class LoginTest : IClassFixture<CustomWebApplicationFactory<Program>>
     [Fact]
     public async void ShouldNotAuthorizeWrongPasswordUser()
     {
-        var request = $@"{{
+        var request =
+            $@"{{
             ""email"": ""mimo@email.com"",
             ""password"": ""I AM WRONG""
         }}";
@@ -74,7 +79,11 @@ public class LoginTest : IClassFixture<CustomWebApplicationFactory<Program>>
         var response = await _httpClient.PostAsync("/user/login", requestContent);
         response.StatusCode.Should().Be(HttpStatusCode.UnprocessableEntity);
         var stringResult = await response.Content.ReadAsStringAsync();
-        var result = JsonSerializer.Deserialize<HttpValidationProblemDetails>(stringResult, jsonSerializerOptions) ?? throw new Exception("Could not parse {stringResult}");
+        var result =
+            JsonSerializer.Deserialize<HttpValidationProblemDetails>(
+                stringResult,
+                jsonSerializerOptions
+            ) ?? throw new Exception("Could not parse {stringResult}");
         result.Title.Should().Be("One or more validation errors occurred.");
         result.Detail.Should().Be("Incorrect Credentials");
     }
@@ -82,7 +91,8 @@ public class LoginTest : IClassFixture<CustomWebApplicationFactory<Program>>
     [Fact]
     public async void ShouldNotAuthorizeWrongEmailUser()
     {
-        var request = $@"{{
+        var request =
+            $@"{{
             ""email"": ""iamnotregistered@email.com"",
             ""password"": ""MyT3stPa$$w0rd""
         }}";
@@ -91,7 +101,11 @@ public class LoginTest : IClassFixture<CustomWebApplicationFactory<Program>>
         var response = await _httpClient.PostAsync("/user/login", requestContent);
         response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
         var stringResult = await response.Content.ReadAsStringAsync();
-        var result = JsonSerializer.Deserialize<HttpValidationProblemDetails>(stringResult, jsonSerializerOptions) ?? throw new Exception("Could not parse {stringResult}");
+        var result =
+            JsonSerializer.Deserialize<HttpValidationProblemDetails>(
+                stringResult,
+                jsonSerializerOptions
+            ) ?? throw new Exception("Could not parse {stringResult}");
         result.Title.Should().Be("Unauthorized");
     }
 

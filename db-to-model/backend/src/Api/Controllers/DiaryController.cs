@@ -39,17 +39,29 @@ public class DiaryController : ControllerBase
     }
 
     [HttpPost(Name = "add_diary")]
-    public async Task<bool> AddDiary(DiaryIngressDto diaryEntryDto, CancellationToken cancellationToken)
+    public async Task<bool> AddDiary(
+        DiaryIngressDto diaryEntryDto,
+        CancellationToken cancellationToken
+    )
     {
-        var user = await userRepository.GetAppUserAsync(User.FindFirstValue(ClaimTypes.Email), cancellationToken);
+        var user = await userRepository.GetAppUserAsync(
+            User.FindFirstValue(ClaimTypes.Email),
+            cancellationToken
+        );
         var message = new AddNewDiary(diaryEntryDto, user);
         return await mediator.Send(message, cancellationToken);
     }
 
     [HttpPost("by_food_name", Name = "add_diary_food_names")]
-    public async Task<bool> AddDiaryByFoodName(DiaryIngressWithFoodNamesDto diaryEntryDto, CancellationToken cancellationToken)
+    public async Task<bool> AddDiaryByFoodName(
+        DiaryIngressWithFoodNamesDto diaryEntryDto,
+        CancellationToken cancellationToken
+    )
     {
-        var user = await userRepository.GetAppUserAsync(User.FindFirstValue(ClaimTypes.Email), cancellationToken);
+        var user = await userRepository.GetAppUserAsync(
+            User.FindFirstValue(ClaimTypes.Email),
+            cancellationToken
+        );
         var message = new AddNewDiaryWithFoodNames(diaryEntryDto, user);
         return await mediator.Send(message, cancellationToken);
     }
