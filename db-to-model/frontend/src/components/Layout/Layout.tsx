@@ -78,10 +78,10 @@ export default function Layout() {
           <DesktopNavigation />
         </div>
 
-        <div className="sticky top-0 z-40 flex items-center gap-x-6 bg-cyan-600 px-4 py-4 shadow-sm sm:px-6 lg:hidden">
+        <div className="sticky top-0 z-40 flex items-center gap-x-6 bg-cyan-50 px-4 py-4 shadow-sm sm:px-6 lg:hidden">
           <button
             type="button"
-            className="-m-2.5 p-2.5 text-indigo-200 lg:hidden"
+            className="-m-2.5 p-2.5 text-slate-600 lg:hidden"
             onClick={() => setSidebarOpen(true)}
           >
             <span className="sr-only">Open sidebar</span>

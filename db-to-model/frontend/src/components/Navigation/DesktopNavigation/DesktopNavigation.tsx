@@ -25,19 +25,16 @@ const DesktopNavigation = () => {
                     className={({ isActive }) =>
                       classNames(
                         isActive
-                          ? 'bg-slate-600 text-white'
-                          : 'text-grey-200 hover:bg-slate-400 hover:text-white',
+                          ? 'is-active bg-slate-600 text-white'
+                          : 'text-slate-600 hover:bg-slate-400 hover:text-white',
                         'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6',
                       )
                     }
                   >
                     <item.icon
-                      className={classNames(
-                        fakeActive
-                          ? 'text-white'
-                          : 'text-indigo-200 group-hover:text-white',
-                        'h-6 w-6 shrink-0',
-                      )}
+                      className={
+                        'h-6 w-6 shrink-0 text-slate-600 group-hover:text-zinc-100 group-[.is-active]:text-zinc-100'
+                      }
                       aria-hidden="true"
                     />
                     {item.name}
