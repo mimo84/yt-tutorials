@@ -7,7 +7,7 @@ export interface AuthProps {
   password: string
 }
 
-export interface LoggedInUser {
+export interface UserInfo {
   displayName: string
   token: string
   bio: string
@@ -17,7 +17,7 @@ export interface LoggedInUser {
 }
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<LoggedInUser | null>(null)
+  const [user, setUser] = useState<UserInfo | null>(null)
 
   const signIn = async (user: AuthProps, callback: VoidFunction) => {
     try {

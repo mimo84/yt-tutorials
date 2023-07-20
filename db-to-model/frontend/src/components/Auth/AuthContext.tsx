@@ -1,8 +1,8 @@
 import { createContext } from 'react'
-import { AuthProps, LoggedInUser } from './AuthProvider'
+import { AuthProps, UserInfo } from './AuthProvider'
 
 interface AuthContextType {
-  user: LoggedInUser | null
+  user: UserInfo | null
   signIn: (user: AuthProps, callback: VoidFunction) => void
   signOut: (callback: VoidFunction) => void
 }

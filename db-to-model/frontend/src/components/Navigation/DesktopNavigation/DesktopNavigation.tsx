@@ -1,70 +1,70 @@
-import { Link, NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { classNames } from '../../../helpers/classNames'
-import { useAuth } from '../../Auth/useAuth'
+import useNavigationItems from '../useNavigationItems'
 
-export default function DesktopNavigation() {
-  const auth = useAuth()
-  const isLoggedIn = auth.user?.token !== undefined
+const DesktopNavigation = () => {
+  const navigationItems = useNavigationItems()
+  const fakeActive = false
   return (
-    <>
-      <div className="flex flex-shrink-0 items-center">
-        <Link to="/">
-          <img
-            className="block h-8 w-auto lg:hidden"
-            src="https://tailwindui.com/img/logos/mark.svg?color=red&shade=600"
-            alt="Your Company"
-          />
-          <img
-            className="hidden h-8 w-auto lg:block"
-            src="https://tailwindui.com/img/logos/mark.svg?color=red&shade=600"
-            alt="Your Company"
-          />
-        </Link>
+    <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-cyan-50 px-6">
+      <div className="flex h-16 shrink-0 items-center">
+        <img
+          className="h-8 w-auto"
+          src="https://tailwindui.com/img/logos/mark.svg?color=slate-300"
+          alt="Your Company"
+        />
       </div>
-      <div className="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
-        <NavLink
-          to="about"
-          className={({ isActive }) =>
-            classNames(
-              isActive
-                ? 'text-skin-accent border-skin-fill'
-                : 'hover:border-background-fill text-skin-accent border-transparent hover:text-skin-hover',
-              'inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium'
-            )
-          }
-        >
-          About
-        </NavLink>
-        {!isLoggedIn && (
-          <NavLink
-            to="login"
-            className={({ isActive }) =>
-              classNames(
-                isActive
-                  ? 'text-skin-accent border-skin-fill'
-                  : 'hover:border-background-fill text-skin-accent border-transparent hover:text-skin-hover',
-                'inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium'
-              )
-            }
-          >
-            Login
-          </NavLink>
-        )}
-        <NavLink
-          to="/protected/diary"
-          className={({ isActive }) =>
-            classNames(
-              isActive
-                ? 'text-skin-accent border-skin-fill'
-                : 'hover:border-background-fill text-skin-accent border-transparent hover:text-skin-hover',
-              'inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium'
-            )
-          }
-        >
-          Diary
-        </NavLink>
-        <Link to="login" className="login-link" />
-      </div>
-    </>
+      <nav className="flex flex-1 flex-col">
+        <ul role="list" className="flex flex-1 flex-col gap-y-7">
+          <li>
+            <ul role="list" className="-mx-2 space-y-1">
+              {navigationItems.map((item) => (
+                <li key={item.name}>
+                  <NavLink
+                    to={item.to}
+                    className={({ isActive }) =>
+                      classNames(
+                        isActive
+                          ? 'bg-slate-600 text-white'
+                          : 'text-grey-200 hover:bg-slate-400 hover:text-white',
+                        'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6',
+                      )
+                    }
+                  >
+                    <item.icon
+                      className={classNames(
+                        fakeActive
+                          ? 'text-white'
+                          : 'text-indigo-200 group-hover:text-white',
+                        'h-6 w-6 shrink-0',
+                      )}
+                      aria-hidden="true"
+                    />
+                    {item.name}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+          </li>
+
+          <li className="-mx-6 mt-auto">
+            <a
+              href="#"
+              className="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-slate-600 hover:bg-slate-700 hover:text-white"
+            >
+              <img
+                className="h-8 w-8 rounded-full bg-slate-700"
+                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                alt=""
+              />
+              <span className="sr-only">Your profile</span>
+              <span aria-hidden="true">Tom Cook</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
   )
 }
+
+export default DesktopNavigation
