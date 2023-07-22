@@ -21,8 +21,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signIn = async (user: AuthProps, callback: VoidFunction) => {
     try {
-      const data = await loginUser(user)
-      console.log(data)
+      const { data } = await loginUser(user)
+
       if (!data) {
         return
       }

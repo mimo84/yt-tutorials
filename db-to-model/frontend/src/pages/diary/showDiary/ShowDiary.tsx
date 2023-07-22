@@ -7,17 +7,14 @@ const ShowDiary = () => {
   const [diary, setDiary] = useState<DiaryWithMeals>({ diary: { diaries: [] } })
 
   useEffect(() => {
-    const controller = new AbortController()
-    const { signal } = controller
-
     const initDiaries = async () => {
       setLoading(true)
       try {
-        const fetchedDiary = await getDiary(signal)
+        const fetchedDiary = await getDiary()
         if (!fetchedDiary) {
           throw new Error('Could not fetch diaries')
         }
-        setDiary(fetchedDiary)
+        setDiary(fetchedDiary.data)
         setLoading(false)
       } catch {
         /* empty */
@@ -26,9 +23,7 @@ const ShowDiary = () => {
 
     void initDiaries()
 
-    return () => {
-      controller.abort()
-    }
+    return () => {}
   }, [])
 
   if (loading) {

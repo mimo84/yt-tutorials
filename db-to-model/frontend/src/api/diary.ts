@@ -1,4 +1,4 @@
-import { GET } from './config'
+import configuredAxios from './config'
 
 export type DiaryWithMeals = {
   diary: {
@@ -24,5 +24,4 @@ export type DiaryWithMeals = {
   }
 }
 
-export const getDiary = (signal: AbortSignal) =>
-  GET<DiaryWithMeals>(`/diary/get`, signal)
+export const getDiary = () => configuredAxios.get<DiaryWithMeals>(`/diary/get`)

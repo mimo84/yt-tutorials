@@ -1,5 +1,6 @@
+import { AxiosResponse } from 'axios'
 import { AuthProps, UserInfo } from '../components/Auth/AuthProvider'
-import { POST } from './config'
+import configuredAxios from './config'
 
 export const loginUser = (user: AuthProps) =>
-  POST<UserInfo, AuthProps>('/user/login', user)
+  configuredAxios.post<AuthProps, AxiosResponse<UserInfo>>('/user/login', user)
