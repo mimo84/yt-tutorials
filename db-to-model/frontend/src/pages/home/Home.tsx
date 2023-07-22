@@ -1,5 +1,5 @@
-import PageBody from '../components/Layout/PageBody'
-import PageHeading from '../components/Layout/PageHeading'
+import PageBody from '../../components/Layout/PageBody'
+import PageHeading from '../../components/Layout/PageHeading'
 
 function Home() {
   return (

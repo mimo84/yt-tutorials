@@ -1,7 +1,7 @@
 import { useNavigate, useLocation } from 'react-router-dom'
-import { AuthProps } from '../components/Auth/AuthProvider'
-import { useAuth } from '../components/Auth/useAuth'
-import imgUrl from '../images/healthy-food-bg-white.jpg'
+import { AuthProps } from '../../components/Auth/AuthProvider'
+import { useAuth } from '../../components/Auth/useAuth'
+import imgUrl from '../../images/healthy-food-bg-white.jpg'
 interface LocationState {
   from?: {
     pathname?: string

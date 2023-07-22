@@ -1,17 +1,17 @@
-import About from './pages/About'
-import { Diary } from './pages/Diary'
 import {
   RouterProvider,
   createBrowserRouter,
   createRoutesFromElements,
   Route,
 } from 'react-router-dom'
-import Home from './pages/Home'
 import Layout from './components/Layout/Layout'
-import NotFound from './pages/NotFound'
-import Login from './pages/Login'
 import { AuthProvider } from './components/Auth/AuthProvider'
 import RequireAuth from './components/Auth/RequireAuth'
+import Home from './pages/home/Home'
+import About from './pages/about/About'
+import Login from './pages/login/Login'
+import { Diary } from './pages/diary/Diary'
+import NotFound from './pages/navigation/notFound/NotFound'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -30,8 +30,8 @@ const router = createBrowserRouter(
       <Route path="/" element={<Home />} />
       <Route path="/about" element={<About />} />
       <Route path="*" element={<NotFound />} />
-    </Route>
-  )
+    </Route>,
+  ),
 )
 
 export function App() {
