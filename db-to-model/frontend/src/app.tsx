@@ -12,6 +12,9 @@ import About from './pages/about/About'
 import Login from './pages/login/Login'
 import { Diary } from './pages/diary/Diary'
 import NotFound from './pages/navigation/notFound/NotFound'
+import AddFood from './pages/diary/addFood/AddFood'
+import AddMeal from './pages/diary/addMeal/AddMeal'
+import ShowDiary from './pages/diary/showDiary/ShowDiary'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -26,7 +29,11 @@ const router = createBrowserRouter(
             <Diary />
           </RequireAuth>
         }
-      />
+      >
+        <Route path="show-diary" element={<ShowDiary />} />
+        <Route path="add-food" element={<AddFood />} />
+        <Route path="add-meal" element={<AddMeal />} />
+      </Route>
       <Route path="/" element={<Home />} />
       <Route path="/about" element={<About />} />
       <Route path="*" element={<NotFound />} />

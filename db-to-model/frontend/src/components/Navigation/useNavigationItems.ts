@@ -24,7 +24,7 @@ const navigationItems = [
   },
   {
     name: 'Diary',
-    to: 'protected/diary',
+    to: 'protected/diary/show-diary',
     icon: PencilSquareIcon,
     userState: 'loggedIn',
   },
