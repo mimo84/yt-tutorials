@@ -1,6 +1,6 @@
 import configuredAxios from './config'
 
-interface FoodDto {
+export interface FoodDto {
   food: [
     {
       foodId: number

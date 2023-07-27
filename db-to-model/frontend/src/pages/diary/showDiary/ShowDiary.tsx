@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { DiaryWithMeals, getDiary } from '../../../api/diary'
 import Loading from '../../../components/Loading/Loading'
+import React from 'react'
 
 const ShowDiary = () => {
   const [loading, setLoading] = useState(false)
@@ -37,54 +38,68 @@ const ShowDiary = () => {
     <>
       Your diaries:
       {diaries.map((d) => {
+        const diaryDate = new Date(d.diaryDate).toLocaleDateString()
         return (
-          <table className={'mt-6'} key={d.diaryId}>
-            <thead>
-              <tr>
-                <td colSpan={6} className={'bg-green-100'}>
-                  Diary of {d.diaryDate} - {Math.round(d.caloriesInDiary)}
-                </td>
-              </tr>
-            </thead>
-            <tbody>
-              {d.meals.map((m) => {
-                return (
-                  <>
-                    <tr key={m.mealId}>
-                      <td colSpan={6} className={'bg-slate-200'}>
-                        {m.mealName} - {m.caloriesInMeal}
-                      </td>
-                    </tr>
+          <div
+            className="mt-6 drop-shadow-sm hover:drop-shadow-xl"
+            key={d.diaryId}
+          >
+            <div className="bg-indigo-100 py-3.5 text-center text-sm font-semibold ">
+              Diary of {diaryDate} - {Math.round(d.caloriesInDiary)}KCal
+            </div>
 
-                    {m.foodInMealResponse.map((f) => {
-                      return (
-                        <tr key={f.foodId}>
-                          <td className={'border-r-4 border-green-500'}>
-                            {f.foodName}
-                          </td>
-                          <td className={'border-r-4 border-green-500'}>
-                            {f.consumedAmount}
-                          </td>
-                          <td className={'border-r-4 border-green-500'}>
-                            {f.carbohydrates}
-                          </td>
-                          <td className={'border-r-4 border-green-500'}>
-                            {f.protein}
-                          </td>
-                          <td className={'border-r-4 border-green-500'}>
-                            {f.fat}
-                          </td>
-                          <td className={'border-r-4 border-green-500'}>
-                            {f.calories}
-                          </td>
-                        </tr>
-                      )
-                    })}
-                  </>
-                )
-              })}
-            </tbody>
-          </table>
+            {d.meals.map((m) => {
+              return (
+                <React.Fragment key={m.mealId}>
+                  <div key={m.mealId} className="flex bg-slate-200">
+                    <div className="w-1/3 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-slate-900 sm:pl-6 lg:pl-8">
+                      {m.mealName} - {m.caloriesInMeal}
+                    </div>
+                    <div className="w-[13%] py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-slate-900 sm:pl-6 lg:pl-8">
+                      Consumed
+                    </div>
+                    <div className="w-[13%] py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-slate-900 sm:pl-6 lg:pl-8">
+                      Carbohydrates
+                    </div>
+                    <div className="w-[13%] py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-slate-900 sm:pl-6 lg:pl-8">
+                      Protein
+                    </div>
+                    <div className="w-[13%] py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-slate-900 sm:pl-6 lg:pl-8">
+                      Fat
+                    </div>
+                    <div className="w-[13%] py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-slate-900 sm:pl-6 lg:pl-8">
+                      Calories
+                    </div>
+                  </div>
+
+                  {m.foodInMealResponse.map((f) => {
+                    return (
+                      <div className="flex" key={f.foodId}>
+                        <div className="w-1/3 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-slate-900 sm:pl-6 lg:pl-8">
+                          {f.foodName}
+                        </div>
+                        <div className="w-[13%] py-3.5 pl-4 pr-3 text-left text-sm text-slate-900 sm:pl-6 lg:pl-8">
+                          {f.consumedAmount}
+                        </div>
+                        <div className="w-[13%] py-3.5 pl-4 pr-3 text-left text-sm text-slate-900 sm:pl-6 lg:pl-8">
+                          {f.carbohydrates}
+                        </div>
+                        <div className="w-[13%] py-3.5 pl-4 pr-3 text-left text-sm text-slate-900 sm:pl-6 lg:pl-8">
+                          {f.protein}
+                        </div>
+                        <div className="w-[13%] py-3.5 pl-4 pr-3 text-left text-sm text-slate-900 sm:pl-6 lg:pl-8">
+                          {f.fat}
+                        </div>
+                        <div className="w-[13%] py-3.5 pl-4 pr-3 text-left text-sm text-slate-900 sm:pl-6 lg:pl-8">
+                          {f.calories}
+                        </div>
+                      </div>
+                    )
+                  })}
+                </React.Fragment>
+              )
+            })}
+          </div>
         )
       })}
     </>
