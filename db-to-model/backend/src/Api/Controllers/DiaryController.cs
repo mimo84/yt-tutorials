@@ -65,4 +65,32 @@ public class DiaryController : ControllerBase
         var message = new AddNewDiaryWithFoodNames(diaryEntryDto, user);
         return await mediator.Send(message, cancellationToken);
     }
+
+    [HttpDelete("{diaryId:int}/meal/{mealId:int}")]
+    public async Task<bool> DeleteMealFromDiary(
+        int diaryId,
+        int mealId,
+        CancellationToken cancellationToken
+    )
+    {
+        var user = await userRepository.GetAppUserAsync(
+            User.FindFirstValue(ClaimTypes.Email),
+            cancellationToken
+        );
+
+        await Task.CompletedTask;
+        return true;
+    }
+
+    [HttpDelete("foodmeal/{foodMealId:int}")]
+    public async Task<bool> DeleteFoodFromDiary(int foodMealId, CancellationToken cancellationToken)
+    {
+        var user = await userRepository.GetAppUserAsync(
+            User.FindFirstValue(ClaimTypes.Email),
+            cancellationToken
+        );
+
+        var message = new DeleteFoodFromMeal(foodMealId, user);
+        return await mediator.Send(message, cancellationToken);
+    }
 }

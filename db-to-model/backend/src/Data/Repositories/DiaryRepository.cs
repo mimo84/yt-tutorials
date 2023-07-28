@@ -36,6 +36,27 @@ public class DiaryRepository : IDiaryRepository
         return diaries;
     }
 
+    public async Task<bool> DeleteFoodFromDiary(
+        int foodMealId,
+        AppUser user,
+        CancellationToken cancellationToken
+    )
+    {
+        var foodMeal = await dbContext.FoodMeals
+            .Where(f => f.FoodMealId == foodMealId)
+            .Include(fm => fm.Meal)
+            .ThenInclude(m => m.Diary)
+            .SingleAsync(cancellationToken);
+        var owner = foodMeal.Meal.Diary.AppUserId;
+        if (owner != user.Id)
+        {
+            return false;
+        }
+        dbContext.Remove(foodMeal);
+        await dbContext.SaveChangesAsync(cancellationToken);
+        return true;
+    }
+
     public async Task<bool> CreateFullDiaryAsync(
         DiaryIngressDto diaryEntryDto,
         AppUser user,

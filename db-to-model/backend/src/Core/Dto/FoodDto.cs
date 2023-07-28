@@ -3,7 +3,7 @@ namespace FoodDiary.Core.Dto;
 public record FoodEnvelope<T>(T Food);
 
 public record FoodInMealResponse(
-    int FoodId,
+    int FoodMealId,
     string FoodName,
     decimal ConsumedAmount,
     decimal Fat,

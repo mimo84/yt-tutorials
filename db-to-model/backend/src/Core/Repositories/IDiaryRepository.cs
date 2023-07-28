@@ -15,6 +15,12 @@ public interface IDiaryRepository
         CancellationToken cancellationToken
     );
 
+    public Task<bool> DeleteFoodFromDiary(
+        int foodMealId,
+        AppUser user,
+        CancellationToken cancellationToken
+    );
+
     public Task<bool> CreateFullDiaryWithNamesAsync(
         DiaryIngressWithFoodNamesDto diaryEntryDto,
         AppUser user,

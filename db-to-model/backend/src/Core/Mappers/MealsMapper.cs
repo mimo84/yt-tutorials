@@ -30,7 +30,7 @@ public static class MealsMapper
         var calories = Nutrition.CalculateCalories(protein, carbohydrates, fat);
 
         return new FoodInMealResponse(
-            FoodId: food.FoodId,
+            FoodMealId: food.FoodMealId,
             FoodName: food.Food.Name,
             ConsumedAmount: food.ConsumedAmount,
             Fat: fat,

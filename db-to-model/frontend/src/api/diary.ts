@@ -11,7 +11,7 @@ export type DiaryWithMeals = {
         mealName: string
         caloriesInMeal: number
         foodInMealResponse: {
-          foodId: number
+          foodMealId: number
           foodName: string
           consumedAmount: number
           fat: number
@@ -25,3 +25,6 @@ export type DiaryWithMeals = {
 }
 
 export const getDiary = () => configuredAxios.get<DiaryWithMeals>(`/diary/get`)
+
+export const deleteMealFromDiary = (foodMealId: number) =>
+  configuredAxios.delete(`/diary/foodmeal/${foodMealId}`)
