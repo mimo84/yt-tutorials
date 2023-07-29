@@ -7,7 +7,7 @@ namespace FoodDiary.Core.Messages;
 
 public record GetDiaryById(int Id) : IRequest<DiaryEnvelope<DiaryResponse>>;
 
-public record GetAllDiaries() : IRequest<DiaryEnvelope<DiariesResponse>>;
+public record GetAllDiaries(AppUser User) : IRequest<DiaryEnvelope<DiariesResponse>>;
 
 public record AddNewDiary(DiaryIngressDto Request, AppUser User) : IRequest<bool>;
 

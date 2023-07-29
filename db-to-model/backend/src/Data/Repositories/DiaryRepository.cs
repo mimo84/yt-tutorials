@@ -23,9 +23,9 @@ public class DiaryRepository : IDiaryRepository
         return diary;
     }
 
-    public async Task<List<Diary>> GetAllDiaries(CancellationToken cancellationToken)
+    public async Task<List<Diary>> GetAllDiaries(AppUser user, CancellationToken cancellationToken)
     {
-        var diaries = await dbContext.Diaries
+        var diaries = await dbContext.Diaries.Where(d => d.AppUser == user)
             .OrderByDescending(d => d.Date)
             .Include(d => d.Meals)
             .ThenInclude(m => m.FoodMeals)

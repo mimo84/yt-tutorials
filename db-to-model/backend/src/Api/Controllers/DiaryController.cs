@@ -25,7 +25,11 @@ public class DiaryController : ControllerBase
     [HttpGet("get", Name = "diaries")]
     public async Task<DiaryEnvelope<DiariesResponse>> Get(CancellationToken cancellationToken)
     {
-        var message = new GetAllDiaries();
+        var user = await userRepository.GetAppUserAsync(
+            User.FindFirstValue(ClaimTypes.Email),
+            cancellationToken
+        );
+        var message = new GetAllDiaries(user);
         var response = await mediator.Send(message, cancellationToken);
         return response;
     }

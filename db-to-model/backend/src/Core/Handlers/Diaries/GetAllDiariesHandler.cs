@@ -20,7 +20,7 @@ public class GetAllDiariesHandler : IRequestHandler<GetAllDiaries, DiaryEnvelope
         CancellationToken cancellationToken
     )
     {
-        var diary = await diaryRepository.GetAllDiaries(cancellationToken);
+        var diary = await diaryRepository.GetAllDiaries(request.User, cancellationToken);
         var diaryResponse = DiariesMapper.MapFromDiariesEntity(diary);
         var result = new DiaryEnvelope<DiariesResponse>(diaryResponse);
         return result;
