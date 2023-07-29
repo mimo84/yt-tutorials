@@ -1,0 +1,61 @@
+name: CI
+
+on:
+  push:
+    branches: [diary-example]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install Node.js
+        working-directory: ./frontend
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - uses: pnpm/action-setup@v2
+        working-directory: ./frontend
+        name: Install pnpm
+        with:
+          version: 7
+          run_install: false
+
+      - name: Get pnpm store directory
+        working-directory: ./frontend
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        working-directory: ./frontend
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        working-directory: ./frontend
+        run: pnpm install
+
+      - name: Check linting
+        working-directory: ./frontend
+        run: pnpm run lint
+
+      - name: Check formatting
+        working-directory: ./frontend
+        run: pnpm run check-format
+
+      - name: Build typescript
+        working-directory: ./frontend
+        run: pnpm run tsc
+
+      - name: Build project
+        working-directory: ./frontend
+        run: pnpm run build
