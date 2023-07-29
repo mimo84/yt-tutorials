@@ -1,11 +1,11 @@
 import { classNames } from '../../../helpers/classNames'
 import { NavLink } from 'react-router-dom'
 import useNavigationItems from '../useNavigationItems'
-
-const fakeActive = true
+import { useTranslation } from 'react-i18next'
 
 const MobileNavigation = () => {
   const navigationItems = useNavigationItems()
+  const [t] = useTranslation()
 
   return (
     <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-cyan-50 px-6 pb-2">
@@ -13,7 +13,7 @@ const MobileNavigation = () => {
         <img
           className="h-8 w-auto"
           src="https://tailwindui.com/img/logos/mark.svg?color=slate-400"
-          alt="Your Company"
+          alt={t('')}
         />
       </div>
       <nav className="flex flex-1 flex-col">

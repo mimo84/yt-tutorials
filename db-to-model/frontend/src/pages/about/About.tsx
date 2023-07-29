@@ -1,13 +1,14 @@
+import { useTranslation } from 'react-i18next'
 import PageBody from '../../components/Layout/PageBody'
 import PageHeading from '../../components/Layout/PageHeading'
 
 function About() {
+  const { t } = useTranslation()
   return (
     <>
-      <PageHeading>About</PageHeading>
+      <PageHeading>{t('about.title')}</PageHeading>
       <PageBody>
-        <p>This is a coding exercise to display my food diary.</p>
-        <p>Hopefully I'm going to make it go online.</p>
+        <p>{t('about.body')}</p>
       </PageBody>
     </>
   )

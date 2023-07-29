@@ -4,7 +4,6 @@ import useNavigationItems from '../useNavigationItems'
 
 const DesktopNavigation = () => {
   const navigationItems = useNavigationItems()
-  const fakeActive = false
   return (
     <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-cyan-50 px-6">
       <div className="flex h-16 shrink-0 items-center">

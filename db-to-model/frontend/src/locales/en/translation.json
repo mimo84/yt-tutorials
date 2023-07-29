@@ -1,0 +1,42 @@
+{
+  "about": {
+    "title": "About this project",
+    "body": "This is a coding exercise. My idea is to use it to learn things that I don't do when I work."
+  },
+  "diary": {
+    "title": "Diary",
+    "kcal": "KCal",
+    "main-link": "Diary",
+    "add-food-link": "Add Food",
+    "add-meal-link": "Add Meal"
+  },
+  "show-diary": {
+    "title": "Diary of {{day, datetime}} - total KCal: {{kcal, number}}",
+    "meal-and-calories": "{{mealName}}, calories in meal: {{calories, number}} kcal",
+    "meal-and-calories_zero": "{{mealName}} - add some food to start",
+    "heading-consumed": "Consumed",
+    "heading-carbs": "Carbs",
+    "heading-proteins": "Proteins",
+    "heading-fats": "Fats",
+    "heading-calories": "Calories"
+  },
+  "login": {
+    "signin": "Sign in to your account",
+    "email-label": "Email Address",
+    "password-label": "Password",
+    "signin-button": "Sign in"
+  },
+  "home": {
+    "title": "Welcome",
+    "body": "Welcome to the food diary project"
+  },
+  "navigation": {
+    "about": "About",
+    "diary": "Diary",
+    "login": "Login"
+  },
+  "notfound": {
+    "title": "Sorry, the page you were looking for was not found.",
+    "return": "Return to Home"
+  }
+}

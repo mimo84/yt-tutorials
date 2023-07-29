@@ -6,9 +6,11 @@ import {
 } from '../../../api/diary'
 import Loading from '../../../components/Loading/Loading'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 const ShowDiary = () => {
   const [loading, setLoading] = useState(false)
+  const { t } = useTranslation()
   const [diary, setDiary] = useState<DiaryWithMeals>({ diary: { diaries: [] } })
 
   const handleDeleteFood = (foodId: number) => {
@@ -46,15 +48,27 @@ const ShowDiary = () => {
   const {
     diary: { diaries },
   } = diary
+
   return (
     <>
       Your diaries:
       {diaries.map((d) => {
-        const diaryDate = new Date(d.diaryDate).toLocaleDateString()
+        const diaryDate = new Date(d.diaryDate)
         return (
           <div className="mb-6 mt-6 " key={d.diaryId}>
             <div className="bg-indigo-100 py-3.5 text-center text-sm font-semibold ">
-              Diary of {diaryDate} - {Math.round(d.caloriesInDiary)}KCal
+              {t('show-diary.title', {
+                day: diaryDate,
+                kcal: Math.round(d.caloriesInDiary),
+                formatParams: {
+                  day: {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                  },
+                },
+              })}
             </div>
 
             {d.meals.map((m) => {
@@ -62,13 +76,31 @@ const ShowDiary = () => {
                 <React.Fragment key={m.mealId}>
                   <div key={m.mealId} className="flex bg-slate-200">
                     <div className="w-full sm:w-1/3">
-                      {m.mealName} - {m.caloriesInMeal}
+                      {t('show-diary.meal-and-calories', {
+                        mealName: m.mealName,
+                        calories: m.caloriesInMeal,
+                        count: m.caloriesInMeal,
+                        formatParams: {
+                          calories: { maximumFractionDigits: 2 },
+                        },
+                      })}
                     </div>
-                    <div className="invisible sm:visible">Consumed</div>
-                    <div className="invisible sm:visible">Carbohydrates</div>
-                    <div className="invisible sm:visible">Protein</div>
-                    <div className="invisible sm:visible">Fat</div>
-                    <div className="invisible sm:visible">Calories</div>
+
+                    <div className="hidden sm:inline-flex">
+                      {t('show-diary.heading-consumed')}
+                    </div>
+                    <div className="hidden sm:inline-flex">
+                      {t('show-diary.heading-carbs')}
+                    </div>
+                    <div className="hidden sm:inline-flex">
+                      {t('show-diary.heading-proteins')}
+                    </div>
+                    <div className="hidden sm:inline-flex">
+                      {t('show-diary.heading-fats')}
+                    </div>
+                    <div className="hidden sm:inline-flex">
+                      {t('show-diary.heading-calories')}
+                    </div>
                   </div>
 
                   {m.foodInMealResponse.map((f) => {

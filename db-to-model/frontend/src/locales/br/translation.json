@@ -1,0 +1,29 @@
+{
+  "about": {
+    "title": "Sobre este projeto",
+    "body": "Este é um exercício de codificação. Minha ideia é usá-lo para aprender coisas que não faço durante o trabalho."
+  },
+  "diary": {
+    "title": "Diário de Alimentação",
+    "kcal": "KCal"
+  },
+  "login": {
+    "signin": "Acesse sua conta",
+    "email-label": "Endereço de e-mail",
+    "password-label": "Senha",
+    "signin-button": "Entrar"
+  },
+  "home": {
+    "title": "Bienvindo!",
+    "body": "Bienvindo nesse projeto de diário alimentar"
+  },
+  "navigation": {
+    "about": "Sobre",
+    "diary": "Diário",
+    "login": "Acesse"
+  },
+  "notfound": {
+    "title": "Sorry, the page you were looking for was not found.",
+    "return": "Return to Home"
+  }
+}

@@ -6,10 +6,17 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import Footer from '../Footer/Footer'
 import MobileNavigation from '../Navigation/MobileNavigation/MobileNavigation'
 import DesktopNavigation from '../Navigation/DesktopNavigation/DesktopNavigation'
+import { useTranslation } from 'react-i18next'
+import usFlag from '../../images/icons/flag-us.svg'
+import itFlag from '../../images/icons/flag-it.svg'
+import brFlag from '../../images/icons/flag-br.svg'
 
 export default function Layout() {
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false)
-
+  const { i18n } = useTranslation()
+  const changeLanguage = (lng: string): void => {
+    void i18n.changeLanguage(lng)
+  }
   return (
     <>
       <div>
@@ -87,15 +94,28 @@ export default function Layout() {
             <span className="sr-only">Open sidebar</span>
             <Bars3Icon className="h-6 w-6" aria-hidden="true" />
           </button>
-          <div className="flex flex-1 justify-end text-sm font-semibold leading-6 text-white">
-            <a className="" href="#">
-              <span className="sr-only">Your profile</span>
-              <img
-                className="h-8 w-8 rounded-full bg-indigo-700"
-                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                alt=""
-              />
-            </a>
+          <div className="flex flex-1 justify-end gap-2 text-sm font-semibold leading-6 text-slate-900">
+            <button
+              type="button"
+              className="h-7 w-7"
+              onClick={() => changeLanguage('br')}
+            >
+              <img src={brFlag} alt="Lingua Brasileira" />
+            </button>
+            <button
+              type="button"
+              className="h-7 w-7"
+              onClick={() => changeLanguage('it')}
+            >
+              <img src={itFlag} alt="Lingua Italiana" />
+            </button>
+            <button
+              className="h-7 w-7"
+              type="button"
+              onClick={() => changeLanguage('en')}
+            >
+              <img src={usFlag} alt="English Language" />
+            </button>
           </div>
         </div>
 

@@ -1,0 +1,32 @@
+{
+  "about": {
+    "title": "Cos'è questo progetto",
+    "body": "Si tratta di un'idea che ho in mente da molto. Vorrei usarlo anche per imparare cose di programmazione che non posso fare a lavoro."
+  },
+  "diary": {
+    "title": "Diario Alimentare",
+    "kcal": "KCal",
+    "main-link": "Diario",
+    "add-food-link": "Aggiungi cibo",
+    "add-meal-link": "Aggiungi pasto"
+  },
+  "login": {
+    "signin": "Accedi",
+    "email-label": "Indirizzo email",
+    "password-label": "La tua password",
+    "signin-button": "Entra!"
+  },
+  "navigation": {
+    "about": "Cos'è",
+    "diary": "Diario",
+    "login": "Entra"
+  },
+  "home": {
+    "title": "Benvenuti",
+    "body": "Benvenuti nel progetto del diario alimentare"
+  },
+  "notfound": {
+    "title": "Non abbiamo trovato quello che cercavi.",
+    "return": "Torna all'inizio"
+  }
+}
