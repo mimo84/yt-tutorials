@@ -70,10 +70,11 @@ builder.Services.AddCors(opt =>
     opt.AddDefaultPolicy(policy =>
     {
         policy
-            .WithOrigins(config.GetValue<string>("Cors:Origins").Split(','))
-            .AllowAnyHeader()
-            .AllowAnyMethod()
-            .AllowCredentials();
+                // .WithOrigins(config.GetValue<string>("Cors:Origins").Split(','))
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials()
+                .SetIsOriginAllowed(origin => true);// Allow any origin
     });
 });
 
