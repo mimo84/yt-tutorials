@@ -1,6 +1,11 @@
 import { useEffect, useState } from 'react'
 import { FoodDto, getFoods } from '../../../api/food'
 import configuredAxios from '../../../api/config'
+import Loading from '../../../components/Loading/Loading'
+import fat from '../../../images/icons/fat.svg'
+import carb from '../../../images/icons/carb.svg'
+import protein from '../../../images/icons/protein.svg'
+import { PlusIcon } from '@heroicons/react/24/outline'
 
 const AddFood = () => {
   const [foodName, setFoodName] = useState('')
@@ -52,74 +57,98 @@ const AddFood = () => {
         })
     }
   }, [foodName])
-
+  console.log(searchResults)
   return (
     <>
-      <div>Add Food Page</div>
-      <input
-        type="text"
-        placeholder="Ricotta"
-        value={foodName}
-        onChange={handleOnChange}
-      />
-
-      <div className="min-w-full divide-y divide-gray-300">
-        <div className="flex">
-          <div className="w-1/2 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-slate-900 sm:pl-6 lg:pl-8">
-            Food Name
-          </div>
-          <div className="w-2/12 px-3 py-3.5 text-left text-sm font-semibold text-slate-900">
-            Amount
-          </div>
-          <div className="w-2/12 px-3 py-3.5 text-left text-sm font-semibold text-slate-900">
-            Calories
-          </div>
-          <div className="w-2/12 whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 lg:pr-8">
-            Add
-          </div>
-        </div>
-
-        <div className="divide-y divide-gray-200 bg-white">
-          {searchResults?.food.map((searchResult) => (
-            <form
-              className="flex"
-              key={searchResult.foodId}
-              onSubmit={handleSubmit}
-            >
-              <div className="w-1/2 whitespace-nowrap py-4 pl-4 pr-3 text-sm text-gray-900 sm:pl-6 lg:pl-8">
-                {searchResult.foodName}
-              </div>
-
-              <div className="w-2/12 whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                <input
-                  type="number"
-                  name="amount"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  defaultValue={searchResult.amount}
-                />
-                <input
-                  type="hidden"
-                  name="foodId"
-                  value={searchResult.foodId}
-                />
-              </div>
-
-              <div className="w-2/12 whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                {searchResult.calories}
-              </div>
-
-              <div className="w-2/12 whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 lg:pr-8">
-                <button
-                  type="submit"
-                  className="text-indigo-600 hover:text-indigo-900"
-                >
-                  Add<span className="sr-only">, {searchResult.foodId}</span>
-                </button>
-              </div>
-            </form>
-          ))}
+      <div>
+        <label
+          htmlFor="food_search"
+          className="block text-sm font-medium leading-6 text-slate-900"
+        >
+          Look up food
+        </label>
+        <div className="mb-4 mt-2">
+          <input
+            type="text"
+            name="food_search"
+            value={foodName}
+            onChange={handleOnChange}
+            id="food_search"
+            className="block w-full rounded-md border-0 py-1.5 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-slate-600 sm:text-sm sm:leading-6"
+            placeholder="Bread"
+          />
         </div>
       </div>
+      <>
+        {searchResults === undefined ? (
+          <Loading />
+        ) : (
+          <ul
+            role="list"
+            className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+          >
+            {searchResults.food.map((searchResult) => (
+              <li
+                key={searchResult.foodId}
+                className="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow"
+              >
+                <div className="flex w-full items-center justify-between space-x-6 p-6">
+                  <div className="wrap flex-1">
+                    <div className="flex items-center space-x-3">
+                      <h3 className="text-sm font-medium text-gray-900">
+                        {searchResult.foodName}
+                      </h3>
+                    </div>
+                    <div className="flex items-center justify-between space-x-3">
+                      <p className="mt-1 truncate text-sm text-gray-500">
+                        {searchResult.calories}KCal/{searchResult.amount}g
+                      </p>
+                      <div className="inline-flex flex-shrink-0 items-center rounded-full bg-green-50 px-1.5 py-0.5 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+                        {searchResult.protein}g
+                        <img src={protein} className="ml-1 h-5 w-5" />
+                        {searchResult.carbohydrates}g
+                        <img src={carb} className="ml-1 h-5 w-5" />
+                        {searchResult.fat}g
+                        <img src={fat} className="ml-1 h-5 w-5" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <form onSubmit={handleSubmit} className="flex">
+                    <div className="flex w-0 flex-1">
+                      <input
+                        type="text"
+                        defaultValue={searchResult.amount}
+                        className="relative  w-0 flex-1 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
+                        name="amount"
+                        id="amount"
+                      />
+                      <input
+                        type="hidden"
+                        name="foodId"
+                        value={searchResult.foodId}
+                      />
+                    </div>
+                    <button
+                      type="submit"
+                      className="-ml-px flex w-0 flex-1 bg-zinc-100"
+                    >
+                      <span className="relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-br-lg border border-transparent py-4 text-sm font-semibold text-gray-900">
+                        <PlusIcon
+                          className="h-5 w-5 text-gray-400"
+                          aria-hidden="true"
+                        />
+                        Add to diary
+                      </span>
+                    </button>
+                  </form>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </>
     </>
   )
 }

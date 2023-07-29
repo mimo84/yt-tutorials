@@ -10,25 +10,25 @@ export function Diary() {
         <DiaryHeading />
       </PageHeading>
       <PageBody>
-        <nav>
+        <nav className="my-1 flex gap-2">
           <Link
-            className="inline-flex items-center gap-x-1.5 rounded-md bg-slate-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-slate-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-600"
+            className="rounded-md bg-slate-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-slate-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-600"
             to="show-diary"
           >
             Diary
           </Link>
           <Link
-            className="inline-flex items-center gap-x-1.5 rounded-md bg-slate-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-slate-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-600"
+            className="rounded-md bg-slate-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-slate-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-600"
             to="add-food"
           >
             Add Food
           </Link>
-          <Link
+          {/* <Link
             className="inline-flex items-center gap-x-1.5 rounded-md bg-slate-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-slate-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-600"
             to="add-meal"
           >
             Add Meal
-          </Link>
+          </Link> */}
         </nav>
 
         <Outlet />

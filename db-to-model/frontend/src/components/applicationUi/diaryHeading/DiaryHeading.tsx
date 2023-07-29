@@ -7,7 +7,7 @@ const DiaryHeading = () => {
       <div className="min-w-0 flex-1">
         <h2>Diary</h2>
       </div>
-      <div className="min-w-0 flex-1">
+      <div className="hidden min-w-0 flex-1">
         <div className="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
           <div className="mt-2 flex items-center text-sm text-gray-500">
             <CakeIcon
