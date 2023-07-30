@@ -1,0 +1,6 @@
+services:
+  fitfood_fe:
+    container_name: fitfood_fe
+    image: ghcr.io/mimo84/fitfood_fe:latest
+    ports:
+      - 80:80
