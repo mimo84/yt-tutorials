@@ -5,6 +5,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>FoodDiary.Api</RootNamespace>
     <EnableSdkContainerSupport>true</EnableSdkContainerSupport>
+    <ContainerImageName>ghcr.io/mimo84/fitfood_be</ContainerImageName>
+    <PublishProfile>DefaultContainer</PublishProfile>
+    <ContainerImageTags>1.0.4;</ContainerImageTags>
+    <RuntimeIdentifier>linux-arm64</RuntimeIdentifier>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,6 +30,10 @@
     <ProjectReference Include="..\Core\Core.csproj" />
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
   </ItemGroup>
+
+  <Target Name="CopyDatabaseFile" BeforeTargets="Build">
+    <Copy SourceFiles="/Users/mimo/work/github_repos/yt-tutorials/db-to-model/backend/src/Data/database.db" DestinationFolder="$(OutputPath)" />
+  </Target>
 
   <ItemGroup>
     <InternalsVisibleTo Include="Integration" />

@@ -12,11 +12,6 @@ FROM base AS build
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install
 RUN pnpm run build
 
-FROM base
-COPY --from=prod-deps /app/node_modules /app/node_modules
-COPY --from=build /app/dist /app/dist
-EXPOSE 8000
-CMD [ "pnpm", "start" ]
 
 # production stage
 FROM nginx:stable-alpine as production
