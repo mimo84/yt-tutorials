@@ -15,10 +15,6 @@
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.32.0" />
   </ItemGroup>
 
-  <Target Name="CopyDatabaseFile" BeforeTargets="Build">
-    <Copy SourceFiles="./database.db" DestinationFolder="$(OutputPath)" />
-  </Target>
-
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj" />
   </ItemGroup>

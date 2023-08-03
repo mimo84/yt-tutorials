@@ -1,6 +1,7 @@
 ﻿using FoodDiary.Core.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace FoodDiary.Data.Contexts;
 
@@ -21,11 +22,18 @@ public partial class FoodDiaryDbContext : IdentityDbContext<AppUser>
 
     public virtual DbSet<Meal> Meals { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
-        optionsBuilder.UseSqlite(
-            "DataSource=/Users/mimo/work/github_repos/yt-tutorials/db-to-model/backend/src/Data/Database/database.db"
-        );
-
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        var envName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+        var builder = new ConfigurationBuilder()
+                .SetBasePath(Path.Combine(Directory.GetCurrentDirectory()))
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{envName}.json", optional: true);
+        builder.AddEnvironmentVariables();
+        var configuration = builder.Build();
+        Console.WriteLine(configuration.GetConnectionString("Database"));
+        optionsBuilder.UseSqlite(configuration.GetConnectionString("Database"));
+    }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Diary>(entity =>

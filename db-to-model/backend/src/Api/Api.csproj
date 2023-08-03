@@ -7,7 +7,7 @@
     <EnableSdkContainerSupport>true</EnableSdkContainerSupport>
     <ContainerImageName>ghcr.io/mimo84/fitfood_be</ContainerImageName>
     <PublishProfile>DefaultContainer</PublishProfile>
-    <ContainerImageTags>1.0.4;</ContainerImageTags>
+    <ContainerImageTags>1.0.0;</ContainerImageTags>
     <RuntimeIdentifier>linux-arm64</RuntimeIdentifier>
   </PropertyGroup>
 
@@ -30,10 +30,6 @@
     <ProjectReference Include="..\Core\Core.csproj" />
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
   </ItemGroup>
-
-  <Target Name="CopyDatabaseFile" BeforeTargets="Build">
-    <Copy SourceFiles="/Users/mimo/work/github_repos/yt-tutorials/db-to-model/backend/src/Data/database.db" DestinationFolder="$(OutputPath)" />
-  </Target>
 
   <ItemGroup>
     <InternalsVisibleTo Include="Integration" />
