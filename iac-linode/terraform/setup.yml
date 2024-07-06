@@ -1,0 +1,31 @@
+---
+- hosts: mylinode
+  become: yes
+  tasks:
+    - name: Update and upgrade apt packages
+      apt:
+        update_cache: yes
+        state: latest
+        upgrade: dist
+
+    - name: Install required software
+      apt:
+        name:
+          - git
+          - curl
+          - nginx
+          - python3-pip
+          - apt-transport-https
+          - ca-certificates
+          - software-properties-common
+          - python3-pip
+          - virtualenv
+          - python3-setuptools
+        state: latest
+        update_cache: true
+
+    - name: Start and enable NGINX
+      service:
+        name: nginx
+        state: started
+        enabled: yes
