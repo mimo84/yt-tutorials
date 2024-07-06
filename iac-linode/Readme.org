@@ -1,0 +1,43 @@
+* IaC Linode
+
+This set of tutorials show how to automate the creation
+of a VPS, hosted on Linode.
+
+** Episode 1 - Create a Linode VPS with Terraform
+
+In this video I show how to create a VPS with Terraform on the Linode stack.
+Also, I set an SSH key to enable access from your command line with SSH.
+
+https://www.youtube.com/watch?v=V5_v47IqflU
+
+** Episode 2 - Namecheap Domains to be hosted on Linode
+
+In this video I show how to connect a domain name bought on NameCheap to point
+to Linode Nameservers.
+
+https://www.youtube.com/watch?v=eVrqrlXMOz4
+
+** Episode 3 - Automatically link Domain Names to VPS
+
+In this video I show how you can automatically create a VPS with Terraform and
+link the VPS IP address to the domain name.
+
+https://www.youtube.com/watch?v=1OIEGI3uEgM
+
+** Episode 4 - Create a VPS and install NGINX with Ansible
+
+In this video I show how you can create a VPS and then using Ansible you can install all of the required software. I use Terraform for the creation of the VPS and then I use a Terraform provider to install the software automatically. Everything happens at the run of =terraform apply= in one go.
+
+https://www.youtube.com/watch?v=71JB0JWEbfs
+
+** Episode 5 - Install Docker on Ubuntu Server with Ansible
+
+Building progresses from the previous episode. Using Ansible we're going to see the right way to install Docker using Ansible and overcome the different architectures nomenclatures used by Docker and Ansible.
+
+https://www.youtube.com/watch?v=8qxEufeSJrM
+
+** Future Episodes
+
+*** Install WordPress using Docker
+*** Import an existing Wordpress site into Docker
+*** Setup Let's Encrypt to have SSL enabled on our site
